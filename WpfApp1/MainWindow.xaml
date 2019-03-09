@@ -1,0 +1,38 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1024">
+    <Grid Margin="0,0,-0.4,0.4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <avalon:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA">
+            <avalon:TextEditor.Foreground>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+            </avalon:TextEditor.Foreground>
+            <avalon:TextEditor.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+            </avalon:TextEditor.Background>
+        </avalon:TextEditor>
+        <WebBrowser x:Name="webBrowser" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.Row="1">
+            <WebBrowser.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </WebBrowser.RenderTransform>
+        </WebBrowser>
+
+    </Grid>
+</Window>
