@@ -2,7 +2,6 @@
 using ICSharpCode.AvalonEdit.Highlighting;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using iTextSharp.text.html;
 using iTextSharp.tool.xml;
 using System;
 using System.Linq;
@@ -35,7 +34,7 @@ namespace WpfApp1
             FountainGame = await FountainGameAsync(text.Text);
             webBrowser.NavigateToString(FountainGame.Html);
             //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
-
+            //webBrowser.NavigateToString(text.Text);
             #region Auto HighLight Text
 
 

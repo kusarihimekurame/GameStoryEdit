@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Story Edit", "WpfApp1\Game Story Edit.csproj", "{5F7EF2B0-0394-4D9D-A6C7-3E33DE16C787}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FountainSharp.Parse.Game.NetStandard", "FountainSharp.Parse.Game.NetStandard\FountainSharp.Parse.Game.NetStandard.fsproj", "{9F085119-8697-4FB4-BC15-8942189B7969}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5F7EF2B0-0394-4D9D-A6C7-3E33DE16C787}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7EF2B0-0394-4D9D-A6C7-3E33DE16C787}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7EF2B0-0394-4D9D-A6C7-3E33DE16C787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F085119-8697-4FB4-BC15-8942189B7969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F085119-8697-4FB4-BC15-8942189B7969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F085119-8697-4FB4-BC15-8942189B7969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F085119-8697-4FB4-BC15-8942189B7969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
