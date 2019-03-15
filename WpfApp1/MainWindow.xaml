@@ -21,32 +21,14 @@
         <StatusBar DockPanel.Dock="Bottom">
             <TextBlock Text="Row" RenderTransformOrigin="37.573,0.934"/>
         </StatusBar>
-        <Grid Margin="0,0,-0.4,0.4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <avalon:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" SyntaxHighlighting="HTML">
-                <avalon:TextEditor.Foreground>
-                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-                </avalon:TextEditor.Foreground>
-                <avalon:TextEditor.Background>
-                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
-                </avalon:TextEditor.Background>
-            </avalon:TextEditor>
-            <WebBrowser x:Name="webBrowser" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.Row="1">
-                <WebBrowser.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </WebBrowser.RenderTransform>
-            </WebBrowser>
-        </Grid>
+        <WebBrowser x:Name="webBrowser" Margin="0,0.4,0,-0.4" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Width="472"/>
+        <avalon:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" SyntaxHighlighting="HTML" Margin="0" DockPanel.Dock="Top">
+            <avalon:TextEditor.Foreground>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+            </avalon:TextEditor.Foreground>
+            <avalon:TextEditor.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+            </avalon:TextEditor.Background>
+        </avalon:TextEditor>
     </DockPanel>
 </Window>

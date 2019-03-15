@@ -16,20 +16,20 @@ namespace WpfApp1
         public FountainDocument Fountain { get; }
         public FSharpList<FountainBlockElement> Blocks => Fountain.Blocks;
         public string Html => HtmlFormatter.WriteHtml(Fountain);
-        public List<FountainBlockElement> Action => Blocks.Where((b) => b.IsAction).ToList();
-        public List<FountainBlockElement> Boneyard => Blocks.Where((b) => b.IsBoneyard).ToList();
-        public List<FountainBlockElement> Centered => Blocks.Where((b) => b.IsCentered).ToList();
-        public List<FountainBlockElement> Character => Blocks.Where((b) => b.IsCharacter).ToList();
-        public List<FountainBlockElement> Dialogue => Blocks.Where((b) => b.IsDialogue).ToList();
-        public List<FountainBlockElement> DualDialogue => Blocks.Where((b) => b.IsDualDialogue).ToList();
-        public List<FountainBlockElement> Lyrics => Blocks.Where((b) => b.IsLyrics).ToList();
-        public List<FountainBlockElement> PageBreak => Blocks.Where((b) => b.IsPageBreak).ToList();
-        public List<FountainBlockElement> Parenthetical => Blocks.Where((b) => b.IsParenthetical).ToList();
-        public List<FountainBlockElement> SceneHeading => Blocks.Where((b) => b.IsSceneHeading).ToList();
-        public List<FountainBlockElement> Section => Blocks.Where((b) => b.IsSection).ToList();
-        public List<FountainBlockElement> Synopses => Blocks.Where((b) => b.IsSynopses).ToList();
-        public List<FountainBlockElement> TitlePage => Blocks.Where((b) => b.IsTitlePage).ToList();
-        public List<FountainBlockElement> Transition => Blocks.Where((b) => b.IsTransition).ToList();
+        public List<FountainBlockElement.Action> Action => Blocks.Where((b) => b.IsAction).Cast<FountainBlockElement.Action>().ToList();
+        public List<FountainBlockElement.Boneyard> Boneyard => Blocks.Where((b) => b.IsBoneyard).Cast<FountainBlockElement.Boneyard>().ToList();
+        public List<FountainBlockElement.Centered> Centered => Blocks.Where((b) => b.IsCentered).Cast<FountainBlockElement.Centered>().ToList();
+        public List<FountainBlockElement.Character> Character => Blocks.Where((b) => b.IsCharacter).Cast<FountainBlockElement.Character>().ToList();
+        public List<FountainBlockElement.Dialogue> Dialogue => Blocks.Where((b) => b.IsDialogue).Cast<FountainBlockElement.Dialogue>().ToList();
+        public List<FountainBlockElement.DualDialogue> DualDialogue => Blocks.Where((b) => b.IsDualDialogue).Cast<FountainBlockElement.DualDialogue>().ToList();
+        public List<FountainBlockElement.Lyrics> Lyrics => Blocks.Where((b) => b.IsLyrics).Cast<FountainBlockElement.Lyrics>().ToList();
+        public List<FountainBlockElement.PageBreak> PageBreak => Blocks.Where((b) => b.IsPageBreak).Cast<FountainBlockElement.PageBreak>().ToList();
+        public List<FountainBlockElement.Parenthetical> Parenthetical => Blocks.Where((b) => b.IsParenthetical).Cast<FountainBlockElement.Parenthetical>().ToList();
+        public List<FountainBlockElement.SceneHeading> SceneHeading => Blocks.Where((b) => b.IsSceneHeading).Cast<FountainBlockElement.SceneHeading>().ToList();
+        public List<FountainBlockElement.Section> Section => Blocks.Where((b) => b.IsSection).Cast<FountainBlockElement.Section>().ToList();
+        public List<FountainBlockElement.Synopses> Synopses => Blocks.Where((b) => b.IsSynopses).Cast<FountainBlockElement.Synopses>().ToList();
+        public List<FountainBlockElement.TitlePage> TitlePage => Blocks.Where((b) => b.IsTitlePage).Cast<FountainBlockElement.TitlePage>().ToList();
+        public List<FountainBlockElement.Transition> Transition => Blocks.Where((b) => b.IsTransition).Cast<FountainBlockElement.Transition>().ToList();
         public FountainGame(string Text)
         {
             Fountain = FountainDocument.Parse(Text);

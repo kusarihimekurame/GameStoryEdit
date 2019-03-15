@@ -34,7 +34,7 @@ namespace WpfApp1
             FountainGame = await FountainGameAsync(text.Text);
             webBrowser.NavigateToString(FountainGame.Html);
             //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
-            //webBrowser.NavigateToString(text.Text);
+            //webBrowser.NavigateToString(text.Text);  //测试html语句用
             #region Auto HighLight Text
 
 

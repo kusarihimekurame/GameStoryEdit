@@ -188,7 +188,7 @@ module Matching =
     match span with
     | Literal _
     | Note _ //TODO: not sure what this should be
-    | HardLineBreak ->
+    | HardLineBreak _->
         SpanLeaf(SL span) //SpanLeafInfo or (SpanNodeInfo * FountainSpans)
     | Strong spans 
     | Italic spans ->
@@ -200,7 +200,7 @@ module Matching =
     // 1) isn't it backwards that the type is defined here? or is the active pattern itself
     // the definition of types?
     // 2) what is the syntax actually doing? why is it in parentheses?
-  let SpanLeaf (SL(span)) = span
+    //let SpanLeaf (SL(span)) = span
     // 3) so are SpanNodes only these formatted bits? what about non formatted bits?
   let SpanNode (SN(span), spans) =
     match span with
@@ -232,4 +232,4 @@ module Matching =
     //| _ -> invalidArg "" "Incorrect ParagraphSpansInfo." //commented out because it says the rule will never be matched.
 
   let ParagraphLeaf (PL(par)) = par
-*)
+  *)
