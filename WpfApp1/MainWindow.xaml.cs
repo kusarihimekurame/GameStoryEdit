@@ -26,6 +26,7 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            LayoutAnchorable_WebBrowser.IsVisible = false;
         }
 
         private async void TextEditor_TextChanged(object sender, EventArgs e)
@@ -35,11 +36,10 @@ namespace WpfApp1
             webBrowser.NavigateToString(FountainGame.Html);
             //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
             //webBrowser.NavigateToString(text.Text);  //测试html语句用
-            #region Auto HighLight Text
 
-
-
-            #endregion
+            if (text.Text != "") LayoutAnchorable_WebBrowser.IsVisible = true;
+            else LayoutAnchorable_WebBrowser.IsVisible = false;
+            
         }
 
         public void HTMLToPdf(string HTML, string FilePath)

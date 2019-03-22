@@ -4,31 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
-        xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024">
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Name="menuOpen" Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Delete"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Edit"></MenuItem>
-            <MenuItem Header="View"></MenuItem>
-            <MenuItem Header="About"></MenuItem>
-        </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
-            <TextBlock Text="Row" RenderTransformOrigin="37.573,0.934"/>
-        </StatusBar>
-        <WebBrowser x:Name="webBrowser" Margin="0,0.4,0,-0.4" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Width="472"/>
-        <avalon:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" SyntaxHighlighting="HTML" Margin="0" DockPanel.Dock="Top">
-            <avalon:TextEditor.Foreground>
-                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-            </avalon:TextEditor.Foreground>
-            <avalon:TextEditor.Background>
-                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
-            </avalon:TextEditor.Background>
-        </avalon:TextEditor>
-    </DockPanel>
+        Title="MainWindow" Height="616.35" Width="983.2">
+    <avalonDock:DockingManager x:Name="dockingManager">
+            <avalonDock:LayoutRoot>
+                <avalonDock:LayoutPanel Orientation="Horizontal">
+                    <avalonDock:LayoutDocumentPane>
+                        <avalonDock:LayoutDocument Title="Fountain" CanClose="False">
+                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" DockPanel.Dock="Top">
+                                <avalonEdit:TextEditor.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+                                </avalonEdit:TextEditor.Foreground>
+                                <avalonEdit:TextEditor.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+                                </avalonEdit:TextEditor.Background>
+                            </avalonEdit:TextEditor>
+                        </avalonDock:LayoutDocument>
+                    </avalonDock:LayoutDocumentPane>
+                    <avalonDock:LayoutAnchorablePane DockWidth="500" >
+                        <avalonDock:LayoutAnchorable x:Name="LayoutAnchorable_WebBrowser" Title="HTML" IsVisible="False" CanHide="True" IsSelected="True" IsEnabled="True">
+                            <WebBrowser x:Name="webBrowser" Margin="0,0.4,0,-0.4" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Width="583"/>
+                        </avalonDock:LayoutAnchorable>
+                    </avalonDock:LayoutAnchorablePane>
+                </avalonDock:LayoutPanel>
+                <avalonDock:LayoutRoot.LeftSide>
+                    <avalonDock:LayoutAnchorSide>
+                        <avalonDock:LayoutAnchorGroup>
+                            <avalonDock:LayoutAnchorable Title="Autohidden Content">
+                                <TextBox/>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.LeftSide>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
 </Window>
