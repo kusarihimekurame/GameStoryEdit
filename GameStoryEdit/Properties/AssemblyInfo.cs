@@ -7,13 +7,13 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("WpfApp1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Game Story Edit")]
+[assembly: AssemblyDescription("Based on the Fountain language for game story creation.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WpfApp1")]
+[assembly: AssemblyCompany("JINGQIAN")]
+[assembly: AssemblyProduct("Game Story Edit")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("JINGQIAN")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
