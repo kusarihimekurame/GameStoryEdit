@@ -7,41 +7,83 @@
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
-        Title="MainWindow" Height="616.35" Width="983.2">
-    <avalonDock:DockingManager x:Name="dockingManager">
+        Title="FountainGame" Height="616.35" Width="983.2">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Name="menuOpen" Header="Open"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Delete"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit"></MenuItem>
+            <MenuItem Header="View"></MenuItem>
+            <MenuItem Header="About"></MenuItem>
+        </Menu>
+        <StatusBar x:Name="statusBar" DockPanel.Dock="Bottom" Margin="0,0,-0.2,0">
+            <Grid Width="{Binding Width, ElementName=statusBar}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Document.LineCount, ElementName=textEditor, Mode=OneWay, StringFormat=Linages:{0}}"/>
+                <TextBlock Text="{Binding Document.TextLength, ElementName=textEditor, Mode=OneWay, StringFormat=Words:{0}}" Grid.Column="1"/>
+                <TextBlock Text="" Grid.Column="2" FlowDirection="RightToLeft" Margin="0,0,10,0"/>
+            </Grid>
+        </StatusBar>
+        <avalonDock:DockingManager x:Name="dockingManager">
             <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel Orientation="Horizontal">
-                <avalonDock:LayoutDocumentPane>
-                    <avalonDock:LayoutDocument Title="Fountain" CanClose="False">
-                        <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" DockPanel.Dock="Top">
-                            <avalonEdit:TextEditor.Foreground>
-                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-                            </avalonEdit:TextEditor.Foreground>
-                            <avalonEdit:TextEditor.Background>
-                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
-                            </avalonEdit:TextEditor.Background>
-                        </avalonEdit:TextEditor>
-                    </avalonDock:LayoutDocument>
-                </avalonDock:LayoutDocumentPane>
-            </avalonDock:LayoutPanel>
-            <avalonDock:LayoutRoot.LeftSide>
-                <avalonDock:LayoutAnchorSide>
-                    <avalonDock:LayoutAnchorGroup>
-                        <avalonDock:LayoutAnchorable Title="ListView">
-                            <ListView></ListView>
+                    <avalonDock:LayoutAnchorablePane DockWidth="197">
+                        <avalonDock:LayoutAnchorable Title="Manager">
+                            <TabControl Margin="0,4,0,0">
+                                <TabItem Header="SceneHeading">
+                                    <ListBox x:Name="SceneHeadingListBox" SelectionChanged="SceneHeadingListBox_SelectionChanged"></ListBox>
+                                </TabItem>
+                                <TabItem Header="Character">
+                                    <ListBox x:Name="CharactersListBox">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Path=Text}" HorizontalAlignment="Left"></TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </TabItem>
+                            </TabControl>
                         </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorGroup>
-                </avalonDock:LayoutAnchorSide>
-            </avalonDock:LayoutRoot.LeftSide>
+                    </avalonDock:LayoutAnchorablePane>
+                    <avalonDock:LayoutDocumentPane>
+                        <avalonDock:LayoutDocument Title="Fountain" CanClose="False">
+                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0">
+                                <avalonEdit:TextEditor.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+                                </avalonEdit:TextEditor.Foreground>
+                                <avalonEdit:TextEditor.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+                                </avalonEdit:TextEditor.Background>
+                            </avalonEdit:TextEditor>
+                        </avalonDock:LayoutDocument>
+                    </avalonDock:LayoutDocumentPane>
+                </avalonDock:LayoutPanel>
+                <avalonDock:LayoutRoot.LeftSide>
+                    <avalonDock:LayoutAnchorSide>
+                        <avalonDock:LayoutAnchorGroup>
+
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.LeftSide>
                 <avalonDock:LayoutRoot.RightSide>
                     <avalonDock:LayoutAnchorSide>
                         <avalonDock:LayoutAnchorGroup>
-                        <avalonDock:LayoutAnchorable x:Name="LayoutAnchorable_WebBrowser" Title="HTML" AutoHideMinWidth="250" AutoHideWidth="400">
-                            <WebBrowser x:Name="webBrowser" Margin="0,0.4,0,-0.4" DockPanel.Dock="Right" RenderTransformOrigin="0.5,0.5" Width="583"/>
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorGroup>
+                            <avalonDock:LayoutAnchorable x:Name="LayoutAnchorable_WebBrowser" Title="HTML" AutoHideMinWidth="250" AutoHideWidth="400">
+                                <WebBrowser x:Name="webBrowser" Margin="0,0.4,0,-0.4" RenderTransformOrigin="0.5,0.5" Width="583"/>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorGroup>
                     </avalonDock:LayoutAnchorSide>
                 </avalonDock:LayoutRoot.RightSide>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
+    </DockPanel>
 </Window>

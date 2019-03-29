@@ -236,7 +236,6 @@ namespace GameStoryEdit
             public Spans Spans { get; }
             public KeyValuePair(Tuple<Tuple<string, Range>, FSharpList<FountainSpanElement>> KeyValuePair)
             {
-                Tuple<string, Range> a = KeyValuePair.Item1;
                 KeyValuePair.Deconstruct(out Tuple<string, Range> key, out FSharpList<FountainSpanElement> spans);
                 Key = key.Item1;
                 Range = key.Item2;

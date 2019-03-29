@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace GameStoryEdit
 {
@@ -33,6 +34,16 @@ namespace GameStoryEdit
             TextEditor text = (TextEditor)sender;
             FountainGame = await FountainGameAsync(text.Text);
             webBrowser.NavigateToString(FountainGame.Html);
+
+            var Characters = FountainGame.Blocks.Characters.
+                GroupBy(c => c.Spans.Literals.Select(s => s.Text).ToList()[0]).
+                Select(Group => new { Text = Group.Key, Count = Group.Count() }).ToList();
+
+            var SceneHeadings = FountainGame.Blocks.SceneHeadings.
+                Select(c => c.Spans.Literals.Select(s => s.Text).ToList()[0]).ToList();
+
+            CharactersListBox.ItemsSource = Characters;
+            SceneHeadingListBox.ItemsSource = SceneHeadings;
             //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
             //webBrowser.NavigateToString(text.Text);  //测试html语句用
         }
@@ -51,6 +62,19 @@ namespace GameStoryEdit
             textReader.Close();
 
             #endregion
+        }
+
+        private void SceneHeadingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count != 0)
+            {
+                foreach (var c in FountainGame.Blocks.SceneHeadings)
+                    c.Spans.Literals.Where(s => s.Text == e.AddedItems[0].ToString()).ToList().ForEach(s =>
+                    {
+                        textEditor.Select(s.Range.Location, s.Range.Length);
+                        textEditor.ScrollToLine(textEditor.Document.GetLineByOffset(s.Range.Location).LineNumber);
+                    });
+            }
         }
     }
 }
