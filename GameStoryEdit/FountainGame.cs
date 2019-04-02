@@ -15,6 +15,8 @@ namespace GameStoryEdit
     {
         public FountainDocument Fountain { get; }
         public Blocks Blocks => new Blocks(Fountain.Blocks);
+        public string GetText(Range range) => Fountain.GetText(range);
+        public void ReplaceText(int location, int length, string replaceText) => Fountain.ReplaceText(location, length, replaceText);
         public string Html => HtmlFormatter.WriteHtml(Fountain);
         public FountainGame(string Text)
         {
