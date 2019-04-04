@@ -27,27 +27,29 @@
             <StatusBar x:Name="statusBar" >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70" />
-                    <ColumnDefinition Width="70" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding Document.LineCount, ElementName=textEditor, Mode=OneWay, StringFormat=Linages:{0}}"/>
-                    <TextBlock Text="{Binding Document.TextLength, ElementName=textEditor, Mode=OneWay, StringFormat=Words:{0}}" Grid.Column="1"/>
+                    <TextBlock Text="{Binding Document.TextLength, ElementName=textEditor, Mode=OneWay, StringFormat=Length:{0}}" Grid.Column="1"/>
                 </Grid>
             </StatusBar>
             <StatusBar Grid.Column="1" FlowDirection="RightToLeft">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="2">
+                    <Grid x:Name="grid" Grid.Column="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="textLocation_Ln" Text="{Binding Line, StringFormat=Ln:{0}}" Grid.Column="1" />
-                        <TextBlock x:Name="textLocation_Col" Text="{Binding Column, StringFormat=Col:{0}\,}"/>
+                        <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="textLocation_Ln" Text="{Binding Line, Mode=OneWay, StringFormat=Ln:{0}}" Grid.Column="1" />
+                        <TextBlock x:Name="textLocation_Col" Text="{Binding Column, Mode=OneWay, StringFormat=Col:{0}\,}" HorizontalAlignment="Right"/>
+                        <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" Grid.Column="1" HorizontalAlignment="Right" />
                     </Grid>
                 </Grid>
             </StatusBar>

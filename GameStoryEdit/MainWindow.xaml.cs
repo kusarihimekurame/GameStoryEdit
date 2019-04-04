@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace GameStoryEdit
 {
@@ -25,23 +26,18 @@ namespace GameStoryEdit
     {
         FountainGame FountainGame;
         private async Task<FountainGame> FountainGameAsync(string Text) => await Task.Run(() => new FountainGame(Text));
-        private TextLocation TextLocation;
-        private TEXTLocation tl = new TEXTLocation();
-        private int SelectionStart
-        {
-            get
-            {
-                tl.TextLocation = textEditor.Document.GetLocation(textEditor.SelectionStart);
-                return textEditor.SelectionStart;
-            }
-        }
 
         public MainWindow()
         {
             InitializeComponent();
-
-            textLocation_Ln.DataContext = tl;
-            textLocation_Col.DataContext = tl;
+            DispatcherTimer Timer = new DispatcherTimer();
+            Timer.Tick += (sender, e) => 
+            {
+                TextLocation textLocation = textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength);
+                textLocation_Ln.DataContext = textLocation;
+                textLocation_Col.DataContext = textLocation;
+            };
+            Timer.Start();
         }
 
         private async void TextEditor_TextChanged(object sender, EventArgs e)
@@ -92,22 +88,5 @@ namespace GameStoryEdit
                     });
             }
         }
-    }
-
-    class TEXTLocation : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private TextLocation textLocation;
-        public TextLocation TextLocation
-        {
-            get => textLocation;
-            set
-            {
-                textLocation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TextLocation"));
-            }
-        }
-        public int Line => TextLocation.Line;
-        public int Column => textLocation.Column;
     }
 }
