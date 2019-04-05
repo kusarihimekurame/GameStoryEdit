@@ -17,7 +17,12 @@
             </MenuItem>
             <MenuItem Header="Edit"></MenuItem>
             <MenuItem Header="View"></MenuItem>
-            <MenuItem Header="About"></MenuItem>
+            <MenuItem Header="About">
+                <MenuItem Header="Language">
+                    <MenuItem Header="en-us" Command="{Binding languages.Language_Changed, Mode=OneWay, Source={StaticResource Languages}}" CommandParameter="0"/>
+                    <MenuItem Header="ch-zh" Command="{Binding languages.Language_Changed, Mode=OneWay, Source={StaticResource Languages}}" CommandParameter="1"/>
+                </MenuItem>
+            </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
@@ -31,8 +36,8 @@
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{Binding Document.LineCount, ElementName=textEditor, Mode=OneWay, StringFormat=Linages:{0}}"/>
-                    <TextBlock Text="{Binding Document.TextLength, ElementName=textEditor, Mode=OneWay, StringFormat=Length:{0}}" Grid.Column="1"/>
+                    <TextBlock Text="{Binding languages.Lines, Mode=Default, Source={StaticResource Languages}}"/>
+                    <TextBlock Text="{Binding languages.Characters, Mode=Default, Source={StaticResource Languages}}" Grid.Column="1"/>
                 </Grid>
             </StatusBar>
             <StatusBar Grid.Column="1" FlowDirection="RightToLeft">
@@ -41,16 +46,9 @@
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="grid" Grid.Column="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" HorizontalAlignment="Left" />
-                        <TextBlock x:Name="textLocation_Ln" Text="{Binding Line, Mode=OneWay, StringFormat=Ln:{0}}" Grid.Column="1" />
-                        <TextBlock x:Name="textLocation_Col" Text="{Binding Column, Mode=OneWay, StringFormat=Col:{0}\,}" HorizontalAlignment="Right"/>
-                        <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" Grid.Column="1" HorizontalAlignment="Right" />
-                    </Grid>
+                    <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="{Binding languages.LocationString, Mode=Default}" DataContext="{x:Static local:Languages.languages}"/>
+                    <Rectangle VerticalAlignment="Stretch" Width="1" Stroke="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="{Binding Height, ElementName=grid}" Grid.Column="1" HorizontalAlignment="Right" />
                 </Grid>
             </StatusBar>
         </Grid>
@@ -60,10 +58,10 @@
                     <avalonDock:LayoutAnchorablePane DockWidth="197">
                         <avalonDock:LayoutAnchorable Title="Manager">
                             <TabControl Margin="0,4,0,0">
-                                <TabItem Header="SceneHeading">
+                                <TabItem Header="{Binding languages.SceneHeading, Mode=OneWay, Source={StaticResource Languages}}">
                                     <ListBox x:Name="SceneHeadingListBox" SelectionChanged="SceneHeadingListBox_SelectionChanged"></ListBox>
                                 </TabItem>
-                                <TabItem Header="Character">
+                                <TabItem Header="{Binding languages.Character, Mode=OneWay, Source={StaticResource Languages}}">
                                     <ListBox x:Name="CharactersListBox">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>

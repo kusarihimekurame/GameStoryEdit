@@ -34,8 +34,9 @@ namespace GameStoryEdit
             Timer.Tick += (sender, e) => 
             {
                 TextLocation textLocation = textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength);
-                textLocation_Ln.DataContext = textLocation;
-                textLocation_Col.DataContext = textLocation;
+                Languages.languages.SetTextLocation(textLocation);
+                Languages.languages.SetLines(textEditor.LineCount);
+                Languages.languages.SetCharacters(textEditor.Document.TextLength);
             };
             Timer.Start();
         }
