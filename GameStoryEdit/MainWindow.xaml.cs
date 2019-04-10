@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace GameStoryEdit
 {
@@ -33,8 +35,7 @@ namespace GameStoryEdit
             DispatcherTimer Timer = new DispatcherTimer();
             Timer.Tick += (sender, e) => 
             {
-                TextLocation textLocation = textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength);
-                Languages.languages.SetTextLocation(textLocation);
+                Languages.languages.SetTextLocation(textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength));
                 Languages.languages.SetLines(textEditor.LineCount);
                 Languages.languages.SetCharacters(textEditor.Document.TextLength);
             };

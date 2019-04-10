@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary x:Class="GameStoryEdit.Languages"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GameStoryEdit">
+                    xmlns:local="clr-namespace:GameStoryEdit"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ObjectDataProvider x:Key="Languages" ObjectType="{x:Type local:Languages}"/>
 </ResourceDictionary>
