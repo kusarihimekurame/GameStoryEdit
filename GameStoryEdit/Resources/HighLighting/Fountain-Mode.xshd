@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="Fountain" extensions=".cs" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="SceneHeadings" foreground="Blue"/>
+  <Color name="Character" foreground="Green"/>
+  <Color name="Dialogue" foreground="Orange"/>
+  <RuleSet>
+    <Span ruleSet="Dialogue" multiline="true">
+      <Begin color="Character">@</Begin>
+      <End>\r\n\r\n</End>
+    </Span>
+    <Import ruleSet="SceneHeadings"/>
+  </RuleSet>
+  <RuleSet name="SceneHeadings" ignoreCase="true">
+    <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
+  </RuleSet>
+  <RuleSet name="Dialogue">
+    <Rule color="Dialogue">^([@]+[0-9A-Za-z# (,._\-'’)]*|[A-Z]+[0-9A-Z# (,._\-'’)]*)(\^?)?(?:\n(?!\n+))([\s\S]+)</Rule>
+  </RuleSet>
+</SyntaxDefinition>

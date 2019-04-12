@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
@@ -18,6 +19,9 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Windows.Data;
 using System.Globalization;
+using ICSharpCode.AvalonEdit.Folding;
+using System.Xml;
+using System.Reflection;
 
 namespace GameStoryEdit
 {
@@ -32,14 +36,20 @@ namespace GameStoryEdit
         public MainWindow()
         {
             InitializeComponent();
+
             DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Tick += (sender, e) => 
+            Timer.Tick += (sender, e) =>
             {
                 Languages.languages.SetTextLocation(textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength));
                 Languages.languages.SetLines(textEditor.LineCount);
                 Languages.languages.SetCharacters(textEditor.Document.TextLength);
             };
             Timer.Start();
+
+            using (XmlReader reader = XmlReader.Create(Assembly.GetExecutingAssembly().GetManifestResourceStream("GameStoryEdit.Resources.HighLighting.Fountain-Mode.xshd")))
+            {
+                textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+            }
         }
 
         private async void TextEditor_TextChanged(object sender, EventArgs e)
@@ -48,15 +58,19 @@ namespace GameStoryEdit
             FountainGame = await FountainGameAsync(text.Text);
             webBrowser.NavigateToString(FountainGame.Html);
 
+            #region ListBox
+
             var Characters = FountainGame.Blocks.Characters.
-                GroupBy(c => FountainGame.GetText(c.Range).Trim()).
+                GroupBy(c => c.Spans.Literals[0].Text).
                 Select(Group => new { Text = Group.Key, Count = Group.Count() }).ToList();
 
             var SceneHeadings = FountainGame.Blocks.SceneHeadings.
-                Select(c => FountainGame.GetText(c.Range).Trim()).ToList();
+                Select(c => c.Spans.Literals[0].Text).ToList();
 
             CharactersListBox.ItemsSource = Characters;
             SceneHeadingListBox.ItemsSource = SceneHeadings;
+
+            #endregion
 
             //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
             //webBrowser.NavigateToString(text.Text);  //测试html语句用

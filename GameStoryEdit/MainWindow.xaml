@@ -38,7 +38,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Content="{Binding languages.Lines, Mode=OneWay, Source={StaticResource Languages}}" TextOptions.TextFormattingMode="Display"/>
-                    <Label Content="{Binding languages.Characters, Mode=OneWay, Source={StaticResource Languages}}" Grid.Column="1"/>
+                    <Label Content="{Binding languages.Characters, Mode=OneWay, Source={StaticResource Languages}}" Grid.Column="1" TextOptions.TextFormattingMode="Display"/>
                 </Grid>
             </StatusBar>
             <StatusBar Grid.Column="1" FlowDirection="RightToLeft">

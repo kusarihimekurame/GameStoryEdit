@@ -40,6 +40,7 @@ namespace GameStoryEdit
         public List<Synopses> Synopses { get; }
         public List<TitlePage> TitlePages { get; }
         public List<Transition> Transitions { get; }
+        public List<FSharpList<FountainBlockElement>> SceneBlocks { get; }
         public Blocks(FSharpList<FountainBlockElement> blocks)
         {
             Actions = new List<Action>();
@@ -56,14 +57,27 @@ namespace GameStoryEdit
             Synopses = new List<Synopses>();
             TitlePages = new List<TitlePage>();
             Transitions = new List<Transition>();
-            foreach (FountainBlockElement b in blocks)
+            SceneBlocks = new List<FSharpList<FountainBlockElement>>();
+            List<int> num = new List<int>();
+            for (int i = 0; i < blocks.Count(); i++)
             {
+                FountainBlockElement b = blocks[i];
+                if (b.IsSceneHeading)
+                {
+                    num.Add(i);
+                }
                 if (b.IsAction) Actions.Add(new Action(b));
                 if (b.IsBoneyard) Boneyards.Add(new Boneyard(b));
                 if (b.IsCentered) Centereds.Add(new Centered(b));
                 if (b.IsCharacter) Characters.Add(new Character(b));
                 if (b.IsDialogue) Dialogues.Add(new Dialogue(b));
-                if (b.IsDualDialogue) DualDialogues.Add(new DualDialogue(b));
+                if (b.IsDualDialogue)
+                {
+                    DualDialogue d = new DualDialogue(b);
+                    DualDialogues.Add(d);
+                    d.Blocks.Characters.ForEach(c => Characters.Add(c));
+                    d.Blocks.Dialogues.ForEach(c => Dialogues.Add(c));
+                }
                 if (b.IsLyrics) Lyrics.Add(new Lyrics(b));
                 if (b.IsPageBreak) PageBreaks.Add(new PageBreak(b));
                 if (b.IsParenthetical) Parentheticals.Add(new Parenthetical(b));
@@ -72,6 +86,11 @@ namespace GameStoryEdit
                 if (b.IsSynopses) Synopses.Add(new Synopses(b));
                 if (b.IsTitlePage) TitlePages.Add(new TitlePage(b));
                 if (b.IsTransition) Transitions.Add(new Transition(b));
+            }
+            for(int i=0;i<num.Count;i++)
+            {
+                if (i < num.Count - 1) SceneBlocks.Add(blocks.GetSlice(num[i], num[i + 1] - 1));
+                else SceneBlocks.Add(blocks.GetSlice(num[i], blocks.Count() - 1));
             }
         }
     }
