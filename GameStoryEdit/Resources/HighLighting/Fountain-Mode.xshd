@@ -1,19 +1,30 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="Fountain" extensions=".cs" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-  <Color name="SceneHeadings" foreground="Blue"/>
-  <Color name="Character" foreground="Green"/>
+  <Color name="SceneHeadings" foreground="#00FFFF"/>
+  <Color name="Character" foreground="#7CFC00"/>
   <Color name="Dialogue" foreground="Orange"/>
+  <Color name="Parenthetical" foreground="#EEEE00"/>
+  <Color name="Title" foreground="Blue"/>
+  <Color name="Boneyard" foreground="#006400"/>
   <RuleSet>
-    <Span ruleSet="Dialogue" multiline="true">
-      <Begin color="Character">@</Begin>
-      <End>\r\n\r\n</End>
+    <Span color="Dialogue" multiline="true" ruleSet="Parenthetical">
+      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z# ,_\-'’]*)( \^?)?(\(\))*$</Begin>
+      <End>^ {2}$</End>
     </Span>
+    <Span color="Boneyard" multiline="true">
+			<Begin>/\*</Begin>
+			<End>\*/</End>
+		</Span>
     <Import ruleSet="SceneHeadings"/>
+    <Import ruleSet="Title"/>
   </RuleSet>
   <RuleSet name="SceneHeadings" ignoreCase="true">
     <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
   </RuleSet>
-  <RuleSet name="Dialogue">
-    <Rule color="Dialogue">^([@]+[0-9A-Za-z# (,._\-'’)]*|[A-Z]+[0-9A-Z# (,._\-'’)]*)(\^?)?(?:\n(?!\n+))([\s\S]+)</Rule>
+  <RuleSet name="Parenthetical">
+    <Rule color="Parenthetical">^(\(.+\))$</Rule>
+  </RuleSet>
+  <RuleSet name="Title" ignoreCase="true">
+    <Rule color="Title">^((?:title|credit|author[s]?|source|notes|draft date|date|contact|copyright)\:)</Rule>
   </RuleSet>
 </SyntaxDefinition>
