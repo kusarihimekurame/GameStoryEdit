@@ -15,6 +15,7 @@ namespace GameStoryEdit
     {
         public FountainDocument Fountain { get; }
         public Blocks Blocks => new Blocks(Fountain.Blocks);
+        public List<SceneBlock> SceneBlocks => Blocks.GetSceneBlocks();
         public string GetText(Range range) => Fountain.GetText(range);
         public void ReplaceText(int location, int length, string replaceText) => Fountain.ReplaceText(location, length, replaceText);
         public string Html => HtmlFormatter.WriteHtml(Fountain);
@@ -40,7 +41,12 @@ namespace GameStoryEdit
         public List<Synopses> Synopses { get; }
         public List<TitlePage> TitlePages { get; }
         public List<Transition> Transitions { get; }
-        public List<FSharpList<FountainBlockElement>> SceneBlocks { get; }
+        public FSharpList<FountainBlockElement> FSharpBlocks { get; }
+        private readonly List<SceneBlock> sceneBlocks;
+        public List<SceneBlock> GetSceneBlocks() => sceneBlocks;
+        private readonly List<DialogueBlock> dialogueBlocks;
+        public List<DialogueBlock> GetDialogueBlocks() => dialogueBlocks;
+
         public Blocks(FSharpList<FountainBlockElement> blocks)
         {
             Actions = new List<Action>();
@@ -57,14 +63,19 @@ namespace GameStoryEdit
             Synopses = new List<Synopses>();
             TitlePages = new List<TitlePage>();
             Transitions = new List<Transition>();
-            SceneBlocks = new List<FSharpList<FountainBlockElement>>();
-            List<int> num = new List<int>();
+            FSharpBlocks = blocks;
+            List<int> SceneBlock_num = new List<int>();
+            List<int> dialogueBlock_num = new List<int>();
             for (int i = 0; i < blocks.Count(); i++)
             {
                 FountainBlockElement b = blocks[i];
                 if (b.IsSceneHeading)
                 {
-                    num.Add(i);
+                    SceneBlock_num.Add(i);
+                }
+                if (b.IsCharacter || b.IsDualDialogue)
+                {
+                    dialogueBlock_num.Add(i);
                 }
                 if (b.IsAction) Actions.Add(new Action(b));
                 if (b.IsBoneyard) Boneyards.Add(new Boneyard(b));
@@ -87,11 +98,33 @@ namespace GameStoryEdit
                 if (b.IsTitlePage) TitlePages.Add(new TitlePage(b));
                 if (b.IsTransition) Transitions.Add(new Transition(b));
             }
-            for(int i=0;i<num.Count;i++)
-            {
-                if (i < num.Count - 1) SceneBlocks.Add(blocks.GetSlice(num[i], num[i + 1] - 1));
-                else SceneBlocks.Add(blocks.GetSlice(num[i], blocks.Count() - 1));
-            }
+            SceneBlock_num.Add(blocks.Count());
+            dialogueBlock_num.Add(blocks.Count());
+            if (blocks.Count(b => b.IsSceneHeading) > 0 && !blocks[0].IsSceneHeading)
+                for (int i = 0; i < SceneBlock_num.Count - 1; i++)
+                    GetSceneBlocks().Add(new SceneBlock(blocks.GetSlice(SceneBlock_num[i], SceneBlock_num[i + 1] - 1)));
+            if (blocks.Count(b => b.IsSceneHeading || b.IsCharacter || b.IsDualDialogue) > 0 && (!blocks[0].IsSceneHeading || !blocks[0].IsCharacter || !blocks[0].IsDualDialogue))
+                for (int i = 0; i < dialogueBlock_num.Count - 1; i++)
+                    GetDialogueBlocks().Add(new DialogueBlock(blocks.GetSlice(dialogueBlock_num[i], dialogueBlock_num[i + 1] - 1)));
+        }
+    }
+
+    class SceneBlock : Blocks
+    {
+        public List<DialogueBlock> DialogueBlocks => GetDialogueBlocks();
+        public Range Range { get; }
+        public SceneBlock(FSharpList<FountainBlockElement> blocks) : base(blocks)
+        {
+            Range = new Range(blocks[0].Range.Location, blocks[blocks.Length - 1].Range.EndLocation - blocks[0].Range.Location + 1);
+        }
+    }
+
+    class DialogueBlock : Blocks
+    {
+        public Range Range { get; }
+        public DialogueBlock(FSharpList<FountainBlockElement> blocks) : base(blocks)
+        {
+            Range = new Range(blocks[0].Range.Location, blocks[blocks.Length - 1].Range.EndLocation - blocks[0].Range.Location + 1);
         }
     }
 

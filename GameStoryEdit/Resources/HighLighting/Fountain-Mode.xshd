@@ -4,11 +4,11 @@
   <Color name="Character" foreground="#7CFC00"/>
   <Color name="Dialogue" foreground="Orange"/>
   <Color name="Parenthetical" foreground="#EEEE00"/>
-  <Color name="Title" foreground="Blue"/>
+  <Color name="Title" foreground="#5CACEE"/>
   <Color name="Boneyard" foreground="#006400"/>
   <RuleSet>
     <Span color="Dialogue" multiline="true" ruleSet="Parenthetical">
-      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z# ,_\-'’]*)( \^?)?(\(\))*$</Begin>
+      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z# ,_\-'’]*)( \^?)?(\(.*\))*$</Begin>
       <End>^ {2}$</End>
     </Span>
     <Span color="Boneyard" multiline="true">
@@ -25,6 +25,6 @@
     <Rule color="Parenthetical">^(\(.+\))$</Rule>
   </RuleSet>
   <RuleSet name="Title" ignoreCase="true">
-    <Rule color="Title">^((?:title|credit|author[s]?|source|notes|draft date|date|contact|copyright)\:)</Rule>
+    <Rule color="Title">^((?:title|标题|タイトル|credit|author[s]?|作者|著者|source|notes|draft date|起稿日期|草案日付|日期|日付|date|contact|联络地址|連絡先|copyright|版权|著作権)\:)</Rule>
   </RuleSet>
 </SyntaxDefinition>

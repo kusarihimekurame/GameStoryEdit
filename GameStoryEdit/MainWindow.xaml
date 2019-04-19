@@ -79,12 +79,12 @@
                     <avalonDock:LayoutDocumentPane>
                         <avalonDock:LayoutDocument x:Name="layoutDocument" Title="Fountain" CanClose="False">
                             <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0">
+                                <avalonEdit:TextEditor.Background>
+                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InfoTextColorKey}}"/>
+                                </avalonEdit:TextEditor.Background>
                                 <avalonEdit:TextEditor.Foreground>
                                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
                                 </avalonEdit:TextEditor.Foreground>
-                                <avalonEdit:TextEditor.Background>
-                                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
-                                </avalonEdit:TextEditor.Background>
                             </avalonEdit:TextEditor>
                         </avalonDock:LayoutDocument>
                     </avalonDock:LayoutDocumentPane>

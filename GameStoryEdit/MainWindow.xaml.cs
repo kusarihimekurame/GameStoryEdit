@@ -1,27 +1,20 @@
 ﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Threading;
-using System.Windows.Data;
-using System.Globalization;
-using ICSharpCode.AvalonEdit.Folding;
 using System.Xml;
-using System.Reflection;
 
 namespace GameStoryEdit
 {
@@ -31,6 +24,8 @@ namespace GameStoryEdit
     public partial class MainWindow : Window
     {
         FountainGame FountainGame;
+        FoldingManager foldingManager;
+        XmlFoldingStrategy foldingStrategy;
         private async Task<FountainGame> FountainGameAsync(string Text) => await Task.Run(() => new FountainGame(Text));
 
         public MainWindow()
@@ -50,6 +45,9 @@ namespace GameStoryEdit
             {
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
+            foldingManager = FoldingManager.Install(textEditor.TextArea);
+            foldingStrategy = new XmlFoldingStrategy();
+            foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
         }
 
         private async void TextEditor_TextChanged(object sender, EventArgs e)
@@ -58,6 +56,18 @@ namespace GameStoryEdit
             FountainGame = await FountainGameAsync(text.Text);
             webBrowser.NavigateToString(FountainGame.Html);
 
+            #region Folding
+
+            List<NewFolding> newFoldings = new List<NewFolding>();
+            FountainGame.SceneBlocks.ForEach(sb =>
+            {
+                sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location, db.Range.EndLocation - 1) { Name = db.SceneHeadings[0].Spans.Literals[0].Text }));
+                newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
+            });
+            foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
+            foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+
+            #endregion
             #region ListBox
 
             var Characters = FountainGame.Blocks.Characters.
@@ -81,7 +91,7 @@ namespace GameStoryEdit
             #region HTML to Pdf
 
             Document document = new Document();
-            TextReader textReader=new StringReader(HTML);
+            TextReader textReader = new StringReader(HTML);
             PdfWriter pdfWriter = PdfWriter.GetInstance(document, new FileStream(FilePath, FileMode.Create));
             document.Open();
             XMLWorkerHelper.GetInstance().ParseXHtml(pdfWriter, document, textReader);
