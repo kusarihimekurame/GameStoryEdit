@@ -42,11 +42,29 @@ namespace GameStoryEdit
         public List<TitlePage> TitlePages { get; }
         public List<Transition> Transitions { get; }
         public FSharpList<FountainBlockElement> FSharpBlocks { get; }
-        private readonly List<SceneBlock> sceneBlocks;
-        public List<SceneBlock> GetSceneBlocks() => sceneBlocks;
-        private readonly List<DialogueBlock> dialogueBlocks;
-        public List<DialogueBlock> GetDialogueBlocks() => dialogueBlocks;
-
+        private List<int> SceneHeading_Index = new List<int>();
+        private List<int> Character_Index = new List<int>();
+        private List<int> Dialogue_Index = new List<int>();
+        public List<SceneBlock> GetSceneBlocks()
+        {
+            List<SceneBlock> sceneBlocks = new List<SceneBlock>();
+            List<int> Index = SceneHeading_Index;
+            Index.Add(FSharpBlocks.Count());
+            for (int i = 0; i < Index.Count - 1; i++)
+                sceneBlocks.Add(new SceneBlock(FSharpBlocks.GetSlice(Index[i], Index[i + 1] - 1)));
+            return sceneBlocks;
+        }
+        public List<DialogueBlock> GetDialogueBlocks()
+        {
+            List<DialogueBlock> dialogueBlocks = new List<DialogueBlock>();
+            for (int i = 0; i < Character_Index.Count; i++)
+                if (Character_Index[i] == Dialogue_Index[i]) dialogueBlocks.Add(new DialogueBlock(FSharpBlocks.GetSlice(Character_Index[i], Dialogue_Index[i])));
+                else
+                {
+                    Dialogue_Index.Where(di => di > Character_Index[i] && di < Character_Index[i + 1]);
+                }
+            return dialogueBlocks;
+        }
         public Blocks(FSharpList<FountainBlockElement> blocks)
         {
             Actions = new List<Action>();
@@ -64,24 +82,14 @@ namespace GameStoryEdit
             TitlePages = new List<TitlePage>();
             Transitions = new List<Transition>();
             FSharpBlocks = blocks;
-            List<int> SceneBlock_num = new List<int>();
-            List<int> dialogueBlock_num = new List<int>();
             for (int i = 0; i < blocks.Count(); i++)
             {
                 FountainBlockElement b = blocks[i];
-                if (b.IsSceneHeading)
-                {
-                    SceneBlock_num.Add(i);
-                }
-                if (b.IsCharacter || b.IsDualDialogue)
-                {
-                    dialogueBlock_num.Add(i);
-                }
                 if (b.IsAction) Actions.Add(new Action(b));
                 if (b.IsBoneyard) Boneyards.Add(new Boneyard(b));
                 if (b.IsCentered) Centereds.Add(new Centered(b));
-                if (b.IsCharacter) Characters.Add(new Character(b));
-                if (b.IsDialogue) Dialogues.Add(new Dialogue(b));
+                if (b.IsCharacter) { Characters.Add(new Character(b)); Character_Index.Add(i); }
+                if (b.IsDialogue) { Dialogues.Add(new Dialogue(b)); Dialogue_Index.Add(i); }
                 if (b.IsDualDialogue)
                 {
                     DualDialogue d = new DualDialogue(b);
@@ -92,20 +100,12 @@ namespace GameStoryEdit
                 if (b.IsLyrics) Lyrics.Add(new Lyrics(b));
                 if (b.IsPageBreak) PageBreaks.Add(new PageBreak(b));
                 if (b.IsParenthetical) Parentheticals.Add(new Parenthetical(b));
-                if (b.IsSceneHeading) SceneHeadings.Add(new SceneHeading(b));
+                if (b.IsSceneHeading) { SceneHeadings.Add(new SceneHeading(b)); SceneHeading_Index.Add(i); }
                 if (b.IsSection) Sections.Add(new Section(b));
                 if (b.IsSynopses) Synopses.Add(new Synopses(b));
                 if (b.IsTitlePage) TitlePages.Add(new TitlePage(b));
                 if (b.IsTransition) Transitions.Add(new Transition(b));
             }
-            SceneBlock_num.Add(blocks.Count());
-            dialogueBlock_num.Add(blocks.Count());
-            if (blocks.Count(b => b.IsSceneHeading) > 0 && !blocks[0].IsSceneHeading)
-                for (int i = 0; i < SceneBlock_num.Count - 1; i++)
-                    GetSceneBlocks().Add(new SceneBlock(blocks.GetSlice(SceneBlock_num[i], SceneBlock_num[i + 1] - 1)));
-            if (blocks.Count(b => b.IsSceneHeading || b.IsCharacter || b.IsDualDialogue) > 0 && (!blocks[0].IsSceneHeading || !blocks[0].IsCharacter || !blocks[0].IsDualDialogue))
-                for (int i = 0; i < dialogueBlock_num.Count - 1; i++)
-                    GetDialogueBlocks().Add(new DialogueBlock(blocks.GetSlice(dialogueBlock_num[i], dialogueBlock_num[i + 1] - 1)));
         }
     }
 
@@ -133,34 +133,37 @@ namespace GameStoryEdit
         public bool Forced { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Action FSharpAction { get; }
         public Action(FountainBlockElement Action)
         {
-            FountainBlockElement.Action action = (FountainBlockElement.Action)Action;
-            Forced = action.Item1;
-            Spans = new Spans(action.Item2);
-            Range = action.Item3;
+            FSharpAction = (FountainBlockElement.Action)Action;
+            Forced = FSharpAction.Item1;
+            Spans = new Spans(FSharpAction.Item2);
+            Range = FSharpAction.Item3;
         }
     }
     class Boneyard
     {
         public string Text { get; }
         public Range Range { get; }
+        public FountainBlockElement.Boneyard FSharpBoneyard { get; }
         public Boneyard(FountainBlockElement Boneyard)
         {
-            FountainBlockElement.Boneyard boneyard = (FountainBlockElement.Boneyard)Boneyard;
-            Text = boneyard.Item1;
-            Range = boneyard.Item2;
+            FSharpBoneyard = (FountainBlockElement.Boneyard)Boneyard;
+            Text = FSharpBoneyard.Item1;
+            Range = FSharpBoneyard.Item2;
         }
     }
     class Centered
     {
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Centered FSharpCentered { get; }
         public Centered(FountainBlockElement Centered)
         {
-            FountainBlockElement.Centered centered = (FountainBlockElement.Centered)Centered;
-            Spans = new Spans(centered.Item1);
-            Range = centered.Item2;
+            FSharpCentered = (FountainBlockElement.Centered)Centered;
+            Spans = new Spans(FSharpCentered.Item1);
+            Range = FSharpCentered.Item2;
         }
     }
     class Character
@@ -169,66 +172,72 @@ namespace GameStoryEdit
         public bool Primary { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Character FSharpCharacter { get; }
         public Character(FountainBlockElement Character)
         {
-            FountainBlockElement.Character character = (FountainBlockElement.Character)Character;
-            Forced = character.Item1;
-            Primary = character.Item2;
-            Spans = new Spans(character.Item3);
-            Range = character.Item4;
+            FSharpCharacter = (FountainBlockElement.Character)Character;
+            Forced = FSharpCharacter.Item1;
+            Primary = FSharpCharacter.Item2;
+            Spans = new Spans(FSharpCharacter.Item3);
+            Range = FSharpCharacter.Item4;
         }
     }
     class Dialogue
     {
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Dialogue FSharpDialogue { get; }
         public Dialogue(FountainBlockElement Dialogue)
         {
-            FountainBlockElement.Dialogue dialogue = (FountainBlockElement.Dialogue)Dialogue;
-            Spans = new Spans(dialogue.Item1);
-            Range = dialogue.Item2;
+            FSharpDialogue = (FountainBlockElement.Dialogue)Dialogue;
+            Spans = new Spans(FSharpDialogue.Item1);
+            Range = FSharpDialogue.Item2;
         }
     }
     class DualDialogue
     {
         public Blocks Blocks { get; }
         public Range Range { get; }
+        public FountainBlockElement.DualDialogue FSharpDualDialogue { get; }
         public DualDialogue(FountainBlockElement DualDialogue)
         {
-            FountainBlockElement.DualDialogue dualDialogue = (FountainBlockElement.DualDialogue)DualDialogue;
-            Blocks = new Blocks(dualDialogue.Item1);
-            Range = dualDialogue.Item2;
+            FSharpDualDialogue = (FountainBlockElement.DualDialogue)DualDialogue;
+            Blocks = new Blocks(FSharpDualDialogue.Item1);
+            Range = FSharpDualDialogue.Item2;
         }
     }
     class Lyrics
     {
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Lyrics FSharpLyrics { get; }
         public Lyrics(FountainBlockElement Lyrics)
         {
-            FountainBlockElement.Lyrics lyrics = (FountainBlockElement.Lyrics)Lyrics;
-            Spans = new Spans(lyrics.Item1);
-            Range = lyrics.Item2;
+            FSharpLyrics = (FountainBlockElement.Lyrics)Lyrics;
+            Spans = new Spans(FSharpLyrics.Item1);
+            Range = FSharpLyrics.Item2;
         }
     }
     class PageBreak
     {
         public Range Range { get; }
+        public FountainBlockElement.PageBreak FSharpPageBreak { get; }
         public PageBreak(FountainBlockElement PageBreak)
         {
-            FountainBlockElement.PageBreak pageBreak = (FountainBlockElement.PageBreak)PageBreak;
-            Range = pageBreak.Item;
+            FSharpPageBreak = (FountainBlockElement.PageBreak)PageBreak;
+            Range = FSharpPageBreak.Item;
         }
     }
     class Parenthetical
     {
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Parenthetical FSarpParenthetical { get; }
         public Parenthetical(FountainBlockElement Parenthetical)
         {
-            FountainBlockElement.Parenthetical parenthetical = (FountainBlockElement.Parenthetical)Parenthetical;
-            Spans = new Spans(parenthetical.Item1);
-            Range = parenthetical.Item2;
+            FSarpParenthetical = (FountainBlockElement.Parenthetical)Parenthetical;
+            Spans = new Spans(FSarpParenthetical.Item1);
+            Range = FSarpParenthetical.Item2;
         }
     }
     class SceneHeading
@@ -236,12 +245,13 @@ namespace GameStoryEdit
         public bool Forced { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.SceneHeading FSharpSceneHeading { get; }
         public SceneHeading(FountainBlockElement SceneHeading)
         {
-            FountainBlockElement.SceneHeading sceneHeading = (FountainBlockElement.SceneHeading)SceneHeading;
-            Forced = sceneHeading.Item1;
-            Spans = new Spans(sceneHeading.Item2);
-            Range = sceneHeading.Item3;
+            FSharpSceneHeading = (FountainBlockElement.SceneHeading)SceneHeading;
+            Forced = FSharpSceneHeading.Item1;
+            Spans = new Spans(FSharpSceneHeading.Item2);
+            Range = FSharpSceneHeading.Item3;
         }
     }
     class Section
@@ -249,38 +259,41 @@ namespace GameStoryEdit
         public int N { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Section FSharpSection { get; }
         public Section(FountainBlockElement Section)
         {
-            FountainBlockElement.Section section = (FountainBlockElement.Section)Section;
-            N = section.Item1;
-            Spans = new Spans(section.Item2);
-            Range = section.Item3;
+            FSharpSection = (FountainBlockElement.Section)Section;
+            N = FSharpSection.Item1;
+            Spans = new Spans(FSharpSection.Item2);
+            Range = FSharpSection.Item3;
         }
     }
     class Synopses
     {
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Synopses FSharpSynopses { get; }
         public Synopses(FountainBlockElement Synopses)
         {
-            FountainBlockElement.Synopses synopses = (FountainBlockElement.Synopses)Synopses;
-            Spans = new Spans(synopses.Item1);
-            Range = synopses.Item2;
+            FSharpSynopses = (FountainBlockElement.Synopses)Synopses;
+            Spans = new Spans(FSharpSynopses.Item1);
+            Range = FSharpSynopses.Item2;
         }
     }
     class TitlePage
     {
         public List<KeyValuePair> KeyValuePairs { get; }
         public Range Range { get; }
+        public FountainBlockElement.TitlePage FSharpTitlePage { get; }
         public TitlePage(FountainBlockElement TitlePage)
         {
             KeyValuePairs = new List<KeyValuePair>();
-            FountainBlockElement.TitlePage titlePage = (FountainBlockElement.TitlePage)TitlePage;
-            foreach (Tuple<Tuple<string, Range>, FSharpList<FountainSpanElement>> k in titlePage.Item1)
+            FSharpTitlePage = (FountainBlockElement.TitlePage)TitlePage;
+            foreach (Tuple<Tuple<string, Range>, FSharpList<FountainSpanElement>> k in FSharpTitlePage.Item1)
             {
                 KeyValuePairs.Add(new KeyValuePair(k));
             }
-            Range = titlePage.Item2;
+            Range = FSharpTitlePage.Item2;
         }
 
         public class KeyValuePair
@@ -302,12 +315,13 @@ namespace GameStoryEdit
         public bool Forced { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public FountainBlockElement.Transition FSharpTransition { get; }
         public Transition(FountainBlockElement Transition)
         {
-            FountainBlockElement.Transition transition = (FountainBlockElement.Transition)Transition;
-            Forced = transition.Item1;
-            Spans = new Spans(transition.Item2);
-            Range = transition.Item3;
+            FSharpTransition = (FountainBlockElement.Transition)Transition;
+            Forced = FSharpTransition.Item1;
+            Spans = new Spans(FSharpTransition.Item2);
+            Range = FSharpTransition.Item3;
         }
     }
 
@@ -342,64 +356,70 @@ namespace GameStoryEdit
         {
             public FSharpList<FountainSpanElement> Spans { get; }
             public Range Range { get; }
+            public FountainSpanElement.Note FSharpNote { get; }
             public Note(FountainSpanElement Note)
             {
-                FountainSpanElement.Note note = (FountainSpanElement.Note)Note;
-                Spans = note.Item1;
-                Range = note.Item2;
+                FSharpNote = (FountainSpanElement.Note)Note;
+                Spans = FSharpNote.Item1;
+                Range = FSharpNote.Item2;
             }
         }
         public class Literal
         {
             public string Text { get; }
             public Range Range { get; }
+            public FountainSpanElement.Literal FSharpLiteral { get; }
             public Literal(FountainSpanElement Literal)
             {
-                FountainSpanElement.Literal literal = (FountainSpanElement.Literal)Literal;
-                Text = literal.Item1;
-                Range = literal.Item2;
+                FSharpLiteral = (FountainSpanElement.Literal)Literal;
+                Text = FSharpLiteral.Item1;
+                Range = FSharpLiteral.Item2;
             }
         }
         public class Bold
         {
             public FSharpList<FountainSpanElement> Spans { get; }
             public Range Range { get; }
+            public FountainSpanElement.Bold FSharpBold { get; }
             public Bold(FountainSpanElement Bold)
             {
-                FountainSpanElement.Bold bold = (FountainSpanElement.Bold)Bold;
-                Spans = bold.Item1;
-                Range = bold.Item2;
+                FSharpBold = (FountainSpanElement.Bold)Bold;
+                Spans = FSharpBold.Item1;
+                Range = FSharpBold.Item2;
             }
         }
         public class Italic
         {
             public FSharpList<FountainSpanElement> Spans { get; }
             public Range Range { get; }
+            public FountainSpanElement.Italic FSharpItalic { get; }
             public Italic(FountainSpanElement Italic)
             {
-                FountainSpanElement.Italic italic = (FountainSpanElement.Italic)Italic;
-                Spans = italic.Item1;
-                Range = italic.Item2;
+                FSharpItalic = (FountainSpanElement.Italic)Italic;
+                Spans = FSharpItalic.Item1;
+                Range = FSharpItalic.Item2;
             }
         }
         public class Underline
         {
             public FSharpList<FountainSpanElement> Spans { get; }
             public Range Range { get; }
+            public FountainSpanElement.Underline FSharpUnderline { get; }
             public Underline(FountainSpanElement Underline)
             {
-                FountainSpanElement.Underline underline = (FountainSpanElement.Underline)Underline;
-                Spans = underline.Item1;
-                Range = underline.Item2;
+                FSharpUnderline = (FountainSpanElement.Underline)Underline;
+                Spans = FSharpUnderline.Item1;
+                Range = FSharpUnderline.Item2;
             }
         }
         public class HardLineBreak
         {
             public Range Range { get; }
+            public FountainSpanElement.HardLineBreak FSharpHardLineBreak { get; }
             public HardLineBreak(FountainSpanElement HardLineBreak)
             {
-                FountainSpanElement.HardLineBreak hardLineBreak = (FountainSpanElement.HardLineBreak)HardLineBreak;
-                Range = hardLineBreak.Item;
+                FSharpHardLineBreak = (FountainSpanElement.HardLineBreak)HardLineBreak;
+                Range = FSharpHardLineBreak.Item;
             }
         }
     }
