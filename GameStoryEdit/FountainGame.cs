@@ -15,7 +15,9 @@ namespace GameStoryEdit
     {
         public FountainDocument Fountain { get; }
         public Blocks Blocks => new Blocks(Fountain.Blocks);
+        public FSharpList<FountainBlockElement> FSharpBlocks => Fountain.Blocks;
         public List<SceneBlock> SceneBlocks => Blocks.GetSceneBlocks();
+        public List<DialogueBlock> DialogueBlocks => Blocks.GetDialogueBlocks();
         public string GetText(Range range) => Fountain.GetText(range);
         public void ReplaceText(int location, int length, string replaceText) => Fountain.ReplaceText(location, length, replaceText);
         public string Html => HtmlFormatter.WriteHtml(Fountain);
@@ -58,10 +60,19 @@ namespace GameStoryEdit
         {
             List<DialogueBlock> dialogueBlocks = new List<DialogueBlock>();
             for (int i = 0; i < Character_Index.Count; i++)
-                if (Character_Index[i] == Dialogue_Index[i]) dialogueBlocks.Add(new DialogueBlock(FSharpBlocks.GetSlice(Character_Index[i], Dialogue_Index[i])));
+                if (Character_Index.Count() == Dialogue_Index.Count()) dialogueBlocks.Add(new DialogueBlock(FSharpBlocks.GetSlice(Character_Index[i], Dialogue_Index[i])));
                 else
                 {
-                    Dialogue_Index.Where(di => di > Character_Index[i] && di < Character_Index[i + 1]);
+                    if (i == Character_Index.Count - 1)
+                    {
+                        List<int> Index = Dialogue_Index.Where(di => di > Character_Index[i] && di < FSharpBlocks.Count()).ToList();
+                        dialogueBlocks.Add(new DialogueBlock(FSharpBlocks.GetSlice(Character_Index[i], Index[Index.Count() - 1])));
+                    }
+                    else
+                    {
+                        List<int> Index = Dialogue_Index.Where(di => di > Character_Index[i] && di < Character_Index[i + 1]).ToList();
+                        dialogueBlocks.Add(new DialogueBlock(FSharpBlocks.GetSlice(Character_Index[i], Index[Index.Count()-1])));
+                    }
                 }
             return dialogueBlocks;
         }
@@ -108,7 +119,6 @@ namespace GameStoryEdit
             }
         }
     }
-
     class SceneBlock : Blocks
     {
         public List<DialogueBlock> DialogueBlocks => GetDialogueBlocks();

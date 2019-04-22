@@ -58,6 +58,7 @@ namespace GameStoryEdit
 
             #region Folding
 
+            var a = FountainGame.DialogueBlocks[0];
             List<NewFolding> newFoldings = new List<NewFolding>();
             FountainGame.SceneBlocks.ForEach(sb =>
             {
