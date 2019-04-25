@@ -10,4 +10,18 @@
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Chinese(simplified)">Chinese(simplified)</sys:String>
     <sys:String x:Key="Japanese">Japanese</sys:String>
+    <sys:String x:Key="File">File</sys:String>
+    <sys:String x:Key="New">New</sys:String>
+    <sys:String x:Key="Open">Open</sys:String>
+    <sys:String x:Key="Close">Close</sys:String>
+    <sys:String x:Key="Save">Save</sys:String>
+    <sys:String x:Key="Save As">Save As</sys:String>
+    <sys:String x:Key="Save All">Save All</sys:String>
+    <sys:String x:Key="Import">Import</sys:String>
+    <sys:String x:Key="Export">Export</sys:String>
+    <sys:String x:Key="Add">Add</sys:String>
+    <sys:String x:Key="Page Setup">Page Setup</sys:String>
+    <sys:String x:Key="Page Preview">Page Preview</sys:String>
+    <sys:String x:Key="Print">Print</sys:String>
+    <sys:String x:Key="Exit">Exit</sys:String>
 </ResourceDictionary>

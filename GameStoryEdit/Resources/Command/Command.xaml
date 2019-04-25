@@ -1,6 +1,6 @@
-﻿<ResourceDictionary x:Class="GameStoryEdit.Languages"
+﻿<ResourceDictionary x:Class="GameStoryEdit.Command"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:GameStoryEdit">
-    <ObjectDataProvider x:Key="Languages" ObjectType="{x:Type local:Languages}"/>
+    <ObjectDataProvider x:Key="Command" ObjectType="{x:Type local:Command}"/>
 </ResourceDictionary>

@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GameStoryEdit.Resources.Style">
+    <Style x:Key="Exit_MenuItem" TargetType="MenuItem">
+        <Setter Property="Header" Value="{DynamicResource Exit}"/>
+        <Setter Property="Command" Value="{Binding Exit, Source={StaticResource Command}}"/>
+        <Setter Property="CommandParameter" Value="{Binding ElementName=window}"/>
+    </Style>
+    <Style x:Key="English_MenuItem" TargetType="MenuItem">
+        <Setter Property="Header" Value="{DynamicResource English}"/>
+        <Setter Property="Command" Value="{Binding Language_Changed, Source={StaticResource Languages}}"/>
+        <Setter Property="CommandParameter" Value="en-US"/>
+        <Setter Property="IsChecked" Value="{Binding languages.IsEnglish, Mode=OneWay, Source={StaticResource Languages}}"/>
+    </Style>
+    <Style x:Key="Chinese(simplified)_MenuItem" TargetType="MenuItem">
+        <Setter Property="Header" Value="{DynamicResource Chinese(simplified)}"/>
+        <Setter Property="Command" Value="{Binding Language_Changed, Source={StaticResource Languages}}"/>
+        <Setter Property="CommandParameter" Value="zh-CN"/>
+        <Setter Property="IsChecked" Value="{Binding languages.IsChinese_Simplified, Mode=OneWay, Source={StaticResource Languages}}"/>
+    </Style>
+    <Style x:Key="Japanese_MenuItem" TargetType="MenuItem">
+        <Setter Property="Header" Value="{DynamicResource Japanese}"/>
+        <Setter Property="Command" Value="{Binding Language_Changed, Source={StaticResource Languages}}"/>
+        <Setter Property="CommandParameter" Value="ja-JP"/>
+        <Setter Property="IsChecked" Value="{Binding languages.IsJapanese, Mode=OneWay, Source={StaticResource Languages}}"/>
+    </Style>
+</ResourceDictionary>

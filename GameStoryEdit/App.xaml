@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="Resources\Language\zh-CN.xaml"/>
                 <ResourceDictionary Source="Resources\Language\ja-JP.xaml"/>
                 <ResourceDictionary Source="Resources\Language\Languages.xaml"/>
+                <ResourceDictionary Source="Resources\Command\Command.xaml"/>
+                <ResourceDictionary Source="Resources\Style\MenuItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

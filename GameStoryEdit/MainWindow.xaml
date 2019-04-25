@@ -1,4 +1,4 @@
-﻿<Window x:Class="GameStoryEdit.MainWindow"
+﻿<Window x:Name="window" x:Class="GameStoryEdit.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,20 +8,37 @@
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         Title="FountainGame" Height="616.35" Width="983.2">
+    <Window.CommandBindings>
+        <CommandBinding />
+    </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Name="menuOpen" Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Delete"></MenuItem>
+            <MenuItem Header="{DynamicResource File}">
+                <MenuItem Header="{DynamicResource New}"/>
+                <MenuItem Header="{DynamicResource Open}"/>
+                <MenuItem Header="{DynamicResource Close}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Save}"/>
+                <MenuItem Header="{DynamicResource Save As}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Import}"/>
+                <MenuItem Header="{DynamicResource Export}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Add}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Page Setup}"/>
+                <MenuItem Header="{DynamicResource Page Preview}"/>
+                <MenuItem Header="{DynamicResource Print}"/>
+                <Separator/>
+                <MenuItem Style="{DynamicResource Exit_MenuItem}"/>
             </MenuItem>
             <MenuItem Header="Edit"></MenuItem>
             <MenuItem Header="View"></MenuItem>
             <MenuItem Header="About">
                 <MenuItem Header="{DynamicResource Language}">
-                    <MenuItem Header="{DynamicResource English}" Command="{Binding Language_Changed, Mode=OneWay, Source={StaticResource Languages}}" CommandParameter="en-US"/>
-                    <MenuItem Header="{DynamicResource Chinese(simplified)}" Command="{Binding Language_Changed, Mode=OneWay, Source={StaticResource Languages}}" CommandParameter="zh-CN"/>
-                    <MenuItem Header="{DynamicResource Japanese}" Command="{Binding Language_Changed, Mode=OneWay, Source={StaticResource Languages}}" CommandParameter="ja-JP"/>
+                    <MenuItem Style="{DynamicResource English_MenuItem}" />
+                    <MenuItem Style="{DynamicResource Chinese(simplified)_MenuItem}" />
+                    <MenuItem Style="{DynamicResource Japanese_MenuItem}" />
                 </MenuItem>
             </MenuItem>
         </Menu>

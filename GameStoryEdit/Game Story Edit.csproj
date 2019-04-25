@@ -72,6 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Resources\Command\Command.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Language\Languages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +89,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FountainGame.cs" />
+    <Compile Include="Resources\Command\Command.xaml.cs">
+      <DependentUpon>Command.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Language\Languages.xaml.cs">
       <DependentUpon>Languages.xaml</DependentUpon>
     </Compile>
@@ -101,6 +108,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Language\en-US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Style\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

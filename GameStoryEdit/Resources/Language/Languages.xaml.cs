@@ -23,6 +23,9 @@ namespace GameStoryEdit
         public string Lines { get; private set; } = string.Format(Application.Current.FindResource("Lines").ToString(), 0);
         public string Characters { get; private set; } = string.Format(Application.Current.FindResource("Characters").ToString(), 0);
         public CultureInfo Language { get; private set; }
+        public bool IsEnglish { get; private set; }
+        public bool IsChinese_Simplified { get; private set; }
+        public bool IsJapanese { get; private set; }
 
         private int Line;
         private int Column;
@@ -56,6 +59,25 @@ namespace GameStoryEdit
             }
             Language = value;
 
+            switch (value.Name)
+            {
+                case "zh-CN":
+                    IsEnglish = false;
+                    IsChinese_Simplified = true;
+                    IsJapanese = false;
+                    break;
+                case "ja-JP":
+                    IsEnglish = false;
+                    IsChinese_Simplified = false;
+                    IsJapanese = true;
+                    break;
+                default:
+                    IsEnglish = true;
+                    IsChinese_Simplified = false;
+                    IsJapanese = false;
+                    break;
+            }
+
             LocationString = string.Format(Application.Current.FindResource("LocationString").ToString(), Line, Column);
             Lines = string.Format(Application.Current.FindResource("Lines").ToString(), linesNum);
             Characters = string.Format(Application.Current.FindResource("Characters").ToString(), charactersNum);
@@ -63,6 +85,9 @@ namespace GameStoryEdit
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LocationString"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Lines"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Characters"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsEnglish"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsChinese_Simplified"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsJapanese"));
         }
 
         private class _Language_Changed : ICommand
@@ -72,6 +97,10 @@ namespace GameStoryEdit
             public void Execute(object parameter)
             {
                 languages.SetLanguage(new CultureInfo(parameter.ToString()));
+            }
+            public void RaiseCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }

@@ -10,4 +10,18 @@
     <sys:String x:Key="English">英语</sys:String>
     <sys:String x:Key="Chinese(simplified)">中文(简体)</sys:String>
     <sys:String x:Key="Japanese">日语</sys:String>
+    <sys:String x:Key="File">文件</sys:String>
+    <sys:String x:Key="New">新建</sys:String>
+    <sys:String x:Key="Open">打开</sys:String>
+    <sys:String x:Key="Close">关闭</sys:String>
+    <sys:String x:Key="Save">保存</sys:String>
+    <sys:String x:Key="Save As">另存为</sys:String>
+    <sys:String x:Key="Save All">全部保存</sys:String>
+    <sys:String x:Key="Import">导入</sys:String>
+    <sys:String x:Key="Export">导出</sys:String>
+    <sys:String x:Key="Add">添加</sys:String>
+    <sys:String x:Key="Page Setup">页面设置</sys:String>
+    <sys:String x:Key="Page Preview">页面预览</sys:String>
+    <sys:String x:Key="Print">打印</sys:String>
+    <sys:String x:Key="Exit">退出</sys:String>
 </ResourceDictionary>

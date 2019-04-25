@@ -10,4 +10,18 @@
     <sys:String x:Key="English">英語</sys:String>
     <sys:String x:Key="Chinese(simplified)">中国語(簡体字)</sys:String>
     <sys:String x:Key="Japanese">日本語</sys:String>
+    <sys:String x:Key="File">ファイル</sys:String>
+    <sys:String x:Key="New">新規ファイル</sys:String>
+    <sys:String x:Key="Open">ファイルを開く</sys:String>
+    <sys:String x:Key="Close">ファイルを閉じる</sys:String>
+    <sys:String x:Key="Save">保存</sys:String>
+    <sys:String x:Key="Save As">名前を付けて保存</sys:String>
+    <sys:String x:Key="Save All">すべて保存</sys:String>
+    <sys:String x:Key="Import">インポート</sys:String>
+    <sys:String x:Key="Export">エクスポート</sys:String>
+    <sys:String x:Key="Add">追加</sys:String>
+    <sys:String x:Key="Page Setup">ページ設定</sys:String>
+    <sys:String x:Key="Page Preview">ページプレビュー</sys:String>
+    <sys:String x:Key="Print">印刷</sys:String>
+    <sys:String x:Key="Exit">終了</sys:String>
 </ResourceDictionary>
