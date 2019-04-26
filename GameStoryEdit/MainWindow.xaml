@@ -27,8 +27,8 @@
                 <MenuItem Header="{DynamicResource Add}"/>
                 <Separator/>
                 <MenuItem Header="{DynamicResource Page Setup}"/>
-                <MenuItem Header="{DynamicResource Page Preview}"/>
-                <MenuItem Header="{DynamicResource Print}"/>
+                <MenuItem Header="{DynamicResource Page Preview}" Command="ApplicationCommands.PrintPreview" CommandTarget="{Binding ElementName=webBrowser, Mode=OneWay}"/>
+                <MenuItem Header="{DynamicResource Print}" Command="ApplicationCommands.Print" CommandTarget="{Binding ElementName=webBrowser, Mode=OneWay}"/>
                 <Separator/>
                 <MenuItem Style="{DynamicResource Exit_MenuItem}"/>
             </MenuItem>
@@ -95,7 +95,18 @@
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutDocumentPane>
                         <avalonDock:LayoutDocument x:Name="layoutDocument" Title="Fountain" CanClose="False">
-                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0">
+                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True">
+                                <avalonEdit:TextEditor.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="ApplicationCommands.Undo" Header="{DynamicResource Undo}"/>
+                                        <MenuItem Command="ApplicationCommands.Redo" Header="{DynamicResource Redo}"/>
+                                        <Separator/>
+                                        <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource Cut}"/>
+                                        <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource Copy}"/>
+                                        <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource Paste}"/>
+                                        <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource SelectAll}"/>
+                                    </ContextMenu>
+                                </avalonEdit:TextEditor.ContextMenu>
                                 <avalonEdit:TextEditor.Background>
                                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InfoTextColorKey}}"/>
                                 </avalonEdit:TextEditor.Background>

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GameStoryEdit.Resources.Style">
+                    xmlns:local="clr-namespace:GameStoryEdit">
     <Style x:Key="Exit_MenuItem" TargetType="MenuItem">
         <Setter Property="Header" Value="{DynamicResource Exit}"/>
         <Setter Property="Command" Value="{Binding Exit, Source={StaticResource Command}}"/>

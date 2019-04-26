@@ -24,4 +24,10 @@
     <sys:String x:Key="Page Preview">ページプレビュー</sys:String>
     <sys:String x:Key="Print">印刷</sys:String>
     <sys:String x:Key="Exit">終了</sys:String>
+    <sys:String x:Key="Cut">切り取り</sys:String>
+    <sys:String x:Key="Copy">コピー</sys:String>
+    <sys:String x:Key="Paste">貼り付け</sys:String>
+    <sys:String x:Key="SelectAll">すべて選択</sys:String>
+    <sys:String x:Key="Undo">元に戻す</sys:String>
+    <sys:String x:Key="Redo">やり直し</sys:String>
 </ResourceDictionary>
