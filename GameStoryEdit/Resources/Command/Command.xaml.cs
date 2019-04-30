@@ -11,13 +11,14 @@ namespace GameStoryEdit
     public partial class Command
     {
         public static ICommand Exit { get; } = new _Exit();
+
         private class _Exit : ICommand
         {
             public event EventHandler CanExecuteChanged;
             public bool CanExecute(object parameter) { return true; }
             public void Execute(object parameter)
             {
-                ((MainWindow)parameter).Close();
+                Application.Current.Shutdown();
             }
             public void RaiseCanExecuteChanged()
             {

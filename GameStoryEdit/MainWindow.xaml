@@ -95,7 +95,7 @@
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutDocumentPane>
                         <avalonDock:LayoutDocument x:Name="layoutDocument" Title="Fountain" CanClose="False">
-                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True">
+                            <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True" WordWrap="True">
                                 <avalonEdit:TextEditor.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="ApplicationCommands.Undo" Header="{DynamicResource Undo}"/>
@@ -114,6 +114,9 @@
                                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
                                 </avalonEdit:TextEditor.Foreground>
                             </avalonEdit:TextEditor>
+                        </avalonDock:LayoutDocument>
+                        <avalonDock:LayoutDocument Title="{DynamicResource Character}">
+                            <local:UserTable />
                         </avalonDock:LayoutDocument>
                     </avalonDock:LayoutDocumentPane>
                 </avalonDock:LayoutPanel>

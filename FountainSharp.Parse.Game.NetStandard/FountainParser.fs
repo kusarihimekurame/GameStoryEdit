@@ -280,7 +280,7 @@ let (|SceneHeading|_|) (ctx:ParsingContext) (input:string list) =
     let length = if tail.IsEmpty then NewLineLength else NewLineLength * 2 // check whether there is an empty line after the scene heading text
     match head with
     // look for normal heading
-    | String.StartsWithAnyCaseInsensitive [ "INT"; "EXT"; "EST"; "INT./EXT."; "INT/EXT"; "I/E" ] matching ->
+    | String.StartsWithAnyCaseInsensitive [ "INT"; "内景"; "屋内"; "EXT"; "外景"; "屋外"; "EST"; "INT./EXT."; "INT/EXT"; "I/E"; "内景/外景" ] matching ->
       let result = {
         Text = head;
         Length = first.Length + length + offset;

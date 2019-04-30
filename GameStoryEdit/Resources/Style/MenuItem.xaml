@@ -4,7 +4,7 @@
     <Style x:Key="Exit_MenuItem" TargetType="MenuItem">
         <Setter Property="Header" Value="{DynamicResource Exit}"/>
         <Setter Property="Command" Value="{Binding Exit, Source={StaticResource Command}}"/>
-        <Setter Property="CommandParameter" Value="{Binding ElementName=window}"/>
+        <Setter Property="InputGestureText" Value="Alt+F4"/>
     </Style>
     <Style x:Key="English_MenuItem" TargetType="MenuItem">
         <Setter Property="Header" Value="{DynamicResource English}"/>

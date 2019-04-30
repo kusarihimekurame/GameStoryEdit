@@ -8,7 +8,7 @@
   <Color name="Boneyard" foreground="#006400"/>
   <RuleSet>
     <Span color="Dialogue" multiline="true" ruleSet="Parenthetical">
-      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z# ,_\-'’]*)( \^?)?(\(.*\))*$</Begin>
+      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z ]*)( \^?)?(\(.*\))*$</Begin>
       <End>^ {2}$</End>
     </Span>
     <Span color="Boneyard" multiline="true">
@@ -19,7 +19,7 @@
     <Import ruleSet="Title"/>
   </RuleSet>
   <RuleSet name="SceneHeadings" ignoreCase="true">
-    <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|ext|est|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
+    <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|内景|屋内|ext|外景|屋外|est|INT\/EXT|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
   </RuleSet>
   <RuleSet name="Parenthetical">
     <Rule color="Parenthetical">^(\(.+\))$</Rule>
