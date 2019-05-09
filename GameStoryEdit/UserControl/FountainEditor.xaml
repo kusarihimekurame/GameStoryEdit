@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="GameStoryEdit.FountainEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GameStoryEdit"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True" WordWrap="True">
+            <avalonEdit:TextEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="ApplicationCommands.Undo" Header="{DynamicResource Undo}"/>
+                    <MenuItem Command="ApplicationCommands.Redo" Header="{DynamicResource Redo}"/>
+                    <Separator/>
+                    <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource Cut}"/>
+                    <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource Copy}"/>
+                    <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource Paste}"/>
+                    <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource SelectAll}"/>
+                </ContextMenu>
+            </avalonEdit:TextEditor.ContextMenu>
+            <avalonEdit:TextEditor.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.InfoTextColorKey}}"/>
+            </avalonEdit:TextEditor.Background>
+            <avalonEdit:TextEditor.Foreground>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+            </avalonEdit:TextEditor.Foreground>
+        </avalonEdit:TextEditor>
+    </Grid>
+</UserControl>

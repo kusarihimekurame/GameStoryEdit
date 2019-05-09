@@ -11,7 +11,7 @@ using Microsoft.FSharp.Collections;
 
 namespace GameStoryEdit
 {
-    class FountainGame
+    public class FountainGame
     {
         public FountainDocument Fountain { get; }
         public Blocks Blocks => new Blocks(Fountain.Blocks);
@@ -27,7 +27,7 @@ namespace GameStoryEdit
         }
     }
 
-    class Blocks
+    public class Blocks
     {
         public List<Action> Actions { get; }
         public List<Boneyard> Boneyards { get; }
@@ -119,7 +119,7 @@ namespace GameStoryEdit
             }
         }
     }
-    class SceneBlock : Blocks
+    public class SceneBlock : Blocks
     {
         public List<DialogueBlock> DialogueBlocks => GetDialogueBlocks();
         public Range Range { get; }
@@ -129,7 +129,7 @@ namespace GameStoryEdit
         }
     }
 
-    class DialogueBlock : Blocks
+    public class DialogueBlock : Blocks
     {
         public Range Range { get; }
         public DialogueBlock(FSharpList<FountainBlockElement> blocks) : base(blocks)
@@ -138,7 +138,7 @@ namespace GameStoryEdit
         }
     }
 
-    class Action
+    public class Action
     {
         public bool Forced { get; }
         public Spans Spans { get; }
@@ -152,7 +152,7 @@ namespace GameStoryEdit
             Range = FSharpAction.Item3;
         }
     }
-    class Boneyard
+    public class Boneyard
     {
         public string Text { get; }
         public Range Range { get; }
@@ -164,7 +164,7 @@ namespace GameStoryEdit
             Range = FSharpBoneyard.Item2;
         }
     }
-    class Centered
+    public class Centered
     {
         public Spans Spans { get; }
         public Range Range { get; }
@@ -176,7 +176,7 @@ namespace GameStoryEdit
             Range = FSharpCentered.Item2;
         }
     }
-    class Character
+    public class Character
     {
         public bool Forced { get; }
         public bool Primary { get; }
@@ -192,7 +192,7 @@ namespace GameStoryEdit
             Range = FSharpCharacter.Item4;
         }
     }
-    class Dialogue
+    public class Dialogue
     {
         public Spans Spans { get; }
         public Range Range { get; }
@@ -204,7 +204,7 @@ namespace GameStoryEdit
             Range = FSharpDialogue.Item2;
         }
     }
-    class DualDialogue
+    public class DualDialogue
     {
         public Blocks Blocks { get; }
         public Range Range { get; }
@@ -216,7 +216,7 @@ namespace GameStoryEdit
             Range = FSharpDualDialogue.Item2;
         }
     }
-    class Lyrics
+    public class Lyrics
     {
         public Spans Spans { get; }
         public Range Range { get; }
@@ -228,7 +228,7 @@ namespace GameStoryEdit
             Range = FSharpLyrics.Item2;
         }
     }
-    class PageBreak
+    public class PageBreak
     {
         public Range Range { get; }
         public FountainBlockElement.PageBreak FSharpPageBreak { get; }
@@ -238,7 +238,7 @@ namespace GameStoryEdit
             Range = FSharpPageBreak.Item;
         }
     }
-    class Parenthetical
+    public class Parenthetical
     {
         public Spans Spans { get; }
         public Range Range { get; }
@@ -250,7 +250,7 @@ namespace GameStoryEdit
             Range = FSarpParenthetical.Item2;
         }
     }
-    class SceneHeading
+    public class SceneHeading
     {
         public bool Forced { get; }
         public Spans Spans { get; }
@@ -264,7 +264,7 @@ namespace GameStoryEdit
             Range = FSharpSceneHeading.Item3;
         }
     }
-    class Section
+    public class Section
     {
         public int N { get; }
         public Spans Spans { get; }
@@ -278,7 +278,7 @@ namespace GameStoryEdit
             Range = FSharpSection.Item3;
         }
     }
-    class Synopses
+    public class Synopses
     {
         public Spans Spans { get; }
         public Range Range { get; }
@@ -290,7 +290,7 @@ namespace GameStoryEdit
             Range = FSharpSynopses.Item2;
         }
     }
-    class TitlePage
+    public class TitlePage
     {
         public List<KeyValuePair> KeyValuePairs { get; }
         public Range Range { get; }
@@ -320,7 +320,7 @@ namespace GameStoryEdit
             }
         }
     }
-    class Transition
+    public class Transition
     {
         public bool Forced { get; }
         public Spans Spans { get; }
@@ -335,7 +335,7 @@ namespace GameStoryEdit
         }
     }
 
-    class Spans
+    public class Spans
     {
         public List<Note> Notes { get; }
         public List<Literal> Literals { get; }
