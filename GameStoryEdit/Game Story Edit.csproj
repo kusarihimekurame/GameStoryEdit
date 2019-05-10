@@ -78,6 +78,9 @@
     <Compile Include="UserControl\UserTable.xaml.cs">
       <DependentUpon>UserTable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\New.xaml.cs">
+      <DependentUpon>New.xaml</DependentUpon>
+    </Compile>
     <Page Include="Command\Command.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\UserTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\New.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

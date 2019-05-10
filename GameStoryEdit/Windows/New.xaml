@@ -1,0 +1,15 @@
+﻿<Window x:Class="GameStoryEdit.Windows.New"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameStoryEdit.Windows"
+        mc:Ignorable="d"
+        Height="450" Width="800" ShowInTaskbar="False" ResizeMode="NoResize" Visibility="Visible" WindowStyle="None">
+    <Window.Background>
+        <SolidColorBrush Color="#FF434343"/>
+    </Window.Background>
+    <Grid Background="#FF3F3F46">
+        
+    </Grid>
+</Window>
