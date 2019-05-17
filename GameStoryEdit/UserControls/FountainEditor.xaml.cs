@@ -24,7 +24,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 
-namespace GameStoryEdit
+namespace GameStoryEdit.UserControls
 {
     /// <summary>
     /// TextEditor.xaml 的交互逻辑

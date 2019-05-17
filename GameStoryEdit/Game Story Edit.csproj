@@ -72,16 +72,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserControl\FountainEditor.xaml.cs">
+    <Compile Include="Commands\MainWindow_InputBindings.cs" />
+    <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\UserTable.xaml.cs">
+    <Compile Include="UserControls\UserTable.xaml.cs">
       <DependentUpon>UserTable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\New.xaml.cs">
+    <Compile Include="Dialogs\New.xaml.cs">
       <DependentUpon>New.xaml</DependentUpon>
     </Compile>
-    <Page Include="Command\Command.xaml">
+    <Page Include="Commands\Command.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,7 +99,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FountainGame.cs" />
-    <Compile Include="Command\Command.xaml.cs">
+    <Compile Include="Commands\Command.xaml.cs">
       <DependentUpon>Command.xaml</DependentUpon>
     </Compile>
     <Compile Include="Language\Languages.xaml.cs">
@@ -120,19 +121,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Style\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\FountainEditor.xaml">
+    <Page Include="UserControls\FountainEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\UserTable.xaml">
+    <Page Include="UserControls\UserTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\New.xaml">
+    <Page Include="Dialogs\New.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,8 +196,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FountainSharp.Parse.Game.NetStandard\FountainSharp.Parse.NetStandard.fsproj">
-      <Project>{8612992c-147b-42d1-a19d-b27e46e531e8}</Project>
+    <ProjectReference Include="..\FountainSharp.Parse.NetStandard\FountainSharp.Parse.NetStandard.fsproj">
+      <Project>{94e2b0f0-45f7-4f74-b41a-9eeb417aa108}</Project>
       <Name>FountainSharp.Parse.NetStandard</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xceed.Wpf.AvalonDock\Xceed.Wpf.AvalonDock.csproj">

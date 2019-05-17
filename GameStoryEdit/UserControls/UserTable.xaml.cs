@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GameStoryEdit
+namespace GameStoryEdit.UserControls
 {
     /// <summary>
     /// Character_Table.xaml 的交互逻辑
