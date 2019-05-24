@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace GameStoryEdit.Commands
 {
@@ -14,6 +15,7 @@ namespace GameStoryEdit.Commands
     {
         public static ICommand Exit { get; } = new _Exit();
         public static ICommand NewDialog { get; } = new _NewDialog();
+        public static ICommand OpenDialog { get; } = new _OpenDialog();
         public static ICommand Close { get; set; } = new _Close();
 
         private class _Exit : ICommand
@@ -51,6 +53,22 @@ namespace GameStoryEdit.Commands
                         else if (button.Content.ToString() == "下一步") tabControl.SelectedIndex += 1;
                         else tabControl.SelectedIndex = 1;
                 }
+            }
+            public void RaiseCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private class _OpenDialog : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter) { return true; }
+            public void Execute(object parameter)
+            {
+                TextBox tb = parameter as TextBox;
+                CommonOpenFileDialog FileDialog = new CommonOpenFileDialog("项目位置") { IsFolderPicker = true, DefaultDirectory = tb.Text };
+                if (FileDialog.ShowDialog(Window.GetWindow(parameter as TextBox)) == CommonFileDialogResult.Ok) tb.Text = FileDialog.FileName;
             }
             public void RaiseCanExecuteChanged()
             {

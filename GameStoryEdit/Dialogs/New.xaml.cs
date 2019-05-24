@@ -23,5 +23,32 @@ namespace GameStoryEdit.Dialogs
         {
             InitializeComponent();
         }
+
+        bool Text_Equals;
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            Text_Equals = tb.Text.Equals(GameName.Text);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Text_Equals) GameName.Text = (sender as TextBox).Text;
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) DragMove();
+        }
+
+        private void Button_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ((Control)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF007ACC"));
+        }
+
+        private void Button_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ((Control)sender).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF333337"));
+        }
     }
 }

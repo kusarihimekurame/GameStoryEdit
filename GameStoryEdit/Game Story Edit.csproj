@@ -182,6 +182,9 @@
     <PackageReference Include="itextsharp.xmlworker">
       <Version>5.5.13</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell">
+      <Version>1.1.3.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
