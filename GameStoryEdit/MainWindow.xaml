@@ -70,7 +70,7 @@
         </Grid>
         <avalonDock:DockingManager x:Name="dockingManager">
             <avalonDock:LayoutRoot>
-                <avalonDock:LayoutPanel x:Name="LayoutPanel">
+                <avalonDock:LayoutPanel>
                     <avalonDock:LayoutAnchorablePane DockWidth="200">
                         <avalonDock:LayoutAnchorable Title="Manager" ContentId="Manager">
                             <TabControl Margin="0,4,0,0">

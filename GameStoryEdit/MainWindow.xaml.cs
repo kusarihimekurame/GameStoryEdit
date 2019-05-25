@@ -18,6 +18,7 @@ namespace GameStoryEdit
         FountainEditor FountainEditor => LayoutDocumentPane.SelectedContent.Content as FountainEditor;
         FountainGame FountainGame => FountainEditor.FountainGame;
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
+        LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
 
         public MainWindow()

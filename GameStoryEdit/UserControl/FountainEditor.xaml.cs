@@ -49,18 +49,18 @@ namespace GameStoryEdit
         private FountainGame fountainGame;
         private async Task<FountainGame> FountainGameAsync(string Text) => await Task.Run(() => new FountainGame(Text));
 
+        private DispatcherTimer Timer = new DispatcherTimer();
+
         public FountainEditor()
         {
             InitializeComponent();
 
-            DispatcherTimer Timer = new DispatcherTimer();
             Timer.Tick += (sender, e) =>
             {
                 Languages.languages.SetTextLocation(textEditor.Document.GetLocation(textEditor.SelectionStart + textEditor.SelectionLength));
                 Languages.languages.SetLines(textEditor.LineCount);
                 Languages.languages.SetCharacters(textEditor.Document.TextLength);
             };
-            if (Parent != null) Timer.Start();
 
             using (XmlReader reader = XmlReader.Create(Assembly.GetExecutingAssembly().GetManifestResourceStream("GameStoryEdit.HighLighting.Fountain-Mode.xshd")))
             {
@@ -108,6 +108,11 @@ namespace GameStoryEdit
             textReader.Close();
 
             #endregion
+        }
+
+        private void TextEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Parent != null) Timer.Start();
         }
     }
 }
