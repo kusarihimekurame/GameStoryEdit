@@ -12,6 +12,7 @@
     <sys:String x:Key="Japanese">Japanese</sys:String>
     <sys:String x:Key="File">File</sys:String>
     <sys:String x:Key="New">New</sys:String>
+    <sys:String x:Key="Project">Project</sys:String>
     <sys:String x:Key="Open">Open</sys:String>
     <sys:String x:Key="Close">Close</sys:String>
     <sys:String x:Key="Save">Save</sys:String>

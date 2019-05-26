@@ -12,7 +12,9 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource File}">
-                <MenuItem Header="{DynamicResource New}"/>
+                <MenuItem Header="{DynamicResource New}">
+                    <MenuItem Style="{DynamicResource Project_MenuItem}"/>
+                </MenuItem>
                 <MenuItem Header="{DynamicResource Open}"/>
                 <MenuItem Header="{DynamicResource Close}"/>
                 <Separator/>
@@ -30,8 +32,8 @@
                 <Separator/>
                 <MenuItem Style="{DynamicResource Exit_MenuItem}"/>
             </MenuItem>
-            <MenuItem Header="Edit"></MenuItem>
-            <MenuItem Header="View"></MenuItem>
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="View"/>
             <MenuItem Header="About">
                 <MenuItem Header="{DynamicResource Language}">
                     <MenuItem Style="{DynamicResource English_MenuItem}" />
@@ -75,14 +77,14 @@
                         <avalonDock:LayoutAnchorable Title="Manager" ContentId="Manager">
                             <TabControl Margin="0,4,0,0">
                                 <TabItem Header="{DynamicResource SceneHeading}">
-                                    <ListBox x:Name="SceneHeadingListBox" SelectionChanged="SceneHeadingListBox_SelectionChanged"></ListBox>
+                                    <ListBox x:Name="SceneHeadingListBox" SelectionChanged="SceneHeadingListBox_SelectionChanged"/>
                                 </TabItem>
                                 <TabItem Header="{DynamicResource Character}">
                                     <ListBox x:Name="CharactersListBox">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
-                                                    <TextBlock Text="{Binding Path=Text}" HorizontalAlignment="Left"></TextBlock>
+                                                    <TextBlock Text="{Binding Text}" HorizontalAlignment="Left"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -91,9 +93,7 @@
                             </TabControl>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutDocumentPane>
-                        
-                    </avalonDock:LayoutDocumentPane>
+                    <avalonDock:LayoutDocumentPane/>
                     <avalonDock:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Solution Explorer" ContentId="Solution Explorer">
@@ -103,16 +103,16 @@
                                             <TreeViewItem Header="Documents" x:Name="Documents">
                                                 <TreeViewItem x:Name="ScreenPlay1" Header="ScreenPlay1" MouseLeftButtonUp="TreeViewItem_MouseLeftButtonUp" MouseDoubleClick="TreeViewItem_MouseDoubleClick"/>
                                             </TreeViewItem>
-                                            <TreeViewItem Header="Flow"></TreeViewItem>
+                                            <TreeViewItem Header="Flow"/>
                                             <TreeViewItem Header="Locations" x:Name="Locations"/>
                                             <TreeViewItem Header="Tables">
                                                 <TreeViewItem Header="Characters" x:Name="Characters"/>
                                             </TreeViewItem>
                                             <TreeViewItem Header="Assets">
-                                                <TreeViewItem Header="Audio"></TreeViewItem>
-                                                <TreeViewItem Header="Documents"></TreeViewItem>
-                                                <TreeViewItem Header="Images"></TreeViewItem>
-                                                <TreeViewItem Header="Videos"></TreeViewItem>
+                                                <TreeViewItem Header="Audio"/>
+                                                <TreeViewItem Header="Documents"/>
+                                                <TreeViewItem Header="Images"/>
+                                                <TreeViewItem Header="Videos"/>
                                             </TreeViewItem>
                                         </TreeViewItem>
                                     </TreeViewItem>
@@ -126,20 +126,6 @@
                         </avalonDock:LayoutAnchorablePane>
                     </avalonDock:LayoutAnchorablePaneGroup>
                 </avalonDock:LayoutPanel>
-                <avalonDock:LayoutRoot.LeftSide>
-                    <avalonDock:LayoutAnchorSide>
-                        <avalonDock:LayoutAnchorGroup>
-                            
-                        </avalonDock:LayoutAnchorGroup>
-                    </avalonDock:LayoutAnchorSide>
-                </avalonDock:LayoutRoot.LeftSide>
-                <avalonDock:LayoutRoot.RightSide>
-                    <avalonDock:LayoutAnchorSide>
-                        <avalonDock:LayoutAnchorGroup>
-
-                        </avalonDock:LayoutAnchorGroup>
-                    </avalonDock:LayoutAnchorSide>
-                </avalonDock:LayoutRoot.RightSide>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
     </DockPanel>

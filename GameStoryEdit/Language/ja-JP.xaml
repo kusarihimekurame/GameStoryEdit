@@ -11,7 +11,8 @@
     <sys:String x:Key="Chinese(simplified)">中国語(簡体字)</sys:String>
     <sys:String x:Key="Japanese">日本語</sys:String>
     <sys:String x:Key="File">ファイル</sys:String>
-    <sys:String x:Key="New">新規ファイル</sys:String>
+    <sys:String x:Key="New">新規作成</sys:String>
+    <sys:String x:Key="Project">プロジェクト</sys:String>
     <sys:String x:Key="Open">ファイルを開く</sys:String>
     <sys:String x:Key="Close">ファイルを閉じる</sys:String>
     <sys:String x:Key="Save">保存</sys:String>

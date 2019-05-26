@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+﻿using GameStoryEdit.Commands;
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace GameStoryEdit
 {
@@ -17,6 +15,11 @@ namespace GameStoryEdit
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Languages.languages.SetLanguage(CultureInfo.CurrentCulture);
+        }
+        
+        private void Application_Activated(object sender, EventArgs e)
+        {
+            MainWindow_InputBindings.Add();
         }
     }
 }
