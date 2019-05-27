@@ -71,6 +71,9 @@
             </StatusBar>
         </Grid>
         <avalonDock:DockingManager x:Name="dockingManager">
+            <avalonDock:DockingManager.Theme>
+                <avalonDock:GenericTheme/>
+            </avalonDock:DockingManager.Theme>
             <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel>
                     <avalonDock:LayoutAnchorablePane DockWidth="200">
