@@ -30,7 +30,7 @@
                     <Label Content="打开最近项" Foreground="White" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,3.6,0,0" FontSize="22" TextOptions.TextFormattingMode="Display"/>
                     <ListBox Background="#FF252526" Grid.Row="1" Margin="50,50,30.4,50"></ListBox>
                     <Label Content="开始使用" Foreground="White" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" TextOptions.TextFormattingMode="Display"/>
-                    <Button TextOptions.TextFormattingMode="Display" Content="打开项目" FontSize="20" Height="50" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0.6,50,50,0" Style="{DynamicResource Button_Big_Black}" GotFocus="Button_GotFocus" LostFocus="Button_LostFocus"/>
+                    <Button TextOptions.TextFormattingMode="Display" Content="打开项目" FontSize="20" Height="50" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0.6,50,50,0" Style="{DynamicResource Button_Big_Black}" GotFocus="Button_GotFocus" LostFocus="Button_LostFocus" Command="{Binding Open, Mode=OneWay, Source={StaticResource Command}}"/>
                     <Button TextOptions.TextFormattingMode="Display" Content="创建新项目" FontSize="20" Height="50" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0.6,110,50,0" Style="{DynamicResource Button_Big_Black}" GotFocus="Button_GotFocus" LostFocus="Button_LostFocus" Command="{Binding NewDialog, Mode=OneWay, Source={StaticResource Command}}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
                 </Grid>
             </TabItem>
@@ -42,14 +42,14 @@
                     </Grid.RowDefinitions>
                     <Label Content="配置新项目" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" FontSize="36" Height="56" Margin="50,0,0,10.2" Width="315"/>
                     <Label Content="项目名称" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,60,0,10.2" Width="315"/>
-                    <TextBox Foreground="White" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,90,300,10" Background="#FF333337" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    <TextBox x:Name="ProjectName" Foreground="White" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,90,300,10" Background="#FF333337" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged" PreviewTextInput="TextBox_PreviewTextInput"/>
                     <Label Content="位置" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,130,0,10.2" Width="315"/>
-                    <TextBox x:Name="textBox" Foreground="White" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,160,300,10" Background="#FF333337" VerticalContentAlignment="Center"/>
-                    <Button Height="30" VerticalAlignment="Top" Margin="503,160,260,10" Content="..." Style="{DynamicResource Button_Small_Black}" Command="{Binding OpenDialog, Mode=OneWay, Source={StaticResource Command}}" CommandParameter="{Binding ElementName=textBox, Mode=OneWay}"/>
+                    <TextBox x:Name="Path" Foreground="White" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,160,300,10" Background="#FF333337" VerticalContentAlignment="Center"/>
+                    <Button Height="30" VerticalAlignment="Top" Margin="503,160,260,10" Content="..." Style="{DynamicResource Button_Small_Black}" Command="{Binding OpenDialog, Mode=OneWay, Source={StaticResource Command}}" CommandParameter="{Binding ElementName=Path, Mode=OneWay}"/>
                     <Label Content="游戏名称" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,200,0,10.2" Width="315"/>
                     <TextBox x:Name="GameName" Foreground="White" VerticalAlignment="Top" TextOptions.TextFormattingMode="Display" Height="30" Margin="50,230,300,10" Background="#FF333337" VerticalContentAlignment="Center"/>
                     <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Height="25" Margin="0,0,140,0" Content="上一步" Style="{DynamicResource Button_Small_Black}" Command="{Binding NewDialog, Mode=OneWay, Source={StaticResource Command}}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>
-                    <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Height="25" Margin="0,0,50,0" Content="创建" Style="{DynamicResource Button_Small_Black}" IsDefault="True"/>
+                    <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Height="25" Margin="0,0,50,0" Content="创建" Style="{DynamicResource Button_Small_Black}" IsDefault="True" Click="Button_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Xml;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
+using GameStoryEdit.Date;
 
 namespace GameStoryEdit
 {
@@ -21,22 +22,23 @@ namespace GameStoryEdit
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
+        ProjectPath ProjectPath;
 
-        public MainWindow()
+        public MainWindow(ProjectPath pp)
         {
             InitializeComponent();
 
+            ProjectPath = pp;
             LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor" };
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
-            LayoutDocumentPane.Children.Add(ld);
+            //LayoutDocumentPane.Children.Add(ld);
 
-            if (File.Exists(@".gse\Layout.xml"))
-                using (XmlReader Reader = XmlReader.Create(@".gse\Layout.xml"))
-                {
-                    serializer.Deserialize(Reader);
-                }
+            using (XmlReader Reader = XmlReader.Create(pp.ProjectFile))
+            {
+                if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
+            }
 
-            LayoutDocumentPane.Children.Remove(ld);
+            //LayoutDocumentPane.Children.Remove(ld);
         }
 
         private void Add_Html(object sender, RoutedEventArgs e)
@@ -83,8 +85,7 @@ namespace GameStoryEdit
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!Directory.Exists(".gse")) Directory.CreateDirectory(".gse").Attributes = FileAttributes.Hidden;
-            using (var stream = new StreamWriter(@".gse\Layout.xml"))
+            using (StreamWriter stream = new StreamWriter(ProjectPath.ProjectFile))
             {
                 serializer.Serialize(stream);
             }
@@ -107,6 +108,11 @@ namespace GameStoryEdit
             SceneHeadingListBox.ItemsSource = SceneHeadings;
 
             #endregion
+        }
+
+        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow = this;
         }
     }
 }

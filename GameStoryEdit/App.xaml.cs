@@ -4,6 +4,7 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using GameStoryEdit.Dialogs;
 
 namespace GameStoryEdit
 {
@@ -15,6 +16,7 @@ namespace GameStoryEdit
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Languages.languages.SetLanguage(CultureInfo.CurrentCulture);
+            new New().ShowDialog();
         }
         
         private void Application_Activated(object sender, EventArgs e)

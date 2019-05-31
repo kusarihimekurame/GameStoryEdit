@@ -1,4 +1,4 @@
-﻿<Window x:Name="window" x:Class="GameStoryEdit.MainWindow"
+﻿<Window xmlns:UserControls="clr-namespace:GameStoryEdit.UserControls"  x:Name="window" x:Class="GameStoryEdit.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,7 @@
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="FountainGame" Height="616.35" Width="983.2">
+        Title="FountainGame" Height="616.35" Width="983.2" GotFocus="Window_GotFocus">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource File}">
@@ -96,7 +96,11 @@
                             </TabControl>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutDocumentPane/>
+                    <avalonDock:LayoutDocumentPane>
+                        <avalonDock:LayoutDocument ContentId="FountainEditor" Title="{Binding Header, ElementName=ScreenPlay1}">
+                            <UserControls:FountainEditor/>
+                        </avalonDock:LayoutDocument>
+                    </avalonDock:LayoutDocumentPane>
                     <avalonDock:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Solution Explorer" ContentId="Solution Explorer">

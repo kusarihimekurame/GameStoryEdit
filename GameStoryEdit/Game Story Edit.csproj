@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
+    <Compile Include="Date\Path.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>
     </Compile>

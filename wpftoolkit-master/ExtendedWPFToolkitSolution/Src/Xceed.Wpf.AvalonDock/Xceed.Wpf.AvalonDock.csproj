@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DB81988F-E0F2-45A0-A1FD-8C37F3D35244}</ProjectGuid>
+    <ProjectGuid>{87403A5A-5E98-4DF3-831A-DC4294CBF5C3}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xceed.Wpf.AvalonDock</RootNamespace>
