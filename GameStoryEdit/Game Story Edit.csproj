@@ -204,17 +204,9 @@
       <Project>{868e53a6-a845-4c59-ae23-69ed266890d1}</Project>
       <Name>FountainSharp.Parse.NetStandard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\wpftoolkit-master\ExtendedWPFToolkitSolution\Src\Xceed.Wpf.AvalonDock.Themes.Aero\Xceed.Wpf.AvalonDock.Themes.Aero.csproj">
-      <Project>{ba72cce0-a9fb-4995-b496-7fec5c87b85b}</Project>
-      <Name>Xceed.Wpf.AvalonDock.Themes.Aero</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\wpftoolkit-master\ExtendedWPFToolkitSolution\Src\Xceed.Wpf.AvalonDock.Themes.Metro\Xceed.Wpf.AvalonDock.Themes.Metro.csproj">
-      <Project>{89286eb4-b4a1-418c-839a-067b00f442d8}</Project>
-      <Name>Xceed.Wpf.AvalonDock.Themes.Metro</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\wpftoolkit-master\ExtendedWPFToolkitSolution\Src\Xceed.Wpf.AvalonDock.Themes.VS2010\Xceed.Wpf.AvalonDock.Themes.VS2010.csproj">
-      <Project>{b3fc3e21-5f2d-4581-aea2-59f671cffc21}</Project>
-      <Name>Xceed.Wpf.AvalonDock.Themes.VS2010</Name>
+    <ProjectReference Include="..\wpftoolkit-master\ExtendedWPFToolkitSolution\Src\Xceed.Wpf.AvalonDock\Xceed.Wpf.AvalonDock.csproj">
+      <Project>{87403a5a-5e98-4df3-831a-dc4294cbf5c3}</Project>
+      <Name>Xceed.Wpf.AvalonDock</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
