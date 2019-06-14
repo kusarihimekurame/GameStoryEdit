@@ -104,7 +104,8 @@
                     <avalonDock:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Solution Explorer" ContentId="Solution Explorer">
-                                <TreeView x:Name="TreeView">
+                                <UserControls:TreeView/>
+                                <!--<TreeView x:Name="TreeView">
                                     <TreeViewItem Header="Solution''(1 projects)" IsExpanded="True">
                                         <TreeViewItem Header="Projects" IsExpanded="True">
                                             <TreeViewItem Header="Documents" x:Name="Documents">
@@ -123,7 +124,7 @@
                                             </TreeViewItem>
                                         </TreeViewItem>
                                     </TreeViewItem>
-                                </TreeView>
+                                </TreeView>-->
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorablePane>
                         <avalonDock:LayoutAnchorablePane>

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameStoryEdit.Date
+namespace GameStoryEdit.TreeData
 {
-    public class ProjectPath
+    public class SolutionPath
     {
         public string ProjectDirectory { get; set; }
         public string ProjectFile { get; set; }
@@ -15,5 +15,10 @@ namespace GameStoryEdit.Date
         public List<string> GameDirectory { get; set; }
         public List<string> GameFile { get; set; }
         public List<string> GameName => GameFile.Select(s => Path.GetFileNameWithoutExtension(s)).ToList();
+    }
+
+    public class SolutionName
+    {
+
     }
 }

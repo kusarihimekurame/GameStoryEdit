@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using GameStoryEdit.Date;
+using GameStoryEdit.TreeData;
 
 namespace GameStoryEdit.Dialogs
 {
@@ -54,12 +54,12 @@ namespace GameStoryEdit.Dialogs
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            Text_Equals = tb.Text.Equals(GameName.Text);
+            Text_Equals = tb.Text.Equals(SolutionName.Text);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Text_Equals) GameName.Text = (sender as TextBox).Text;
+            if (Text_Equals) SolutionName.Text = (sender as TextBox).Text;
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -81,9 +81,9 @@ namespace GameStoryEdit.Dialogs
         {
             string ProjectDirectory = path + @"\" + ProjectName.Text;
             string ProjectFile = ProjectDirectory + @"\" + ProjectName.Text + ".gse";
-            List<string> GameDirectory = new List<string>() { ProjectDirectory + @"\" + GameName.Text };
-            List<string> GameFile = new List<string>() { GameDirectory + @"\" + GameName.Text + ".GameStory" };
-            ProjectPath = new ProjectPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
+            List<string> GameDirectory = new List<string>() { ProjectDirectory + @"\" + SolutionName.Text };
+            List<string> GameFile = new List<string>() { GameDirectory[0] + @"\" + SolutionName.Text + ".GameStory" };
+            ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
 
             Directory.CreateDirectory(ProjectPath.ProjectDirectory);
             File.Create(ProjectPath.ProjectFile).Close();
@@ -94,6 +94,6 @@ namespace GameStoryEdit.Dialogs
             Application.Current.MainWindow.Show();
             Close();
         }
-        public ProjectPath ProjectPath { get; private set; }
+        public SolutionPath ProjectPath { get; private set; }
     }
 }

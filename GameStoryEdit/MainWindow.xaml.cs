@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Xml;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
-using GameStoryEdit.Date;
+using GameStoryEdit.TreeData;
 
 namespace GameStoryEdit
 {
@@ -22,9 +22,9 @@ namespace GameStoryEdit
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
-        ProjectPath ProjectPath;
+        SolutionPath ProjectPath;
 
-        public MainWindow(ProjectPath pp)
+        public MainWindow(SolutionPath pp)
         {
             InitializeComponent();
 

@@ -1,4 +1,4 @@
-﻿using GameStoryEdit.Date;
+﻿using GameStoryEdit.TreeData;
 using GameStoryEdit.Dialogs;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -82,7 +82,7 @@ namespace GameStoryEdit.Commands
                     DirectoryInfo dir = new DirectoryInfo(ProjectDirectory);
                     FileSystemInfo[] files = dir.GetFileSystemInfos("*.GameStory", SearchOption.AllDirectories);
                     files.Cast<FileInfo>().ToList().ForEach(f => { GameDirectory.Add(f.DirectoryName); GameFile.Add(f.FullName); });
-                    ProjectPath ProjectPath = new ProjectPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
+                    SolutionPath ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
 
                     Application.Current.MainWindow = new MainWindow(ProjectPath);
                     Application.Current.MainWindow.Show();

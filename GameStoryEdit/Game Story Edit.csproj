@@ -73,9 +73,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
-    <Compile Include="Date\Path.cs" />
+    <Compile Include="TreeData\TreeData.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TreeView.xaml.cs">
+      <DependentUpon>TreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UserTable.xaml.cs">
       <DependentUpon>UserTable.xaml</DependentUpon>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\FountainEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
