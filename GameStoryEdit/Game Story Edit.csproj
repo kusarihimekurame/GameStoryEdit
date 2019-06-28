@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
     <Compile Include="TreeData\TreeData.cs" />
+    <Compile Include="TreeData\TreeViewItemViewModel.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>
     </Compile>
