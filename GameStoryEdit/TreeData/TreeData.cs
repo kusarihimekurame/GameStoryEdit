@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
+using System.Xml.Serialization;
 
 namespace GameStoryEdit.TreeData
 {
@@ -21,24 +23,38 @@ namespace GameStoryEdit.TreeData
 
     public interface ITreeItem
     {
+        [XmlAttribute("Name")]
         string Name { get; set; }
+        [XmlAttribute("Path")]
         string Path { get; set; }
+        [XmlIgnore]
         ITreeItem Parent { get; }
-        IList<ITreeItem> Children { get; }
+        IEnumerable<ITreeItem> Children { get; }
     }
+
+    [Serializable]
+    [XmlInclude(typeof(Project))]
     public class Solution : ITreeItem
     {
+        [XmlElement("Name")]
         public string Name { get; set; }
+        [XmlElement("Path")]
         public string Path { get; set; }
+        [XmlIgnore]
         public ITreeItem Parent { get; } = null;
-        public IList<ITreeItem> Children { get; } = new List<ITreeItem>();
+        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
     }
+
+    [Serializable]
     public class Project : ITreeItem
     {
+        [XmlElement("Name")]
         public string Name { get; set; }
+        [XmlElement("Path")]
         public string Path { get; set; }
-        public ITreeItem Parent { get; }
-        public IList<ITreeItem> Children { get; } = new List<ITreeItem>();
+        [XmlIgnore]
+        public ITreeItem Parent { get; set; }
+        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
     }
 
     public class SolutionViewModel : TreeViewItemViewModel

@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
 using GameStoryEdit.TreeData;
 
 namespace GameStoryEdit.Dialogs
@@ -84,6 +86,19 @@ namespace GameStoryEdit.Dialogs
             List<string> GameDirectory = new List<string>() { ProjectDirectory + @"\" + SolutionName.Text };
             List<string> GameFile = new List<string>() { GameDirectory[0] + @"\" + SolutionName.Text + ".GameStory" };
             ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
+
+            Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
+            solution.Children.Add(new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text, Parent = solution });
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Solution));
+            using (StreamWriter stream = new StreamWriter(solution.Path + "123456"))
+            {
+                serializer.Serialize(stream, solution);
+            }
+            using (XmlReader Reader = XmlReader.Create(solution.Path + "123456"))
+            {
+                var a = serializer.Deserialize(Reader);
+            }
 
             Directory.CreateDirectory(ProjectPath.ProjectDirectory);
             File.Create(ProjectPath.ProjectFile).Close();
