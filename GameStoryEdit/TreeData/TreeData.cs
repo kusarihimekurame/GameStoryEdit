@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace GameStoryEdit.TreeData
@@ -19,6 +20,29 @@ namespace GameStoryEdit.TreeData
         public List<string> GameDirectory { get; set; }
         public List<string> GameFile { get; set; }
         public List<string> GameName => GameFile.Select(s => Path.GetFileNameWithoutExtension(s)).ToList();
+    }
+
+    public class TreeRoot : ITreeItem,IXmlSerializable
+    {
+        [XmlElement("Name")]
+        public string Name { get; set; }
+        [XmlElement("Path")]
+        public string Path { get; set; }
+        [XmlIgnore]
+        public ITreeItem Parent { get; } = null;
+        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+        public void ReadXml(XmlReader reader)
+        { }
+        public void WriteXml(XmlWriter writer)
+        {
+            //writer.WriteElementString("k0", k0.ToString());
+            //writer.WriteElementString("k1", k1.ToString());
+            //writer.WriteElementString("k2", k2.ToString());
+        }
     }
 
     public interface ITreeItem
@@ -34,7 +58,7 @@ namespace GameStoryEdit.TreeData
 
     [Serializable]
     [XmlInclude(typeof(Project))]
-    public class Solution : ITreeItem
+    public abstract class Solution : ITreeItem
     {
         [XmlElement("Name")]
         public string Name { get; set; }
@@ -42,18 +66,28 @@ namespace GameStoryEdit.TreeData
         public string Path { get; set; }
         [XmlIgnore]
         public ITreeItem Parent { get; } = null;
-        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
+        public abstract IEnumerable<ITreeItem> Children { get; }
     }
 
     [Serializable]
     public class Project : ITreeItem
     {
+        private ITreeItem parent;
+
         [XmlElement("Name")]
         public string Name { get; set; }
         [XmlElement("Path")]
         public string Path { get; set; }
         [XmlIgnore]
-        public ITreeItem Parent { get; set; }
+        public ITreeItem Parent
+        {
+            get => parent;
+            set
+            {
+                parent = value;
+                parent.Children.Add(this);
+            }
+        }
         public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
     }
 

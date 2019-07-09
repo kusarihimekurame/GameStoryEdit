@@ -88,7 +88,7 @@ namespace GameStoryEdit.Dialogs
             ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
 
             Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
-            solution.Children.Add(new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text, Parent = solution });
+            Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text, Parent = solution };
 
             XmlSerializer serializer = new XmlSerializer(typeof(Solution));
             using (StreamWriter stream = new StreamWriter(solution.Path + "123456"))
