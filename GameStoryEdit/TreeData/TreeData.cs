@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace GameStoryEdit.TreeData
@@ -22,7 +23,8 @@ namespace GameStoryEdit.TreeData
         public List<string> GameName => GameFile.Select(s => Path.GetFileNameWithoutExtension(s)).ToList();
     }
 
-    public class TreeRoot : ITreeItem,IXmlSerializable
+    [Serializable]
+    public class TreeRoot : ITreeItem, IXmlSerializable
     {
         [XmlElement("Name")]
         public string Name { get; set; }
@@ -31,7 +33,7 @@ namespace GameStoryEdit.TreeData
         [XmlIgnore]
         public ITreeItem Parent { get; } = null;
         public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
-        public System.Xml.Schema.XmlSchema GetSchema()
+        public XmlSchema GetSchema()
         {
             return null;
         }
@@ -85,7 +87,7 @@ namespace GameStoryEdit.TreeData
             set
             {
                 parent = value;
-                parent.Children.Add(this);
+                //parent.Children.Add(this);
             }
         }
         public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
