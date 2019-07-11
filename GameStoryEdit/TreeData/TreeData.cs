@@ -23,30 +23,6 @@ namespace GameStoryEdit.TreeData
         public List<string> GameName => GameFile.Select(s => Path.GetFileNameWithoutExtension(s)).ToList();
     }
 
-    [Serializable]
-    public class TreeRoot : ITreeItem, IXmlSerializable
-    {
-        [XmlElement("Name")]
-        public string Name { get; set; }
-        [XmlElement("Path")]
-        public string Path { get; set; }
-        [XmlIgnore]
-        public ITreeItem Parent { get; } = null;
-        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-        public void ReadXml(XmlReader reader)
-        { }
-        public void WriteXml(XmlWriter writer)
-        {
-            //writer.WriteElementString("k0", k0.ToString());
-            //writer.WriteElementString("k1", k1.ToString());
-            //writer.WriteElementString("k2", k2.ToString());
-        }
-    }
-
     public interface ITreeItem
     {
         [XmlAttribute("Name")]
@@ -54,21 +30,77 @@ namespace GameStoryEdit.TreeData
         [XmlAttribute("Path")]
         string Path { get; set; }
         [XmlIgnore]
-        ITreeItem Parent { get; }
-        IEnumerable<ITreeItem> Children { get; }
+        ITreeItem Parent { get; set; }
+        ObservableCollection<ITreeItem> Children { get; }
     }
 
     [Serializable]
-    [XmlInclude(typeof(Project))]
-    public abstract class Solution : ITreeItem
+    public class Solution : ITreeItem, IXmlSerializable
     {
-        [XmlElement("Name")]
+        private ITreeItem parent;
+
         public string Name { get; set; }
-        [XmlElement("Path")]
         public string Path { get; set; }
-        [XmlIgnore]
-        public ITreeItem Parent { get; } = null;
-        public abstract IEnumerable<ITreeItem> Children { get; }
+        public ITreeItem Parent
+        {
+            get => parent;
+            set
+            {
+                parent = value;
+                if (parent != null) parent.Children.Add(this);
+            }
+        }
+        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            if (reader.IsEmptyElement)
+            {
+                reader.Read();
+                return;
+            }
+            var startElementName = reader.LocalName;
+            reader.Read();
+            if (reader.LocalName.Equals(startElementName) && (reader.NodeType == XmlNodeType.EndElement))
+            {
+                return;
+            }
+
+            while (reader.Read())
+            {
+                switch (reader.LocalName)
+                {
+                    case "Name":
+                        reader.Read();
+                        Name = reader.Value;
+                        break;
+                    case "Path":
+                        reader.Read();
+                        Path = reader.Value;
+                        break;
+                    case "Project":
+                        reader.Read();
+                        break;
+                }
+            }
+        }
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteElementString("Name", Name);
+            writer.WriteElementString("Path", Path);
+            writer.WriteStartElement("Project");
+            foreach (var child in Children)
+            {
+                Type type = child.GetType();
+                XmlSerializer serializer = new XmlSerializer(type);
+                serializer.Serialize(writer, child);
+            }
+            writer.WriteEndElement();
+        }
     }
 
     [Serializable]
@@ -87,10 +119,11 @@ namespace GameStoryEdit.TreeData
             set
             {
                 parent = value;
-                //parent.Children.Add(this);
+                if (parent != null) parent.Children.Add(this);
             }
         }
-        public IEnumerable<ITreeItem> Children { get; } = new List<ITreeItem>();
+        [XmlIgnore]
+        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
     }
 
     public class SolutionViewModel : TreeViewItemViewModel
