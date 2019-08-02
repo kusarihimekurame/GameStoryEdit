@@ -35,31 +35,24 @@ namespace GameStoryEdit.TreeData
     }
 
     [Serializable]
-    public class Solution : ITreeItem, IXmlSerializable
+    public class Solution : IXmlSerializable
     {
-        private ITreeItem parent;
-
+        public List<Project> Projects { get; set; } = new List<Project>();
         public string Name { get; set; }
         public string Path { get; set; }
-        public ITreeItem Parent
-        {
-            get => parent;
-            set
-            {
-                parent = value;
-                if (parent != null) parent.Children.Add(this);
-            }
-        }
-        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
+
+        public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
+            reader.ReadStartElement("Solution");
             while (reader.Read())
             {
                 reader.MoveToContent();
+
+                if (reader.LocalName.Equals("Solution") && reader.NodeType == XmlNodeType.EndElement)
+                {
+                    break;
+                }
 
                 if (reader.IsEmptyElement || reader.NodeType == XmlNodeType.EndElement)
                 {
@@ -76,24 +69,36 @@ namespace GameStoryEdit.TreeData
                         reader.Read();
                         Path = reader.Value;
                         break;
-                    case "Project":
-                        reader.Read();
-                        break;
                 }
             }
+
         }
         public void WriteXml(XmlWriter writer)
         {
+            writer.WriteStartElement("Solution");
             writer.WriteElementString("Name", Name);
             writer.WriteElementString("Path", Path);
-            writer.WriteStartElement("Project");
-            foreach (var child in Children)
-            {
-                Type type = child.GetType();
-                XmlSerializer serializer = new XmlSerializer(type);
-                serializer.Serialize(writer, child);
-            }
             writer.WriteEndElement();
+
+            writer.WriteStartElement("Projects");
+            Projects.ForEach(p =>
+            {
+                writer.WriteStartElement(p.Name);
+                writer.WriteElementString("Path", p.Path);
+                writer.WriteEndElement();
+            });
+            writer.WriteEndElement();
+
+            //writer.WriteElementString("Name", Name);
+            //writer.WriteElementString("Path", Path);
+            //writer.WriteStartElement("Project");
+            //foreach (var child in Children)
+            //{
+            //    Type type = child.GetType();
+            //    XmlSerializer serializer = new XmlSerializer(type);
+            //    serializer.Serialize(writer, child);
+            //}
+            //writer.WriteEndElement();
         }
     }
 
@@ -120,13 +125,13 @@ namespace GameStoryEdit.TreeData
         public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
     }
 
-    public class SolutionViewModel : TreeViewItemViewModel
-    {
-        public SolutionViewModel(Solution solution)
-            : base(solution)
-        {
-        }
-    }
+    //public class SolutionViewModel : TreeViewItemViewModel
+    //{
+    //    public SolutionViewModel(Solution solution)
+    //        : base(solution)
+    //    {
+    //    }
+    //}
     public class ProjectViewModel : TreeViewItemViewModel
     {
         public ProjectViewModel(Project project)

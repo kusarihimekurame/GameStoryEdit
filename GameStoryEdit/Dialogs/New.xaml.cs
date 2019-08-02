@@ -88,22 +88,23 @@ namespace GameStoryEdit.Dialogs
             ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
 
             Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
-            Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text, Parent = solution };
+            Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text };
+            solution.Projects.Add(project);
 
             XmlSerializer serializer = new XmlSerializer(typeof(Solution));
-            using (StreamWriter stream = new StreamWriter(solution.Path + @"\123456"))
+            using (StreamWriter stream = new StreamWriter(solution.Path + @"\" + solution.Name + ".gse"))
             {
                 serializer.Serialize(stream, solution);
             }
-            using (XmlReader Reader = XmlReader.Create(solution.Path + @"\123456"))
+            using (XmlReader Reader = XmlReader.Create(solution.Path + @"\" + solution.Name + ".gse"))
             {
                 var a = serializer.Deserialize(Reader);
             }
 
-            Directory.CreateDirectory(ProjectPath.ProjectDirectory);
-            File.Create(ProjectPath.ProjectFile).Close();
-            Directory.CreateDirectory(ProjectPath.GameDirectory[0]);
-            File.Create(ProjectPath.GameFile[0]).Close();
+            //Directory.CreateDirectory(ProjectPath.ProjectDirectory);
+            //File.Create(ProjectPath.ProjectFile).Close();
+            //Directory.CreateDirectory(ProjectPath.GameDirectory[0]);
+            //File.Create(ProjectPath.GameFile[0]).Close();
 
             Application.Current.MainWindow = new MainWindow(ProjectPath);
             Application.Current.MainWindow.Show();

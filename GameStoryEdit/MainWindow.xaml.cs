@@ -33,9 +33,12 @@ namespace GameStoryEdit
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
             //LayoutDocumentPane.Children.Add(ld);
 
-            using (XmlReader Reader = XmlReader.Create(pp.ProjectFile))
+            if (File.Exists("Layout.xml"))
             {
-                if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
+                using (XmlReader Reader = XmlReader.Create("Layout.xml"))
+                {
+                    if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
+                }
             }
 
             //LayoutDocumentPane.Children.Remove(ld);
@@ -85,7 +88,7 @@ namespace GameStoryEdit
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            using (StreamWriter stream = new StreamWriter(ProjectPath.ProjectFile))
+            using (StreamWriter stream = new StreamWriter("Layout.xml"))
             {
                 serializer.Serialize(stream);
             }
