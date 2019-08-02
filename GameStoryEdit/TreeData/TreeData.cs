@@ -57,21 +57,15 @@ namespace GameStoryEdit.TreeData
         }
         public void ReadXml(XmlReader reader)
         {
-            reader.MoveToContent();
-            if (reader.IsEmptyElement)
-            {
-                reader.Read();
-                return;
-            }
-            var startElementName = reader.LocalName;
-            reader.Read();
-            if (reader.LocalName.Equals(startElementName) && (reader.NodeType == XmlNodeType.EndElement))
-            {
-                return;
-            }
-
             while (reader.Read())
             {
+                reader.MoveToContent();
+
+                if (reader.IsEmptyElement || reader.NodeType == XmlNodeType.EndElement)
+                {
+                    continue;
+                }
+
                 switch (reader.LocalName)
                 {
                     case "Name":

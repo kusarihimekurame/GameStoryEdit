@@ -91,11 +91,11 @@ namespace GameStoryEdit.Dialogs
             Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text, Parent = solution };
 
             XmlSerializer serializer = new XmlSerializer(typeof(Solution));
-            using (StreamWriter stream = new StreamWriter(solution.Path + "123456"))
+            using (StreamWriter stream = new StreamWriter(solution.Path + @"\123456"))
             {
                 serializer.Serialize(stream, solution);
             }
-            using (XmlReader Reader = XmlReader.Create(solution.Path + "123456"))
+            using (XmlReader Reader = XmlReader.Create(solution.Path + @"\123456"))
             {
                 var a = serializer.Deserialize(Reader);
             }
