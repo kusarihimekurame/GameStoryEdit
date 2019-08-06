@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace GameStoryEdit.Commands
 {
@@ -75,17 +77,19 @@ namespace GameStoryEdit.Commands
                 ofd.Filter = "gse项目文件|*.gse";
                 if (ofd.ShowDialog().GetValueOrDefault())
                 {
-                    string ProjectDirectory = Path.GetDirectoryName(ofd.FileName);
-                    string ProjectFile = ofd.FileName;
-                    List<string> GameDirectory = new List<string>();
-                    List<string> GameFile = new List<string>();
-                    DirectoryInfo dir = new DirectoryInfo(ProjectDirectory);
-                    FileSystemInfo[] files = dir.GetFileSystemInfos("*.GameStory", SearchOption.AllDirectories);
-                    files.Cast<FileInfo>().ToList().ForEach(f => { GameDirectory.Add(f.DirectoryName); GameFile.Add(f.FullName); });
-                    SolutionPath ProjectPath = new SolutionPath() { ProjectDirectory = ProjectDirectory, ProjectFile = ProjectFile, GameDirectory = GameDirectory, GameFile = GameFile };
+                    Solution solution;
 
-                    Application.Current.MainWindow = new MainWindow(ProjectPath);
+                    XmlSerializer serializer = new XmlSerializer(typeof(Solution));
+                    using (XmlReader Reader = XmlReader.Create(ofd.FileName))
+                    {
+                        solution = (Solution)serializer.Deserialize(Reader);
+                    }
+
+                    New @new = null;
+                    if (Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
+                    Application.Current.MainWindow = new MainWindow(solution);
                     Application.Current.MainWindow.Show();
+                    if (@new != null) @new.Close();
                 }
             }
             public void RaiseCanExecuteChanged()

@@ -37,14 +37,13 @@ namespace GameStoryEdit.TreeData
     [Serializable]
     public class Solution : IXmlSerializable
     {
-        public List<Project> Projects { get; set; } = new List<Project>();
+        public ProjectCollection Projects { get; set; } = new ProjectCollection();
         public string Name { get; set; }
         public string Path { get; set; }
 
         public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
-            reader.ReadStartElement("Solution");
             while (reader.Read())
             {
                 reader.MoveToContent();
@@ -69,16 +68,36 @@ namespace GameStoryEdit.TreeData
                         reader.Read();
                         Path = reader.Value;
                         break;
+                    case "Projects":
+                        while (reader.Read())
+                        {
+                            if (reader.LocalName.Equals("Projects") && reader.NodeType == XmlNodeType.EndElement)
+                            {
+                                break;
+                            }
+
+                            if (reader.NodeType == XmlNodeType.Element && !reader.LocalName.Equals("Path"))
+                            {
+                                string name = reader.LocalName;
+                                reader.Read();
+                                reader.Read();
+
+                                XmlSerializer serializer = new XmlSerializer(typeof(Project));
+                                using (XmlReader xmlReader = XmlReader.Create(reader.Value + @"\" + name + ".GameStory"))
+                                {
+                                    Projects.Add((Project)serializer.Deserialize(xmlReader));
+                                }
+                            }
+                        }
+                        break;
                 }
             }
 
         }
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement("Solution");
             writer.WriteElementString("Name", Name);
             writer.WriteElementString("Path", Path);
-            writer.WriteEndElement();
 
             writer.WriteStartElement("Projects");
             Projects.ForEach(p =>
@@ -86,20 +105,28 @@ namespace GameStoryEdit.TreeData
                 writer.WriteStartElement(p.Name);
                 writer.WriteElementString("Path", p.Path);
                 writer.WriteEndElement();
+
+                if (!Directory.Exists(p.Path)) Directory.CreateDirectory(p.Path);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(Project));
+                using (XmlWriter xmlWriter = XmlWriter.Create(p.Path + @"\" + p.Name + ".GameStory"))
+                {
+                    serializer.Serialize(xmlWriter, p);
+                }
             });
             writer.WriteEndElement();
-
-            //writer.WriteElementString("Name", Name);
-            //writer.WriteElementString("Path", Path);
-            //writer.WriteStartElement("Project");
-            //foreach (var child in Children)
-            //{
-            //    Type type = child.GetType();
-            //    XmlSerializer serializer = new XmlSerializer(type);
-            //    serializer.Serialize(writer, child);
-            //}
-            //writer.WriteEndElement();
         }
+    }
+
+    public class ProjectCollection : List<Project>
+    {
+        public ProjectCollection() : base() { }
+        public Project this[string Name]
+        {
+            get => base[FindIndex(match => match.Name == Name)];
+            set => base[FindIndex(match => match.Name == Name)] = value;
+        }
+        public void Remove(string Name) => RemoveAt(FindIndex(match => match.Name == Name));
     }
 
     [Serializable]

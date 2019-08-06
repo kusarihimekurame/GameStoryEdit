@@ -22,13 +22,11 @@ namespace GameStoryEdit
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
-        SolutionPath ProjectPath;
 
-        public MainWindow(SolutionPath pp)
+        public MainWindow(Solution solution)
         {
             InitializeComponent();
 
-            ProjectPath = pp;
             LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor" };
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
             //LayoutDocumentPane.Children.Add(ld);
