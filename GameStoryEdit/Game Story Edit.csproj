@@ -74,7 +74,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
-    <Compile Include="TreeData\TreeData.cs" />
+    <Compile Include="TreeData\ITreeItem.cs" />
+    <Compile Include="TreeData\Project.cs" />
+    <Compile Include="TreeData\ProjectCollection.cs" />
+    <Compile Include="TreeData\Solution.cs" />
     <Compile Include="TreeData\TreeViewItemViewModel.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>

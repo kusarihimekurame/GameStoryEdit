@@ -1,39 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace GameStoryEdit.TreeData
 {
-    public class SolutionPath
-    {
-        public string ProjectDirectory { get; set; }
-        public string ProjectFile { get; set; }
-        public string ProjectName => Path.GetFileNameWithoutExtension(ProjectFile);
-        public List<string> GameDirectory { get; set; }
-        public List<string> GameFile { get; set; }
-        public List<string> GameName => GameFile.Select(s => Path.GetFileNameWithoutExtension(s)).ToList();
-    }
-
-    public interface ITreeItem
-    {
-        [XmlAttribute("Name")]
-        string Name { get; set; }
-        [XmlAttribute("Path")]
-        string Path { get; set; }
-        [XmlIgnore]
-        ITreeItem Parent { get; set; }
-        ObservableCollection<ITreeItem> Children { get; }
-    }
-
     [Serializable]
     public class Solution : IXmlSerializable
     {
@@ -115,55 +91,6 @@ namespace GameStoryEdit.TreeData
                 }
             });
             writer.WriteEndElement();
-        }
-    }
-
-    public class ProjectCollection : List<Project>
-    {
-        public ProjectCollection() : base() { }
-        public Project this[string Name]
-        {
-            get => base[FindIndex(match => match.Name == Name)];
-            set => base[FindIndex(match => match.Name == Name)] = value;
-        }
-        public void Remove(string Name) => RemoveAt(FindIndex(match => match.Name == Name));
-    }
-
-    [Serializable]
-    public class Project : ITreeItem
-    {
-        private ITreeItem parent;
-
-        [XmlElement("Name")]
-        public string Name { get; set; }
-        [XmlElement("Path")]
-        public string Path { get; set; }
-        [XmlIgnore]
-        public ITreeItem Parent
-        {
-            get => parent;
-            set
-            {
-                parent = value;
-                if (parent != null) parent.Children.Add(this);
-            }
-        }
-        [XmlIgnore]
-        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
-    }
-
-    //public class SolutionViewModel : TreeViewItemViewModel
-    //{
-    //    public SolutionViewModel(Solution solution)
-    //        : base(solution)
-    //    {
-    //    }
-    //}
-    public class ProjectViewModel : TreeViewItemViewModel
-    {
-        public ProjectViewModel(Project project)
-            : base(project)
-        {
         }
     }
 }

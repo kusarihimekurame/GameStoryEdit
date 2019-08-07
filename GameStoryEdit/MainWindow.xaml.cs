@@ -9,6 +9,7 @@ using System.Xml;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using GameStoryEdit.TreeData;
+using System.ComponentModel;
 
 namespace GameStoryEdit
 {
@@ -22,18 +23,21 @@ namespace GameStoryEdit
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
+        Solution Solution { get; set; }
 
         public MainWindow(Solution solution)
         {
             InitializeComponent();
 
+            Solution = solution;
+
             LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor" };
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
             //LayoutDocumentPane.Children.Add(ld);
 
-            if (File.Exists("Layout.xml"))
+            if (File.Exists(@"Layout\" + solution.Name + ".xml"))
             {
-                using (XmlReader Reader = XmlReader.Create("Layout.xml"))
+                using (XmlReader Reader = XmlReader.Create(@"Layout\" + solution.Name + ".xml"))
                 {
                     if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
                 }
@@ -84,9 +88,10 @@ namespace GameStoryEdit
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            using (StreamWriter stream = new StreamWriter("Layout.xml"))
+            if (!Directory.Exists(@"Layout\")) Directory.CreateDirectory(@"Layout\");
+            using (StreamWriter stream = new StreamWriter(@"Layout\" + Solution.Name + ".xml"))
             {
                 serializer.Serialize(stream);
             }
