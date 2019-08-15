@@ -31,4 +31,5 @@
     <sys:String x:Key="SelectAll">全选</sys:String>
     <sys:String x:Key="Undo">撤销</sys:String>
     <sys:String x:Key="Redo">重做</sys:String>
+    <sys:String x:Key="Solution">解决方案'{0}'(共 {1} 个项目)</sys:String>
 </ResourceDictionary>

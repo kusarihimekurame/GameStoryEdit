@@ -87,6 +87,7 @@ namespace GameStoryEdit.Dialogs
             List<string> GameFile = new List<string>() { GameDirectory[0] + @"\" + SolutionName.Text + ".GameStory" };
 
             Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
+
             Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text };
             solution.Projects.Add(project);
 
@@ -102,7 +103,8 @@ namespace GameStoryEdit.Dialogs
                 var a = serializer.Deserialize(Reader);
             }
 
-            Application.Current.MainWindow = new MainWindow(solution);
+            TreeItem.Solution = solution;
+            Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
             Close();
         }

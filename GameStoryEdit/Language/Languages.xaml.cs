@@ -1,4 +1,5 @@
-﻿using ICSharpCode.AvalonEdit.Document;
+﻿using GameStoryEdit.TreeData;
+using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace GameStoryEdit
         public string LocationString { get; private set; } = string.Format(Application.Current.FindResource("LocationString").ToString(), 0, 0);
         public string Lines { get; private set; } = string.Format(Application.Current.FindResource("Lines").ToString(), 0);
         public string Characters { get; private set; } = string.Format(Application.Current.FindResource("Characters").ToString(), 0);
+        public string Solution { get; private set; } = string.Format(Application.Current.FindResource("Solution").ToString(), TreeItem.Solution.Name, TreeItem.Solution.Projects.Count);
         public CultureInfo Language { get; private set; }
         public bool IsEnglish { get; private set; }
         public bool IsChinese_Simplified { get; private set; }
@@ -81,6 +83,7 @@ namespace GameStoryEdit
             LocationString = string.Format(Application.Current.FindResource("LocationString").ToString(), Line, Column);
             Lines = string.Format(Application.Current.FindResource("Lines").ToString(), linesNum);
             Characters = string.Format(Application.Current.FindResource("Characters").ToString(), charactersNum);
+            Solution = string.Format(Application.Current.FindResource("Solution").ToString(), TreeItem.Solution.Name, TreeItem.Solution.Projects.Count);
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LocationString"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Lines"));
@@ -88,6 +91,7 @@ namespace GameStoryEdit
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsEnglish"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsChinese_Simplified"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsJapanese"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Solution"));
         }
 
         private class _Language_Changed : ICommand

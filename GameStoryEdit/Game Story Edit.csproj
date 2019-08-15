@@ -78,6 +78,7 @@
     <Compile Include="TreeData\Project.cs" />
     <Compile Include="TreeData\ProjectCollection.cs" />
     <Compile Include="TreeData\Solution.cs" />
+    <Compile Include="TreeData\TreeItem.cs" />
     <Compile Include="TreeData\TreeViewItemViewModel.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">
       <DependentUpon>FountainEditor.xaml</DependentUpon>

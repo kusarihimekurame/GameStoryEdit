@@ -23,21 +23,18 @@ namespace GameStoryEdit
         XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
-        Solution Solution { get; set; }
 
-        public MainWindow(Solution solution)
+        public MainWindow()
         {
             InitializeComponent();
-
-            Solution = solution;
 
             LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor" };
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
             //LayoutDocumentPane.Children.Add(ld);
 
-            if (File.Exists(@"Layout\" + solution.Name + ".xml"))
+            if (File.Exists(@"Layout\" + TreeItem.Solution.Name + ".xml"))
             {
-                using (XmlReader Reader = XmlReader.Create(@"Layout\" + solution.Name + ".xml"))
+                using (XmlReader Reader = XmlReader.Create(@"Layout\" + TreeItem.Solution.Name + ".xml"))
                 {
                     if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
                 }
@@ -91,7 +88,7 @@ namespace GameStoryEdit
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (!Directory.Exists(@"Layout\")) Directory.CreateDirectory(@"Layout\");
-            using (StreamWriter stream = new StreamWriter(@"Layout\" + Solution.Name + ".xml"))
+            using (StreamWriter stream = new StreamWriter(@"Layout\" + TreeItem.Solution.Name + ".xml"))
             {
                 serializer.Serialize(stream);
             }

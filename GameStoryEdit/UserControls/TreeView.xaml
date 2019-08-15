@@ -11,7 +11,7 @@
             <RowDefinition Height="15" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Solution''(1 projects)"/>
+        <TextBlock Text="{Binding languages.Solution, Mode=OneWay, Source={StaticResource Languages}}"/>
         <TreeView Grid.Row="1" BorderBrush="{x:Null}">
             <TreeViewItem Header="Projects" IsExpanded="True">
                 <TreeViewItem Header="Documents" x:Name="Documents">

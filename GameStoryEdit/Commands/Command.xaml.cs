@@ -77,17 +77,15 @@ namespace GameStoryEdit.Commands
                 ofd.Filter = "gse项目文件|*.gse";
                 if (ofd.ShowDialog().GetValueOrDefault())
                 {
-                    Solution solution;
-
                     XmlSerializer serializer = new XmlSerializer(typeof(Solution));
                     using (XmlReader Reader = XmlReader.Create(ofd.FileName))
                     {
-                        solution = (Solution)serializer.Deserialize(Reader);
+                        TreeItem.Solution = (Solution)serializer.Deserialize(Reader);
                     }
 
                     New @new = null;
                     if (Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
-                    Application.Current.MainWindow = new MainWindow(solution);
+                    Application.Current.MainWindow = new MainWindow();
                     Application.Current.MainWindow.Show();
                     if (@new != null) @new.Close();
                 }

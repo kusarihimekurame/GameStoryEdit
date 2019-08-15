@@ -31,4 +31,5 @@
     <sys:String x:Key="SelectAll">SelectAll</sys:String>
     <sys:String x:Key="Undo">Undo</sys:String>
     <sys:String x:Key="Redo">Redo</sys:String>
+    <sys:String x:Key="Solution">Solution'{0}'({1} projects)</sys:String>
 </ResourceDictionary>
