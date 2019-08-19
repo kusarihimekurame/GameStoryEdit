@@ -16,7 +16,23 @@ namespace GameStoryEdit.TreeData
         public ProjectCollection Projects { get; set; } = new ProjectCollection();
         public string Name { get; set; }
         public string Path { get; set; }
-
+        public void Serialize()
+        {
+            if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
+            XmlSerializer serializer = new XmlSerializer(typeof(Solution));
+            using (XmlWriter xmlWriter = XmlWriter.Create(Path + @"\" + Name + ".gse"))
+            {
+                serializer.Serialize(xmlWriter, this);
+            }
+        }
+        public static Solution Deserialize(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Solution));
+            using (XmlReader Reader = XmlReader.Create(path))
+            {
+                return (Solution)serializer.Deserialize(Reader);
+            }
+        }
         public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
@@ -58,17 +74,12 @@ namespace GameStoryEdit.TreeData
                                 reader.Read();
                                 reader.Read();
 
-                                XmlSerializer serializer = new XmlSerializer(typeof(Project));
-                                using (XmlReader xmlReader = XmlReader.Create(reader.Value + @"\" + name + ".GameStory"))
-                                {
-                                    Projects.Add((Project)serializer.Deserialize(xmlReader));
-                                }
+                                Projects.Add(Project.Deserialize(reader.Value + @"\" + name + ".GameStory"));
                             }
                         }
                         break;
                 }
             }
-
         }
         public void WriteXml(XmlWriter writer)
         {
@@ -84,11 +95,7 @@ namespace GameStoryEdit.TreeData
 
                 if (!Directory.Exists(p.Path)) Directory.CreateDirectory(p.Path);
 
-                XmlSerializer serializer = new XmlSerializer(typeof(Project));
-                using (XmlWriter xmlWriter = XmlWriter.Create(p.Path + @"\" + p.Name + ".GameStory"))
-                {
-                    serializer.Serialize(xmlWriter, p);
-                }
+                p.Serialize();
             });
             writer.WriteEndElement();
         }

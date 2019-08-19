@@ -12,8 +12,29 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding languages.Solution, Mode=OneWay, Source={StaticResource Languages}}"/>
-        <TreeView Grid.Row="1" BorderBrush="{x:Null}">
-            <TreeViewItem Header="Projects" IsExpanded="True">
+        <TreeView Grid.Row="1" BorderBrush="{x:Null}" ItemsSource="{Binding FirstGeneration}">
+            <TreeView.ItemContainerStyle>
+                <!-- 
+                This Style binds a TreeViewItem to a TreeViewItemViewModel. 
+                -->
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <!--<TreeViewItem Header="Projects" IsExpanded="True">
                 <TreeViewItem Header="Documents" x:Name="Documents">
                     <TreeViewItem x:Name="ScreenPlay1" Header="ScreenPlay1"/>
                 </TreeViewItem>
@@ -28,7 +49,7 @@
                     <TreeViewItem Header="Images"/>
                     <TreeViewItem Header="Videos"/>
                 </TreeViewItem>
-            </TreeViewItem>
+            </TreeViewItem>-->
         </TreeView>
     </Grid>
 </UserControl>

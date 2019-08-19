@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameStoryEdit.TreeData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace GameStoryEdit.UserControls
         public TreeView()
         {
             InitializeComponent();
+
+            // Let the UI bind to the view-model.
+            DataContext = TreeItem.GetSolutionTree();
         }
     }
 }

@@ -9,5 +9,6 @@ namespace GameStoryEdit.TreeData
     public static class TreeItem
     {
         public static Solution Solution = new Solution();
+        public static SolutionViewModel GetSolutionTree() => new SolutionViewModel(Solution);
     }
 }

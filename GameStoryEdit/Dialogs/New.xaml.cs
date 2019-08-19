@@ -89,19 +89,13 @@ namespace GameStoryEdit.Dialogs
             Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
 
             Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text };
+            Document document = new Document() { Name = "Document", Path = project.Path + @"\Document" };
+            ScreenPlay screenPlay = new ScreenPlay() { Name = "ScreenPlay1", Path = document.Path};
+            document.Children.Add(screenPlay);
+            project.Children.Add(document);
             solution.Projects.Add(project);
 
-            if (!Directory.Exists(solution.Path)) Directory.CreateDirectory(solution.Path);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Solution));
-            using (XmlWriter xmlWriter = XmlWriter.Create(solution.Path + @"\" + solution.Name + ".gse"))
-            {
-                serializer.Serialize(xmlWriter, solution);
-            }
-            using (XmlReader Reader = XmlReader.Create(solution.Path + @"\" + solution.Name + ".gse"))
-            {
-                var a = serializer.Deserialize(Reader);
-            }
+            solution.Serialize();
 
             TreeItem.Solution = solution;
             Application.Current.MainWindow = new MainWindow();

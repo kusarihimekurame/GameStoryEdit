@@ -77,11 +77,7 @@ namespace GameStoryEdit.Commands
                 ofd.Filter = "gse项目文件|*.gse";
                 if (ofd.ShowDialog().GetValueOrDefault())
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Solution));
-                    using (XmlReader Reader = XmlReader.Create(ofd.FileName))
-                    {
-                        TreeItem.Solution = (Solution)serializer.Deserialize(Reader);
-                    }
+                    TreeItem.Solution = Solution.Deserialize(ofd.FileName);
 
                     New @new = null;
                     if (Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;

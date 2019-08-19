@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace GameStoryEdit.TreeData
 {
@@ -11,7 +12,6 @@ namespace GameStoryEdit.TreeData
     {
         string Name { get; set; }
         string Path { get; set; }
-        ITreeItem Parent { get; set; }
         ObservableCollection<ITreeItem> Children { get; }
     }
 }
