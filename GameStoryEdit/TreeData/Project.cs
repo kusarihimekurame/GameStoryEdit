@@ -13,11 +13,10 @@ using System.Xml.Serialization;
 namespace GameStoryEdit.TreeData
 {
     [Serializable]
-    public class Project : ITreeItem, IXmlSerializable
+    public class Project : BaseTreeItem, IXmlSerializable
     {
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
+        #region Serialize
+
         public void Serialize()
         {
             if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
@@ -27,6 +26,11 @@ namespace GameStoryEdit.TreeData
                 serializer.Serialize(xmlWriter, this);
             }
         }
+
+        #endregion
+
+        #region Deserialize
+
         public static Project Deserialize(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Project));
@@ -35,6 +39,11 @@ namespace GameStoryEdit.TreeData
                 return (Project)serializer.Deserialize(Reader);
             }
         }
+
+        #endregion
+
+        #region XmlSerializable
+
         public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
@@ -63,7 +72,7 @@ namespace GameStoryEdit.TreeData
                         Path = reader.Value;
                         break;
                     case "Children":
-                        void _readxml(ITreeItem rootTreeItem)
+                        void _readxml(BaseTreeItem rootTreeItem)
                         {
                             while (reader.Read())
                             {
@@ -74,7 +83,7 @@ namespace GameStoryEdit.TreeData
 
                                 if (reader.NodeType == XmlNodeType.Element && !reader.LocalName.Equals("Name") && !reader.LocalName.Equals("Path") && !reader.LocalName.Equals("Children"))
                                 {
-                                    ITreeItem treeItem = (ITreeItem)Assembly.GetExecutingAssembly().CreateInstance("GameStoryEdit.TreeData." + reader.LocalName);
+                                    BaseTreeItem treeItem = (BaseTreeItem)Assembly.GetExecutingAssembly().CreateInstance("GameStoryEdit.TreeData." + reader.LocalName);
                                     while (reader.Read())
                                     {
                                         if (reader.NodeType == XmlNodeType.EndElement && !reader.LocalName.Equals("Name") && !reader.LocalName.Equals("Path") && !reader.LocalName.Equals("Children"))
@@ -111,24 +120,43 @@ namespace GameStoryEdit.TreeData
         }
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteElementString("Name", Name);
-            writer.WriteElementString("Path", Path);
-
-            writer.WriteStartElement("Children");
-            void _writexml(ITreeItem rootTreeItem)
+            void _writexml(BaseTreeItem rootTreeItem)
             {
-                rootTreeItem.Children.ToList().ForEach(c =>
+                #region XML
+
+                if (rootTreeItem != this) writer.WriteStartElement(rootTreeItem.GetType().Name);
+                writer.WriteElementString("Name", rootTreeItem.Name);
+                writer.WriteElementString("Path", rootTreeItem.Path);
+                writer.WriteStartElement("Children");
+                rootTreeItem.Children.ToList().ForEach(c => _writexml(c));
+                writer.WriteEndElement();
+                if (rootTreeItem != this) writer.WriteEndElement();
+
+                #endregion
+
+                #region Creat Directory and File
+
+                if (rootTreeItem is Assets assets)
                 {
-                    writer.WriteStartElement(c.GetType().Name);
-                    writer.WriteElementString("Name", c.Name);
-                    writer.WriteElementString("Path", c.Path);
-                    writer.WriteStartElement("Children");
-                    _writexml(c);
-                    writer.WriteEndElement();
-                });
+                    if (!Directory.Exists(assets.Path)) Directory.CreateDirectory(assets.Path);
+                    assets.Children.ToList().ForEach(a =>
+                    {
+                        if (!Directory.Exists(a.Path)) Directory.CreateDirectory(a.Path);
+                    });
+                }
+                else if(rootTreeItem is ScreenPlay screenPlay)
+                {
+                    string fullpath = screenPlay.Path + @"\" + screenPlay.Name + ".fountain";
+
+                    if (!Directory.Exists(screenPlay.Path)) Directory.CreateDirectory(screenPlay.Path);
+                    if (!File.Exists(fullpath)) File.Create(fullpath);
+                }
+
+                #endregion
             }
             _writexml(this);
-            writer.WriteEndElement();
         }
+
+        #endregion
     }
 }

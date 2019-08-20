@@ -289,12 +289,15 @@ let (|SceneHeading|_|) (ctx:ParsingContext) (input:string list) =
       Some(false, result, tail)
     // look for forced heading
     | String.StartsWith "." matching ->
-      let recognition = {
-        Text = head.Substring(1);
-        Length = first.Length + length + offset;
-        Offset = first.IndexOf(head) + 1 + offset 
-      }
-      Some(true, recognition, tail)
+      match head with
+      | String.StartsWith "." matching -> None
+      | _->
+        let recognition = {
+            Text = head.Substring(1);
+            Length = first.Length + length + offset;
+            Offset = first.IndexOf(head) + 1 + offset 
+          }
+        Some(true, recognition, tail)
     | _ -> None
 
   match ctx.LastParsedBlock with

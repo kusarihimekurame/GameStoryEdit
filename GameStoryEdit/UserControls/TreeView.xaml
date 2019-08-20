@@ -12,7 +12,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding languages.Solution, Mode=OneWay, Source={StaticResource Languages}}"/>
-        <TreeView Grid.Row="1" BorderBrush="{x:Null}" ItemsSource="{Binding FirstGeneration}">
+        <TreeView x:Name="TreeView1" Grid.Row="1" BorderBrush="{x:Null}" ItemsSource="{Binding FirstGeneration}">
             <TreeView.ItemContainerStyle>
                 <!-- 
                 This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -34,22 +34,6 @@
                     <TextBlock Text="{Binding Name}" />
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
-            <!--<TreeViewItem Header="Projects" IsExpanded="True">
-                <TreeViewItem Header="Documents" x:Name="Documents">
-                    <TreeViewItem x:Name="ScreenPlay1" Header="ScreenPlay1"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Flow"/>
-                <TreeViewItem Header="Locations" x:Name="Locations"/>
-                <TreeViewItem Header="Tables">
-                    <TreeViewItem Header="Characters" x:Name="Characters"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Assets">
-                    <TreeViewItem Header="Audio"/>
-                    <TreeViewItem Header="Documents"/>
-                    <TreeViewItem Header="Images"/>
-                    <TreeViewItem Header="Videos"/>
-                </TreeViewItem>
-            </TreeViewItem>-->
         </TreeView>
     </Grid>
 </UserControl>

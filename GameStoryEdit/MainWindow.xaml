@@ -97,14 +97,14 @@
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutDocumentPane>
-                        <avalonDock:LayoutDocument ContentId="FountainEditor" Title="{Binding Header, ElementName=ScreenPlay1}">
+                        <!--<avalonDock:LayoutDocument ContentId="FountainEditor" Title="{Binding Header, ElementName=ScreenPlay1}">
                             <UserControls:FountainEditor/>
-                        </avalonDock:LayoutDocument>
+                        </avalonDock:LayoutDocument>-->
                     </avalonDock:LayoutDocumentPane>
                     <avalonDock:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Solution Explorer" ContentId="Solution Explorer">
-                                <UserControls:TreeView/>
+                                <UserControls:TreeView x:Name="TreeView"/>
                                 <!--<TreeView x:Name="TreeView">
                                     <TreeViewItem Header="Solution''(1 projects)" IsExpanded="True">
                                         <TreeViewItem Header="Projects" IsExpanded="True">

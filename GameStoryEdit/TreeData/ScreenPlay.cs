@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,18 @@ using System.Xml.Serialization;
 
 namespace GameStoryEdit.TreeData
 {
-    public class ScreenPlay : ITreeItem
+    public class ScreenPlay : BaseTreeItem
     {
-        [XmlElement("Name")]
-        public string Name { get; set; }
-        [XmlElement("Path")]
-        public string Path { get; set; }
-        [XmlIgnore]
-        public ObservableCollection<ITreeItem> Children { get; } = new ObservableCollection<ITreeItem>();
+        public string GetText()
+        {
+            StreamReader sr = new StreamReader(Path + @"\" + Name + ".fountain", Encoding.Default);
+            string _line;
+            StringBuilder line = new StringBuilder();
+            while ((_line = sr.ReadLine()) != null)
+            {
+                line.AppendLine(_line);
+            }
+            return line.ToString();
+        }
     }
 }

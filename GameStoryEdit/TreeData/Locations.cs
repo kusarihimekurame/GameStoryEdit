@@ -4,14 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace GameStoryEdit.TreeData
 {
-    public interface ITreeItem
+    public class Locations : BaseTreeItem
     {
-        string Name { get; set; }
-        string Path { get; set; }
-        ObservableCollection<ITreeItem> Children { get; }
     }
 }

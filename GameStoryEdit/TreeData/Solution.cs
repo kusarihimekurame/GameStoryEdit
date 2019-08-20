@@ -13,9 +13,16 @@ namespace GameStoryEdit.TreeData
     [Serializable]
     public class Solution : IXmlSerializable
     {
+        #region Data
+
         public ProjectCollection Projects { get; set; } = new ProjectCollection();
         public string Name { get; set; }
         public string Path { get; set; }
+
+        #endregion
+
+        #region Serialize
+
         public void Serialize()
         {
             if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
@@ -25,6 +32,11 @@ namespace GameStoryEdit.TreeData
                 serializer.Serialize(xmlWriter, this);
             }
         }
+
+        #endregion
+
+        #region Deserialize
+
         public static Solution Deserialize(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Solution));
@@ -33,6 +45,11 @@ namespace GameStoryEdit.TreeData
                 return (Solution)serializer.Deserialize(Reader);
             }
         }
+
+        #endregion
+
+        #region XmlSerializable
+
         public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
@@ -99,5 +116,7 @@ namespace GameStoryEdit.TreeData
             });
             writer.WriteEndElement();
         }
+
+        #endregion
     }
 }

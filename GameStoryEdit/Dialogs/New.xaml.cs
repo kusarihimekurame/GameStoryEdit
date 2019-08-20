@@ -81,20 +81,27 @@ namespace GameStoryEdit.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string ProjectDirectory = path + @"\" + ProjectName.Text;
-            string ProjectFile = ProjectDirectory + @"\" + ProjectName.Text + ".gse";
-            List<string> GameDirectory = new List<string>() { ProjectDirectory + @"\" + SolutionName.Text };
-            List<string> GameFile = new List<string>() { GameDirectory[0] + @"\" + SolutionName.Text + ".GameStory" };
-
             Solution solution = new Solution() { Name = SolutionName.Text, Path = path + @"\" + SolutionName.Text };
 
             Project project = new Project() { Name = ProjectName.Text, Path = solution.Path + @"\" + ProjectName.Text };
-            Document document = new Document() { Name = "Document", Path = project.Path + @"\Document" };
-            ScreenPlay screenPlay = new ScreenPlay() { Name = "ScreenPlay1", Path = document.Path};
+            Assets assets = new Assets() { Name = "Assets", Path = project.Path + @"\Assets" };
+            assets.Children.Add(new BaseTreeItem() { Name = "Audio", Path = assets.Path + @"\Audio" });
+            assets.Children.Add(new BaseTreeItem() { Name = "Documents", Path = assets.Path + @"\Documents" });
+            assets.Children.Add(new BaseTreeItem() { Name = "Images", Path = assets.Path + @"\Images" });
+            assets.Children.Add(new BaseTreeItem() { Name = "Videos", Path = assets.Path + @"\Videos" });
+            Document document = new Document() { Name = "Document", Path = assets.Children["Documents"].Path };
+            ScreenPlay screenPlay = new ScreenPlay() { Name = "ScreenPlay1", Path = document.Path };
             document.Children.Add(screenPlay);
+            Flow flow = new Flow() { Name = "Flow", Path = project.Path + @"\Flow" };
+            Locations locations = new Locations() { Name = "Locations" };
+            Tables tables = new Tables() { Name = "Tables", Path = project.Path + @"\Tables" };
             project.Children.Add(document);
+            project.Children.Add(flow);
+            project.Children.Add(locations);
+            project.Children.Add(tables);
+            project.Children.Add(assets);
             solution.Projects.Add(project);
-
+            
             solution.Serialize();
 
             TreeItem.Solution = solution;

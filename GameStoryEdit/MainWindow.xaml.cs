@@ -28,9 +28,10 @@ namespace GameStoryEdit
         {
             InitializeComponent();
 
-            LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor" };
+            LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor", Title = "ScreenPlay1" };
             ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
-            //LayoutDocumentPane.Children.Add(ld);
+            ((FountainEditor)ld.Content).textEditor.Text = ((ScreenPlay)TreeItem.Solution.Projects[0].Children["Document"].Children["ScreenPlay1"]).GetText();
+            LayoutDocumentPane.Children.Add(ld);
 
             if (File.Exists(@"Layout\" + TreeItem.Solution.Name + ".xml"))
             {
@@ -39,8 +40,6 @@ namespace GameStoryEdit
                     if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
                 }
             }
-
-            //LayoutDocumentPane.Children.Remove(ld);
         }
 
         private void Add_Html(object sender, RoutedEventArgs e)
@@ -63,25 +62,27 @@ namespace GameStoryEdit
 
         private void TreeViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem tvi = (TreeViewItem)sender;
-
-            LayoutDocument ld = LayoutDocumentPane.Children.Cast<LayoutDocument>().SingleOrDefault(d => d.Title == tvi.Header.ToString());
-            if (ld != null)
+            if (sender is TreeViewItem tvi)
             {
-                ld.IsSelected = true;
-                ld.IsActive = true;
+                LayoutDocument ld = LayoutDocumentPane.Children.Cast<LayoutDocument>().SingleOrDefault(d => d.Title == tvi.Header.ToString());
+                if (ld != null)
+                {
+                    ld.IsSelected = true;
+                    ld.IsActive = true;
+                }
             }
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem tvi = (TreeViewItem)sender;
-
-            if (LayoutDocumentPane.Children.Cast<LayoutDocument>().Count(d => d.Title == tvi.Header.ToString()) == 0)
+            if (sender is TreeViewItem tvi)
             {
-                FountainEditor fe = new FountainEditor();
-                LayoutDocumentPane.Children.Add(new LayoutDocument() { Content = fe, ContentId = "FountainEditor", Title = tvi.Header.ToString() });
-                fe.FountainGame_Changed += FountainGame_Changed;
+                if (LayoutDocumentPane.Children.Cast<LayoutDocument>().Count(d => d.Title == tvi.Header.ToString()) == 0)
+                {
+                    FountainEditor fe = new FountainEditor();
+                    LayoutDocumentPane.Children.Add(new LayoutDocument() { Content = fe, ContentId = "FountainEditor", Title = tvi.Header.ToString() });
+                    fe.FountainGame_Changed += FountainGame_Changed;
+                }
             }
         }
 

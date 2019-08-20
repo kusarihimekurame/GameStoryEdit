@@ -82,8 +82,12 @@ namespace GameStoryEdit.UserControls
             List<NewFolding> newFoldings = new List<NewFolding>();
             fountainGame.SceneBlocks.ForEach(sb =>
             {
-                newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
-                sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
+                try
+                {
+                    newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
+                    sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
+                }
+                catch { }
             });
             foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
             foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);

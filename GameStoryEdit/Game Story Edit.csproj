@@ -74,13 +74,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
+    <Compile Include="TreeData\Assets.cs" />
+    <Compile Include="TreeData\ChildrenCollection.cs" />
     <Compile Include="TreeData\Document.cs" />
-    <Compile Include="TreeData\ITreeItem.cs" />
+    <Compile Include="TreeData\Flow.cs" />
+    <Compile Include="TreeData\BaseTreeItem.cs" />
+    <Compile Include="TreeData\Locations.cs" />
     <Compile Include="TreeData\Project.cs" />
     <Compile Include="TreeData\ProjectCollection.cs" />
     <Compile Include="TreeData\ScreenPlay.cs" />
     <Compile Include="TreeData\Solution.cs" />
     <Compile Include="TreeData\SolutionViewModel.cs" />
+    <Compile Include="TreeData\Tables.cs" />
     <Compile Include="TreeData\TreeItem.cs" />
     <Compile Include="TreeData\TreeViewItemViewModel.cs" />
     <Compile Include="UserControls\FountainEditor.xaml.cs">

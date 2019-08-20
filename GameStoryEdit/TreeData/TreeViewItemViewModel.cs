@@ -17,7 +17,7 @@ namespace GameStoryEdit.TreeData
 
         readonly ReadOnlyCollection<TreeViewItemViewModel> _children;
         readonly TreeViewItemViewModel _parent;
-        readonly ITreeItem _treeItem;
+        readonly BaseTreeItem _treeItem;
 
         bool _isExpanded;
         bool _isSelected;
@@ -26,12 +26,12 @@ namespace GameStoryEdit.TreeData
 
         #region Constructors
 
-        public TreeViewItemViewModel(ITreeItem treeItem)
+        public TreeViewItemViewModel(BaseTreeItem treeItem)
             : this(treeItem, null)
         {
         }
 
-        private TreeViewItemViewModel(ITreeItem treeItem, TreeViewItemViewModel parent)
+        private TreeViewItemViewModel(BaseTreeItem treeItem, TreeViewItemViewModel parent)
         {
             _treeItem = treeItem;
             _parent = parent;
