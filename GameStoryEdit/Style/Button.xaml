@@ -4,9 +4,9 @@
     <Style x:Key="Button_Close" TargetType="Button">
         <Setter Property="Background" Value="#FF252526"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Content" Value="X"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="FZLanTingHeiS-UL-GB"/>
+        <Setter Property="Content" Value="×"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="Command" Value="{Binding Close, Source={StaticResource Command}}"/>
         <Setter Property="CommandParameter" Value="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>

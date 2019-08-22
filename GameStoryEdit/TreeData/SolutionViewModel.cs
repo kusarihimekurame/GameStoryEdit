@@ -56,6 +56,12 @@ namespace GameStoryEdit.TreeData
 
         #endregion // Solution
 
+        #region Projects
+
+        public TreeViewItemViewModel[] Projects => _projects;
+
+        #endregion // Solution
+
         #region SearchCommand
 
         /// <summary>
@@ -126,16 +132,16 @@ namespace GameStoryEdit.TreeData
             if (_matchingTreeItemEnumerator == null || !_matchingTreeItemEnumerator.MoveNext())
                 VerifyMatchingPeopleEnumerator();
 
-            var person = _matchingTreeItemEnumerator.Current;
+            TreeViewItemViewModel treeItem = _matchingTreeItemEnumerator.Current;
 
-            if (person == null)
+            if (treeItem == null)
                 return;
 
             // Ensure that this person is in view.
-            if (person.Parent != null)
-                person.Parent.IsExpanded = true;
+            if (treeItem.Parent != null)
+                treeItem.Parent.IsExpanded = true;
 
-            person.IsSelected = true;
+            treeItem.IsSelected = true;
         }
 
         void VerifyMatchingPeopleEnumerator()
@@ -154,7 +160,7 @@ namespace GameStoryEdit.TreeData
             }
         }
 
-        IEnumerable<TreeViewItemViewModel> FindMatches(string searchText, TreeViewItemViewModel treeItem)
+        public IEnumerable<TreeViewItemViewModel> FindMatches(string searchText, TreeViewItemViewModel treeItem)
         {
             if (treeItem.NameContainsText(searchText))
                 yield return treeItem;
@@ -163,7 +169,7 @@ namespace GameStoryEdit.TreeData
                 foreach (TreeViewItemViewModel match in FindMatches(searchText, child))
                     yield return match;
         }
-        IEnumerable<TreeViewItemViewModel> FindMatches(string searchText, TreeViewItemViewModel[] treeItems)
+        public IEnumerable<TreeViewItemViewModel> FindMatches(string searchText, TreeViewItemViewModel[] treeItems)
         {
             foreach(TreeViewItemViewModel treeItem in treeItems)
                 foreach(TreeViewItemViewModel findMatch in FindMatches(searchText, treeItem))

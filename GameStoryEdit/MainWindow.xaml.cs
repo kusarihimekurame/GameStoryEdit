@@ -10,6 +10,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using GameStoryEdit.TreeData;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace GameStoryEdit
 {
@@ -18,28 +19,32 @@ namespace GameStoryEdit
     /// </summary>
     public partial class MainWindow : Window
     {
-        FountainEditor FountainEditor => LayoutDocumentPane.SelectedContent.Content as FountainEditor;
-        FountainGame FountainGame => FountainEditor.FountainGame;
-        XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
-        LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
-        LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
+        public FountainEditor FountainEditor => (FountainEditor)Layouts_FountainEditor.FirstOrDefault(lf => lf.IsSelected).Content;
+        public FountainGame FountainGame => FountainEditor.FountainGame;
+        public XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
+        public LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
+        public LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
+        public List<LayoutDocument> Layouts_FountainEditor => dockingManager.Layout.Descendents().OfType<LayoutDocument>().Where(ld => ld.ContentId.Equals("FountainEditor")).ToList();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            LayoutDocument ld = new LayoutDocument() { Content = new FountainEditor(), ContentId = "FountainEditor", Title = "ScreenPlay1" };
-            ((FountainEditor)ld.Content).FountainGame_Changed += FountainGame_Changed;
-            ((FountainEditor)ld.Content).textEditor.Text = ((ScreenPlay)TreeItem.Solution.Projects[0].Children["Document"].Children["ScreenPlay1"]).GetText();
-            LayoutDocumentPane.Children.Add(ld);
-
             if (File.Exists(@"Layout\" + TreeItem.Solution.Name + ".xml"))
             {
                 using (XmlReader Reader = XmlReader.Create(@"Layout\" + TreeItem.Solution.Name + ".xml"))
                 {
-                    if (Reader.XmlSpace != XmlSpace.None) serializer.Deserialize(Reader);
+                    serializer.Deserialize(Reader);
                 }
             }
+
+            Layouts_FountainEditor.ForEach(lf =>
+            {
+                if (TreeView.DataContext is SolutionViewModel solutionView)
+                {
+                    lf.Content = solutionView.FindMatches(lf.Title, solutionView.Projects).Select(vm => vm.TreeItem).Cast<ScreenPlay>().First().FountainEditor;
+                }
+            });
         }
 
         private void Add_Html(object sender, RoutedEventArgs e)
@@ -60,32 +65,6 @@ namespace GameStoryEdit
             }
         }
 
-        private void TreeViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is TreeViewItem tvi)
-            {
-                LayoutDocument ld = LayoutDocumentPane.Children.Cast<LayoutDocument>().SingleOrDefault(d => d.Title == tvi.Header.ToString());
-                if (ld != null)
-                {
-                    ld.IsSelected = true;
-                    ld.IsActive = true;
-                }
-            }
-        }
-
-        private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is TreeViewItem tvi)
-            {
-                if (LayoutDocumentPane.Children.Cast<LayoutDocument>().Count(d => d.Title == tvi.Header.ToString()) == 0)
-                {
-                    FountainEditor fe = new FountainEditor();
-                    LayoutDocumentPane.Children.Add(new LayoutDocument() { Content = fe, ContentId = "FountainEditor", Title = tvi.Header.ToString() });
-                    fe.FountainGame_Changed += FountainGame_Changed;
-                }
-            }
-        }
-
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (!Directory.Exists(@"Layout\")) Directory.CreateDirectory(@"Layout\");
@@ -95,7 +74,7 @@ namespace GameStoryEdit
             }
         }
 
-        private void FountainGame_Changed(object sender, EventArgs e)
+        public void FountainGame_Changed(object sender, EventArgs e)
         {
             #region ListBox
 

@@ -97,34 +97,14 @@
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutDocumentPane>
-                        <!--<avalonDock:LayoutDocument ContentId="FountainEditor" Title="{Binding Header, ElementName=ScreenPlay1}">
+                        <avalonDock:LayoutDocument ContentId="FountainEditor" Title="ScreenPlay1">
                             <UserControls:FountainEditor/>
-                        </avalonDock:LayoutDocument>-->
+                        </avalonDock:LayoutDocument>
                     </avalonDock:LayoutDocumentPane>
                     <avalonDock:LayoutAnchorablePaneGroup Orientation="Vertical" DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable Title="Solution Explorer" ContentId="Solution Explorer">
                                 <UserControls:TreeView x:Name="TreeView"/>
-                                <!--<TreeView x:Name="TreeView">
-                                    <TreeViewItem Header="Solution''(1 projects)" IsExpanded="True">
-                                        <TreeViewItem Header="Projects" IsExpanded="True">
-                                            <TreeViewItem Header="Documents" x:Name="Documents">
-                                                <TreeViewItem x:Name="ScreenPlay1" Header="ScreenPlay1" MouseLeftButtonUp="TreeViewItem_MouseLeftButtonUp" MouseDoubleClick="TreeViewItem_MouseDoubleClick"/>
-                                            </TreeViewItem>
-                                            <TreeViewItem Header="Flow"/>
-                                            <TreeViewItem Header="Locations" x:Name="Locations"/>
-                                            <TreeViewItem Header="Tables">
-                                                <TreeViewItem Header="Characters" x:Name="Characters"/>
-                                            </TreeViewItem>
-                                            <TreeViewItem Header="Assets">
-                                                <TreeViewItem Header="Audio"/>
-                                                <TreeViewItem Header="Documents"/>
-                                                <TreeViewItem Header="Images"/>
-                                                <TreeViewItem Header="Videos"/>
-                                            </TreeViewItem>
-                                        </TreeViewItem>
-                                    </TreeViewItem>
-                                </TreeView>-->
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorablePane>
                         <avalonDock:LayoutAnchorablePane>

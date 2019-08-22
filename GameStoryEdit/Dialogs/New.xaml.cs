@@ -101,8 +101,12 @@ namespace GameStoryEdit.Dialogs
             project.Children.Add(tables);
             project.Children.Add(assets);
             solution.Projects.Add(project);
-            
+
+            screenPlay.FountainEditor = new UserControls.FountainEditor();
             solution.Serialize();
+            solution = Solution.Deserialize(solution.Path + @"\" + solution.Name + ".gse");
+            
+            if (File.Exists(@"Layout\" + solution.Name + ".xml")) File.Delete(@"Layout\" + solution.Name + ".xml");
 
             TreeItem.Solution = solution;
             Application.Current.MainWindow = new MainWindow();

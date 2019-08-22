@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
@@ -40,6 +41,7 @@ namespace GameStoryEdit.UserControls
                 FountainGame_Changed?.Invoke(fountainGame, null);
             }
         }
+
         public delegate void _FountainGame_Changed(object sender, EventArgs e);
         public event _FountainGame_Changed FountainGame_Changed;
         public WebBrowser webBrowser = new WebBrowser();
@@ -61,7 +63,7 @@ namespace GameStoryEdit.UserControls
                 Languages.languages.SetLines(textEditor.LineCount);
                 Languages.languages.SetCharacters(textEditor.Document.TextLength);
             };
-
+            
             using (XmlReader reader = XmlReader.Create(Assembly.GetExecutingAssembly().GetManifestResourceStream("GameStoryEdit.HighLighting.Fountain-Mode.xshd")))
             {
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
@@ -114,9 +116,19 @@ namespace GameStoryEdit.UserControls
             #endregion
         }
 
-        private void TextEditor_Loaded(object sender, RoutedEventArgs e)
+        private void TextEditor_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (Parent != null) Timer.Start();
+            if ((bool)e.NewValue)
+            {
+                Timer.Start();
+            }
+            else
+            {
+                Timer.Stop();
+                Languages.languages.SetTextLocation(new TextLocation(0, 0));
+                Languages.languages.SetLines(0);
+                Languages.languages.SetCharacters(0);
+            }
         }
     }
 }

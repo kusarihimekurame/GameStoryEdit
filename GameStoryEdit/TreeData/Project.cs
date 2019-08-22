@@ -109,6 +109,12 @@ namespace GameStoryEdit.TreeData
                                                 break;
                                         }
                                     }
+
+                                    if (treeItem is ScreenPlay sp && sp.Name != null && sp.Path != null)
+                                    {
+                                        sp.FountainEditor = new UserControls.FountainEditor();
+                                    }
+
                                     rootTreeItem.Children.Add(treeItem);
                                 }
                             }
@@ -149,7 +155,7 @@ namespace GameStoryEdit.TreeData
                     string fullpath = screenPlay.Path + @"\" + screenPlay.Name + ".fountain";
 
                     if (!Directory.Exists(screenPlay.Path)) Directory.CreateDirectory(screenPlay.Path);
-                    if (!File.Exists(fullpath)) File.Create(fullpath);
+                    File.WriteAllText(fullpath, screenPlay.FountainEditor.textEditor.Text);
                 }
 
                 #endregion
