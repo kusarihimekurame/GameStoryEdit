@@ -18,7 +18,9 @@ namespace GameStoryEdit.TreeData
         public ProjectCollection Projects { get; set; } = new ProjectCollection();
         public string Name { get; set; }
         public string Path { get; set; }
-        public DateTime LastOpenTime { get; private set; }
+        public string Extension => ".gse";
+        public string FileName => Name + Extension;
+        public string FullName => Path + @"\" + Name + Extension;
 
         #endregion
 
@@ -54,7 +56,6 @@ namespace GameStoryEdit.TreeData
         public XmlSchema GetSchema() => null;
         public void ReadXml(XmlReader reader)
         {
-            LastOpenTime = DateTime.Now;
             while (reader.Read())
             {
                 reader.MoveToContent();

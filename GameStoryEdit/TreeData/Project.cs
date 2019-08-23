@@ -15,6 +15,14 @@ namespace GameStoryEdit.TreeData
     [Serializable]
     public class Project : BaseTreeItem, IXmlSerializable
     {
+        #region Date
+
+        public string Extension => ".GameStory";
+        public string FileName => Name + Extension;
+        public string FullName => Path + @"\" + Name + Extension;
+
+        #endregion
+
         #region Serialize
 
         public void Serialize()

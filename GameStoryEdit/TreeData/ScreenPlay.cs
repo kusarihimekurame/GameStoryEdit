@@ -13,6 +13,10 @@ namespace GameStoryEdit.TreeData
 {
     public class ScreenPlay : BaseTreeItem
     {
+        public string Extension;
+        public string FileName => Name + Extension;
+        public string FullName => Path + @"\" + Name + Extension;
+
         private FountainEditor _fountainEditor;
         public FountainEditor FountainEditor
         {
@@ -28,7 +32,8 @@ namespace GameStoryEdit.TreeData
         public LayoutDocument LayoutDocument { get; private set; }
         public string GetText()
         {
-            using (StreamReader sr = new StreamReader(Path + @"\" + Name + ".fountain", Encoding.Default))
+            Extension = new DirectoryInfo(Path).GetFiles().First(file => file.Name.Contains(Name)).Extension;
+            using (StreamReader sr = new StreamReader(FullName, Encoding.Default))
             {
                 string _line;
                 StringBuilder line = new StringBuilder();
