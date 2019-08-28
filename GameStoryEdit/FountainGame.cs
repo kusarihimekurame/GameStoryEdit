@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using FountainSharp;
 using Microsoft.FSharp.Core;
 using Microsoft.FSharp.Collections;
+using System.Diagnostics;
 
 namespace GameStoryEdit
 {
+    [DebuggerDisplay("Scene_{SceneBlocks}")]
     public class FountainGame
     {
         public FountainDocument Fountain { get; }
@@ -119,6 +121,7 @@ namespace GameStoryEdit
             }
         }
     }
+    [DebuggerDisplay("{Range}")]
     public class SceneBlock : Blocks
     {
         public List<DialogueBlock> DialogueBlocks => GetDialogueBlocks();
@@ -128,7 +131,7 @@ namespace GameStoryEdit
             Range = new Range(blocks[0].Range.Location, blocks[blocks.Length - 1].Range.EndLocation - blocks[0].Range.Location + 1);
         }
     }
-
+    [DebuggerDisplay("{Range}")]
     public class DialogueBlock : Blocks
     {
         public Range Range { get; }
@@ -138,6 +141,7 @@ namespace GameStoryEdit
         }
     }
 
+    [DebuggerDisplay("{FSharpAction}")]
     public class Action
     {
         public bool Forced { get; }
@@ -152,6 +156,7 @@ namespace GameStoryEdit
             Range = FSharpAction.Item3;
         }
     }
+    [DebuggerDisplay("{FSharpBoneyard}")]
     public class Boneyard
     {
         public string Text { get; }
@@ -164,6 +169,7 @@ namespace GameStoryEdit
             Range = FSharpBoneyard.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpCentered}")]
     public class Centered
     {
         public Spans Spans { get; }
@@ -176,6 +182,7 @@ namespace GameStoryEdit
             Range = FSharpCentered.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpCharacter}")]
     public class Character
     {
         public bool Forced { get; }
@@ -192,6 +199,7 @@ namespace GameStoryEdit
             Range = FSharpCharacter.Item4;
         }
     }
+    [DebuggerDisplay("{FSharpDialogue}")]
     public class Dialogue
     {
         public Spans Spans { get; }
@@ -204,6 +212,7 @@ namespace GameStoryEdit
             Range = FSharpDialogue.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpDualDialogue}")]
     public class DualDialogue
     {
         public Blocks Blocks { get; }
@@ -216,6 +225,7 @@ namespace GameStoryEdit
             Range = FSharpDualDialogue.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpLyrics}")]
     public class Lyrics
     {
         public Spans Spans { get; }
@@ -228,6 +238,7 @@ namespace GameStoryEdit
             Range = FSharpLyrics.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpPageBreak}")]
     public class PageBreak
     {
         public Range Range { get; }
@@ -238,6 +249,7 @@ namespace GameStoryEdit
             Range = FSharpPageBreak.Item;
         }
     }
+    [DebuggerDisplay("{FSarpParenthetical}")]
     public class Parenthetical
     {
         public Spans Spans { get; }
@@ -250,6 +262,7 @@ namespace GameStoryEdit
             Range = FSarpParenthetical.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpSceneHeading}")]
     public class SceneHeading
     {
         public bool Forced { get; }
@@ -264,6 +277,7 @@ namespace GameStoryEdit
             Range = FSharpSceneHeading.Item3;
         }
     }
+    [DebuggerDisplay("{FSharpSection}")]
     public class Section
     {
         public int N { get; }
@@ -278,6 +292,7 @@ namespace GameStoryEdit
             Range = FSharpSection.Item3;
         }
     }
+    [DebuggerDisplay("{FSharpSynopses}")]
     public class Synopses
     {
         public Spans Spans { get; }
@@ -290,6 +305,7 @@ namespace GameStoryEdit
             Range = FSharpSynopses.Item2;
         }
     }
+    [DebuggerDisplay("{FSharpTitlePage}")]
     public class TitlePage
     {
         public List<KeyValuePair> KeyValuePairs { get; }
@@ -306,6 +322,7 @@ namespace GameStoryEdit
             Range = FSharpTitlePage.Item2;
         }
 
+        [DebuggerDisplay("{Key}")]
         public class KeyValuePair
         {
             public string Key { get; }
@@ -320,6 +337,7 @@ namespace GameStoryEdit
             }
         }
     }
+    [DebuggerDisplay("{FSharpTransition}")]
     public class Transition
     {
         public bool Forced { get; }
@@ -362,6 +380,7 @@ namespace GameStoryEdit
             }
         }
 
+        [DebuggerDisplay("{FSharpNote}")]
         public class Note
         {
             public FSharpList<FountainSpanElement> Spans { get; }
@@ -374,6 +393,7 @@ namespace GameStoryEdit
                 Range = FSharpNote.Item2;
             }
         }
+        [DebuggerDisplay("{FSharpLiteral}")]
         public class Literal
         {
             public string Text { get; }
@@ -386,6 +406,7 @@ namespace GameStoryEdit
                 Range = FSharpLiteral.Item2;
             }
         }
+        [DebuggerDisplay("{FSharpBold}")]
         public class Bold
         {
             public FSharpList<FountainSpanElement> Spans { get; }
@@ -398,6 +419,7 @@ namespace GameStoryEdit
                 Range = FSharpBold.Item2;
             }
         }
+        [DebuggerDisplay("{FSharpItalic}")]
         public class Italic
         {
             public FSharpList<FountainSpanElement> Spans { get; }
@@ -410,6 +432,7 @@ namespace GameStoryEdit
                 Range = FSharpItalic.Item2;
             }
         }
+        [DebuggerDisplay("{FSharpUnderline}")]
         public class Underline
         {
             public FSharpList<FountainSpanElement> Spans { get; }
@@ -422,6 +445,7 @@ namespace GameStoryEdit
                 Range = FSharpUnderline.Item2;
             }
         }
+        [DebuggerDisplay("{FSharpHardLineBreak}")]
         public class HardLineBreak
         {
             public Range Range { get; }

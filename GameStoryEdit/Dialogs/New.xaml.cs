@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
 using System.Xml.Serialization;
+using GameStoryEdit.Data;
 using GameStoryEdit.TreeData;
 
 namespace GameStoryEdit.Dialogs
@@ -48,8 +49,9 @@ namespace GameStoryEdit.Dialogs
         public New()
         {
             InitializeComponent();
-            Path.TextChanged += (sender, e) => { if (sender is TextBox tb) path = Path.Text; };
+            Path.TextChanged += (sender, e) => { if (sender is TextBox tb) path = tb.Text; };
             path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Histories.ItemsSource = HistoryCollection.Deserialize();
         }
 
         bool Text_Equals;

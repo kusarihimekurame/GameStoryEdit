@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameStoryEdit.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,19 @@ namespace GameStoryEdit.TreeData
             {
                 serializer.Serialize(xmlWriter, this);
             }
+
+            HistoryCollection histories = HistoryCollection.Deserialize();
+            if (histories.Contains(Name))
+            {
+                histories[Name].Extension = Extension;
+                histories[Name].Path = Path;
+                histories[Name].CloseTime = DateTime.Now;
+            }
+            else
+            {
+                histories.Add(new History() { Name = Name, Extension = Extension, Path = Path, CloseTime = DateTime.Now });
+            }
+            histories.Serialize();
         }
 
         #endregion
@@ -45,7 +59,22 @@ namespace GameStoryEdit.TreeData
             XmlSerializer serializer = new XmlSerializer(typeof(Solution));
             using (XmlReader Reader = XmlReader.Create(path))
             {
-                return (Solution)serializer.Deserialize(Reader);
+                Solution solution = (Solution)serializer.Deserialize(Reader);
+
+                HistoryCollection histories = HistoryCollection.Deserialize();
+                if (histories.Contains(solution.Name))
+                {
+                    histories[solution.Name].Extension = solution.Extension;
+                    histories[solution.Name].Path = solution.Path;
+                    histories[solution.Name].OpenTime = DateTime.Now;
+                }
+                else
+                {
+                    histories.Add(new History() { Name = solution.Name, Extension = solution.Extension, Path = solution.Path, OpenTime = DateTime.Now });
+                }
+                histories.Serialize();
+
+                return solution;
             }
         }
 

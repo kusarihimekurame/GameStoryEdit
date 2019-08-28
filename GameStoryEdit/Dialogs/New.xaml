@@ -28,7 +28,25 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Game Story Edit" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" TextOptions.TextFormattingMode="Display" FontSize="36" FontWeight="Bold" Height="56" Margin="50,29,0,10.2" Width="315"/>
                     <Label Content="打开最近使用的内容" Foreground="White" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,3.6,0,0" FontSize="22" TextOptions.TextFormattingMode="Display"/>
-                    <ListBox Background="#FF252526" Grid.Row="1" Margin="50,50,30.4,50"></ListBox>
+                    <ListBox x:Name="Histories" Grid.Row="1" Margin="50,50,30.4,50" Background="#FF252526" Foreground="White" BorderBrush="{x:Null}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="360">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="10*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock  Grid.Column="1" Height="23" Text="{Binding FileName}" HorizontalAlignment="Left" />
+                                    <TextBlock  Grid.Column="1" Height="23" Text="{Binding Path=OpenTime, StringFormat=yyyy/MM/dd HH:mm}" HorizontalAlignment="Right" TextAlignment="Right" />
+                                    <TextBlock  Grid.Row="1" Grid.Column="1" Height="23" Text="{Binding Path}" HorizontalAlignment="Left" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <Label Content="开始使用" Foreground="White" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" TextOptions.TextFormattingMode="Display"/>
                     <Button TextOptions.TextFormattingMode="Display" Content="打开项目" FontSize="20" Height="50" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0.6,50,50,0" Style="{DynamicResource Button_Big_Black}" GotFocus="Button_GotFocus" LostFocus="Button_LostFocus" Command="{Binding Open, Mode=OneWay, Source={StaticResource Command}}"/>
                     <Button TextOptions.TextFormattingMode="Display" Content="创建新项目" FontSize="20" Height="50" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0.6,110,50,0" Style="{DynamicResource Button_Big_Black}" GotFocus="Button_GotFocus" LostFocus="Button_LostFocus" Command="{Binding NewDialog, Mode=OneWay, Source={StaticResource Command}}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"/>

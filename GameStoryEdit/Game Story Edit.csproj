@@ -74,6 +74,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\MainWindow_InputBindings.cs" />
+    <Compile Include="Data\History.cs" />
+    <Compile Include="Data\HistoryCollection.cs" />
     <Compile Include="TreeData\Assets.cs" />
     <Compile Include="TreeData\ChildrenCollection.cs" />
     <Compile Include="TreeData\Document.cs" />
