@@ -41,11 +41,11 @@ namespace GameStoryEdit.TreeData
             {
                 histories[Name].Extension = Extension;
                 histories[Name].Path = Path;
-                histories[Name].CloseTime = DateTime.Now;
+                histories[Name].SaveTime = DateTime.Now;
             }
             else
             {
-                histories.Add(new History() { Name = Name, Extension = Extension, Path = Path, CloseTime = DateTime.Now });
+                histories.Add(new History() { Name = Name, Extension = Extension, Path = Path, SaveTime = DateTime.Now });
             }
             histories.Serialize();
         }

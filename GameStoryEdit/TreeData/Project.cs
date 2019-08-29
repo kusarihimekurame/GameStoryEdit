@@ -160,10 +160,7 @@ namespace GameStoryEdit.TreeData
                 }
                 else if(rootTreeItem is ScreenPlay screenPlay)
                 {
-                    string fullpath = screenPlay.Path + @"\" + screenPlay.Name + ".fountain";
-
-                    if (!Directory.Exists(screenPlay.Path)) Directory.CreateDirectory(screenPlay.Path);
-                    File.WriteAllText(fullpath, screenPlay.FountainEditor.textEditor.Text);
+                    screenPlay.SaveText();
                 }
 
                 #endregion

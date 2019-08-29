@@ -13,7 +13,7 @@ namespace GameStoryEdit.TreeData
 {
     public class ScreenPlay : BaseTreeItem
     {
-        public string Extension;
+        public string Extension { get; set; } = ".fountain";
         public string FileName => Name + Extension;
         public string FullName => Path + @"\" + Name + Extension;
 
@@ -43,6 +43,11 @@ namespace GameStoryEdit.TreeData
                 }
                 return line.ToString();
             }
+        }
+        public void SaveText()
+        {
+            if (!Directory.Exists(Path)) Directory.CreateDirectory(Path);
+            File.WriteAllText(FullName, FountainEditor.textEditor.Text);
         }
     }
 }

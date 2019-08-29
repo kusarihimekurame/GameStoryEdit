@@ -75,29 +75,31 @@ namespace GameStoryEdit.UserControls
 
         private async void TextEditor_TextChanged(object sender, EventArgs e)
         {
-            TextEditor text = (TextEditor)sender;
-            FountainGame = await FountainGameAsync(text.Text);
-            webBrowser.NavigateToString(fountainGame.Html);
-
-            #region Folding
-
-            List<NewFolding> newFoldings = new List<NewFolding>();
-            fountainGame.SceneBlocks.ForEach(sb =>
+            if (sender is TextEditor text)
             {
-                try
+                FountainGame = await FountainGameAsync(text.Text);
+                webBrowser.NavigateToString(fountainGame.Html);
+
+                #region Folding
+
+                List<NewFolding> newFoldings = new List<NewFolding>();
+                fountainGame.SceneBlocks.ForEach(sb =>
                 {
-                    newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
-                    sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
-                }
-                catch { }
-            });
-            foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
-            foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+                    try
+                    {
+                        newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
+                        sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
+                    }
+                    catch { }
+                });
+                foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
+                foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
 
-            #endregion
+                #endregion
 
-            //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
-            //webBrowser.NavigateToString(text.Text);  //测试html语句用
+                //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
+                //webBrowser.NavigateToString(text.Text);  //测试html语句用
+            }
         }
 
         public void HTMLToPdf(string HTML, string FilePath)

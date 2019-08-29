@@ -17,6 +17,6 @@ namespace GameStoryEdit.Data
         public string FileName => Name + Extension;
         public string FullName => Path + @"\" + Name + Extension;
         public DateTime OpenTime { get; set; }
-        public DateTime CloseTime { get; set; }
+        public DateTime SaveTime { get; set; }
     }
 }

@@ -23,25 +23,23 @@ namespace GameStoryEdit.Commands
         public static ICommand Open { get; } = new _Open();
         public static ICommand OpenDialog { get; } = new _OpenDialog();
         public static ICommand Close { get; } = new _Close();
+        public static ICommand Save { get; } = new _Save();
 
         private class _Exit : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) { return true; }
+            public bool CanExecute(object parameter) => true;
             public void Execute(object parameter)
             {
                 Application.Current.MainWindow.Close();
             }
-            public void RaiseCanExecuteChanged()
-            {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-            }
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private class _NewDialog : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) { return true; }
+            public bool CanExecute(object parameter) => true;
             public void Execute(object parameter)
             {
                 if (parameter == null) new New().ShowDialog();
@@ -60,24 +58,31 @@ namespace GameStoryEdit.Commands
                         else tabControl.SelectedIndex = 1;
                 }
             }
-            public void RaiseCanExecuteChanged()
-            {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-            }
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private class _Open : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) { return true; }
+            public bool CanExecute(object parameter) => true;
             public void Execute(object parameter)
             {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Title = "打开项目";
-                ofd.Filter = "gse项目文件|*.gse";
-                if (ofd.ShowDialog().GetValueOrDefault())
+                string path = null;
+                if (parameter == null)
                 {
-                    TreeItem.Solution = Solution.Deserialize(ofd.FileName);
+                    OpenFileDialog ofd = new OpenFileDialog();
+                    ofd.Title = "打开项目";
+                    ofd.Filter = "gse项目文件|*.gse";
+                    if (ofd.ShowDialog().GetValueOrDefault())
+                    {
+                        path = ofd.FileName;
+                    }
+                }
+                else path = parameter.ToString();
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    TreeItem.Solution = Solution.Deserialize(path);
 
                     New @new = null;
                     if (Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
@@ -86,40 +91,42 @@ namespace GameStoryEdit.Commands
                     if (@new != null) @new.Close();
                 }
             }
-            public void RaiseCanExecuteChanged()
-            {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-            }
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private class _OpenDialog : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) { return true; }
+            public bool CanExecute(object parameter) => true;
             public void Execute(object parameter)
             {
                 TextBox tb = parameter as TextBox;
                 CommonOpenFileDialog FileDialog = new CommonOpenFileDialog("项目位置") { IsFolderPicker = true, DefaultDirectory = tb.Text };
                 if (FileDialog.ShowDialog(Window.GetWindow(parameter as TextBox)) == CommonFileDialogResult.Ok) tb.Text = FileDialog.FileName;
             }
-            public void RaiseCanExecuteChanged()
-            {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-            }
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private class _Close : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) { return true; }
+            public bool CanExecute(object parameter) => true;
             public void Execute(object parameter)
             {
                 Window.GetWindow((DependencyObject)parameter).Close();
             }
-            public void RaiseCanExecuteChanged()
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private class _Save : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter) => true;
+            public void Execute(object parameter)
             {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                TreeItem.Solution.Serialize();
             }
+            public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
