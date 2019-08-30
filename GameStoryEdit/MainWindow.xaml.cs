@@ -19,12 +19,20 @@ namespace GameStoryEdit
     /// </summary>
     public partial class MainWindow : Window
     {
-        public FountainEditor FountainEditor => (FountainEditor)Layouts_FountainEditor.FirstOrDefault(lf => lf.IsSelected).Content;
+        public FountainEditor FountainEditor
+        {
+            get
+            {
+                LayoutDocument ld = Layouts_FountainEditor.FirstOrDefault(lf => lf.IsSelected);
+                return ld == null ? null : (FountainEditor)ld.Content;
+            }
+        }
+
         public FountainGame FountainGame => FountainEditor.FountainGame;
         public XmlLayoutSerializer serializer => new XmlLayoutSerializer(dockingManager);
         public LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         public LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
-        public List<LayoutDocument> Layouts_FountainEditor => dockingManager.Layout.Descendents().OfType<LayoutDocument>().Where(ld => ld.ContentId.Equals("FountainEditor")).ToList();
+        public List<LayoutDocument> Layouts_FountainEditor => dockingManager.Layout.Descendents().OfType<LayoutDocument>().Where(ld => !string.IsNullOrEmpty(ld.ContentId) && ld.ContentId.Equals("FountainEditor")).ToList();
 
         public MainWindow()
         {
@@ -45,6 +53,8 @@ namespace GameStoryEdit
                     lf.Content = solutionView.FindMatches(lf.Title, solutionView.Projects).Select(vm => vm.TreeItem).Cast<ScreenPlay>().First().FountainEditor;
                 }
             });
+
+            if (FountainEditor != null) FountainEditor.FountainGame_Changed += FountainGame_Changed;
         }
 
         private void Add_Html(object sender, RoutedEventArgs e)

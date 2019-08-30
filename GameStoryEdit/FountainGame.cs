@@ -9,6 +9,7 @@ using FountainSharp;
 using Microsoft.FSharp.Core;
 using Microsoft.FSharp.Collections;
 using System.Diagnostics;
+using System.Threading;
 
 namespace GameStoryEdit
 {
@@ -23,10 +24,9 @@ namespace GameStoryEdit
         public string GetText(Range range) => Fountain.GetText(range);
         public void ReplaceText(int location, int length, string replaceText) => Fountain.ReplaceText(location, length, replaceText);
         public string Html => HtmlFormatter.WriteHtml(Fountain);
-        public FountainGame(string Text)
-        {
-            Fountain = FountainDocument.Parse(Text);
-        }
+        public FountainGame(string Text) => Fountain = FountainDocument.Parse(Text);
+        private FountainGame(FountainDocument fountainDocument) => Fountain = fountainDocument;
+        public static async Task<FountainGame> GetValueAsync(string Text) => new FountainGame(await FountainDocument.ParseAsync(Text));
     }
 
     public class Blocks

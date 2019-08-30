@@ -38,7 +38,30 @@ namespace GameStoryEdit.UserControls
             set
             {
                 fountainGame = value;
+
                 FountainGame_Changed?.Invoke(fountainGame, null);
+
+                webBrowser.NavigateToString(fountainGame.Html);
+
+                #region Folding
+
+                List<NewFolding> newFoldings = new List<NewFolding>();
+                fountainGame.SceneBlocks.ForEach(sb =>
+                {
+                    try
+                    {
+                        newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
+                        sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
+                    }
+                    catch { }
+                });
+                foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
+                foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+
+                #endregion
+
+                //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
+                //webBrowser.NavigateToString(text.Text);  //测试html语句用
             }
         }
 
@@ -49,7 +72,6 @@ namespace GameStoryEdit.UserControls
         private FoldingManager foldingManager;
         private XmlFoldingStrategy foldingStrategy;
         private FountainGame fountainGame;
-        private async Task<FountainGame> FountainGameAsync(string Text) => await Task.Run(() => new FountainGame(Text));
 
         private DispatcherTimer Timer = new DispatcherTimer();
 
@@ -77,28 +99,7 @@ namespace GameStoryEdit.UserControls
         {
             if (sender is TextEditor text)
             {
-                FountainGame = await FountainGameAsync(text.Text);
-                webBrowser.NavigateToString(fountainGame.Html);
-
-                #region Folding
-
-                List<NewFolding> newFoldings = new List<NewFolding>();
-                fountainGame.SceneBlocks.ForEach(sb =>
-                {
-                    try
-                    {
-                        newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
-                        sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
-                    }
-                    catch { }
-                });
-                foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
-                foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
-
-                #endregion
-
-                //HTMLToPdf(FountainGame.Html, @"F:\GameStory.pdf");
-                //webBrowser.NavigateToString(text.Text);  //测试html语句用
+                FountainGame = await FountainGame.GetValueAsync(text.Text);
             }
         }
 
