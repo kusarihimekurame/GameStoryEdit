@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xceed.Wpf.Toolkit", "wpftoo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xceed.Wpf.Toolkit.LiveExplorer", "wpftoolkit-master\ExtendedWPFToolkitSolution\Src\Xceed.Wpf.Toolkit.LiveExplorer\Xceed.Wpf.Toolkit.LiveExplorer.csproj", "{5E7DC9C8-3E27-400C-B84C-29FF9E710CB3}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Android = Debug|Android
@@ -345,6 +347,26 @@ Global
 		{5E7DC9C8-3E27-400C-B84C-29FF9E710CB3}.Release|WithNRefactory.ActiveCfg = Release|x86
 		{5E7DC9C8-3E27-400C-B84C-29FF9E710CB3}.Release|x86.ActiveCfg = Release|x86
 		{5E7DC9C8-3E27-400C-B84C-29FF9E710CB3}.Release|x86.Build.0 = Release|x86
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Android.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Any CPU.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|iOS.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Net35.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Net40.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Windows-ARM.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Windows-x64.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|Windows-x86.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|WithNRefactory.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Debug|x86.ActiveCfg = Debug
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Android.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Any CPU.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|iOS.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Net35.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Net40.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Windows-ARM.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Windows-x64.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|Windows-x86.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|WithNRefactory.ActiveCfg = Release
+		{7CFFB49B-03BE-4A6D-8B56-D5D281AF0E00}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

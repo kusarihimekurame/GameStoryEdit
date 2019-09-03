@@ -95,11 +95,23 @@ namespace GameStoryEdit.UserControls
             foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
         }
 
+        private Task<FountainGame> Task_FountainGame;
+        private bool IsOnCompleted;
         private async void TextEditor_TextChanged(object sender, EventArgs e)
         {
             if (sender is TextEditor text)
             {
-                FountainGame = await FountainGame.GetValueAsync(text.Text);
+                if (Task_FountainGame == null || Task_FountainGame.IsCompleted)
+                {
+                    IsOnCompleted = false;
+                    Task_FountainGame = FountainGame.GetValueAsync(text.Text);
+                    FountainGame = await FountainGame.GetValueAsync(text.Text);
+                }
+                else if (Task_FountainGame != null && !IsOnCompleted)
+                {
+                    Task_FountainGame.GetAwaiter().OnCompleted(() => TextEditor_TextChanged(sender, e));
+                    IsOnCompleted = true;
+                }
             }
         }
 
