@@ -68,6 +68,11 @@ namespace GameStoryEdit.Commands
             public void Execute(object parameter)
             {
                 string path = null;
+                if (parameter != null && !File.Exists(parameter.ToString()))
+                {
+                    MessageBox.Show("Unable to find the path, please select new path!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    parameter = null;
+                }
                 if (parameter == null)
                 {
                     OpenFileDialog ofd = new OpenFileDialog();

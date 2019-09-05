@@ -76,8 +76,8 @@ namespace GameStoryEdit.TreeData
                         Name = reader.Value;
                         break;
                     case "Path":
-                        reader.Read();
-                        Path = reader.Value;
+                        string BasePath = reader.BaseURI.Substring(8, reader.BaseURI.Length - reader.BaseURI.Split('/').Last().Length - 9).Replace('/', '\\');
+                        Path = Directory.Exists(reader.Value) ? reader.Value : BasePath;
                         break;
                     case "Children":
                         void _readxml(BaseTreeItem rootTreeItem)
@@ -110,7 +110,7 @@ namespace GameStoryEdit.TreeData
                                                 break;
                                             case "Path":
                                                 reader.Read();
-                                                treeItem.Path = reader.Value;
+                                                treeItem.Path = Directory.Exists(reader.Value) ? reader.Value : Path.Substring(0, 3) + reader.Value.Substring(3);
                                                 break;
                                             case "Children":
                                                 _readxml(treeItem);

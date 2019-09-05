@@ -107,7 +107,8 @@ namespace GameStoryEdit.TreeData
                         break;
                     case "Path":
                         reader.Read();
-                        Path = reader.Value;
+                        string BasePath = reader.BaseURI.Substring(8, reader.BaseURI.Length - reader.BaseURI.Split('/').Last().Length - 9).Replace('/', '\\');
+                        Path = Directory.Exists(reader.Value) ? reader.Value : BasePath;
                         break;
                     case "Projects":
                         while (reader.Read())
@@ -123,7 +124,7 @@ namespace GameStoryEdit.TreeData
                                 reader.Read();
                                 reader.Read();
 
-                                Projects.Add(Project.Deserialize(reader.Value + @"\" + name + ".GameStory"));
+                                Projects.Add(Project.Deserialize(Directory.Exists(reader.Value) ? reader.Value : Path.Substring(0, 3) + reader.Value.Substring(3) + @"\" + name + ".GameStory"));
                             }
                         }
                         break;
