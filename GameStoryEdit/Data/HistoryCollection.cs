@@ -22,23 +22,25 @@ namespace GameStoryEdit.Data
 
         public void Serialize()
         {
-            if (!Directory.Exists(@"Histories")) Directory.CreateDirectory(@"Histories");
+            string path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "Histories";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             XmlSerializer serializer = new XmlSerializer(typeof(HistoryCollection));
-            using (XmlWriter xmlWriter = XmlWriter.Create(@"Histories\OpenTime.xml"))
+            using (XmlWriter xmlWriter = XmlWriter.Create(path + @"\OpenTime.xml"))
             {
                 serializer.Serialize(xmlWriter, this);
             }
         }
         public static HistoryCollection Deserialize()
         {
-            if (!File.Exists(@"Histories\OpenTime.xml"))
+            string path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"Histories\OpenTime.xml";
+            if (!File.Exists(path))
             {
                 HistoryCollection histories = new HistoryCollection();
                 histories.Serialize();
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(HistoryCollection));
-            using (XmlReader Reader = XmlReader.Create(@"Histories\OpenTime.xml"))
+            using (XmlReader Reader = XmlReader.Create(path))
             {
                 return (HistoryCollection)serializer.Deserialize(Reader);
             }

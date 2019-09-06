@@ -15,16 +15,17 @@ namespace GameStoryEdit
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string path = null;
             string[] arguments = e.Args;
 
-            if (arguments.Length > 0 && arguments[1].EndsWith(".gse"))
+            if (arguments.Length > 0 && arguments[0].EndsWith(".gse"))
             {
-                path = arguments[1];
+                string path = arguments[0];
+                Command.Open.Execute(path);
             }
 
             Languages.languages.SetLanguage(CultureInfo.CurrentCulture);
-            new New(path).ShowDialog();
+
+            if (MainWindow == null) new New().ShowDialog();
         }
         
         private void Application_Activated(object sender, EventArgs e)

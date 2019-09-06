@@ -46,17 +46,12 @@ namespace GameStoryEdit.Dialogs
             }
         }
 
-        public New(string _path = null)
+        public New()
         {
             InitializeComponent();
             Path.TextChanged += (sender, e) => { if (sender is TextBox tb) path = tb.Text; };
             path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             Histories.ItemsSource = HistoryCollection.Deserialize();
-
-            if (!string.IsNullOrEmpty(_path))
-            {
-                Commands.Command.Open.Execute(_path);
-            }
         }
 
         bool Text_Equals;

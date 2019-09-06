@@ -38,9 +38,11 @@ namespace GameStoryEdit
         {
             InitializeComponent();
 
-            if (File.Exists(@"Layout\" + TreeItem.Solution.Name + ".xml"))
+            string path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"Layout\";
+
+            if (File.Exists(path + TreeItem.Solution.Name + ".xml"))
             {
-                using (XmlReader Reader = XmlReader.Create(@"Layout\" + TreeItem.Solution.Name + ".xml"))
+                using (XmlReader Reader = XmlReader.Create(path + TreeItem.Solution.Name + ".xml"))
                 {
                     serializer.Deserialize(Reader);
                 }
@@ -77,8 +79,10 @@ namespace GameStoryEdit
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (!Directory.Exists(@"Layout\")) Directory.CreateDirectory(@"Layout\");
-            using (StreamWriter stream = new StreamWriter(@"Layout\" + TreeItem.Solution.Name + ".xml"))
+            string path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"Layout\";
+
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            using (StreamWriter stream = new StreamWriter(path + TreeItem.Solution.Name + ".xml"))
             {
                 serializer.Serialize(stream);
             }

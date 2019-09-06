@@ -90,7 +90,7 @@ namespace GameStoryEdit.Commands
                     TreeItem.Solution = Solution.Deserialize(path);
 
                     New @new = null;
-                    if (Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
+                    if (Application.Current.MainWindow != null && Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
                     Application.Current.MainWindow = new MainWindow();
                     Application.Current.MainWindow.Show();
                     if (@new != null) @new.Close();

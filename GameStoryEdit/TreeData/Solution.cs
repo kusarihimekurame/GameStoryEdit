@@ -124,7 +124,7 @@ namespace GameStoryEdit.TreeData
                                 reader.Read();
                                 reader.Read();
 
-                                Projects.Add(Project.Deserialize(Directory.Exists(reader.Value) ? reader.Value : Path.Substring(0, 3) + reader.Value.Substring(3) + @"\" + name + ".GameStory"));
+                                Projects.Add(Project.Deserialize(Directory.Exists(reader.Value) ? reader.Value + @"\" + name + ".GameStory" : Path.Substring(0, 3) + reader.Value.Substring(3) + @"\" + name + ".GameStory"));
                             }
                         }
                         break;

@@ -25,14 +25,17 @@ namespace GameStoryEdit.TreeData
             {
                 _fountainEditor = value;
                 _fountainEditor.Name = Name;
-                _fountainEditor.textEditor.Text = GetText();
+                if (Directory.Exists(Path))
+                {
+                    Extension = new DirectoryInfo(Path).GetFiles().First(file => file.Name.Contains(Name)).Extension;
+                    _fountainEditor.textEditor.Text = GetText();
+                }
                 LayoutDocument = new LayoutDocument() { Content = _fountainEditor, ContentId = "FountainEditor", Title = Name };
             }
         }
         public LayoutDocument LayoutDocument { get; private set; }
         public string GetText()
         {
-            Extension = new DirectoryInfo(Path).GetFiles().First(file => file.Name.Contains(Name)).Extension;
             using (StreamReader sr = new StreamReader(FullName, Encoding.Default))
             {
                 string _line;
