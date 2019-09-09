@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using GameStoryEdit.Dialogs;
+using System.Windows.Threading;
 
 namespace GameStoryEdit
 {
@@ -31,6 +32,11 @@ namespace GameStoryEdit
         private void Application_Activated(object sender, EventArgs e)
         {
             MainWindow_InputBindings.Add();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
         }
     }
 }
