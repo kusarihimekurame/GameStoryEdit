@@ -36,7 +36,7 @@ namespace GameStoryEdit.TreeData
         public LayoutDocument LayoutDocument { get; private set; }
         public string GetText()
         {
-            using (StreamReader sr = new StreamReader(FullName, Encoding.Default))
+            using (StreamReader sr = new StreamReader(FullName))
             {
                 string _line;
                 StringBuilder line = new StringBuilder();
