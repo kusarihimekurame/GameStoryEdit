@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using System.Xml;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace GameStoryEdit.Commands
 {
@@ -102,7 +103,7 @@ namespace GameStoryEdit.Commands
         private class _OpenDialog : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) => true;
+            public bool CanExecute(object parameter) => parameter is TextBox;
             public void Execute(object parameter)
             {
                 TextBox tb = parameter as TextBox;
@@ -115,10 +116,11 @@ namespace GameStoryEdit.Commands
         private class _Close : ICommand
         {
             public event EventHandler CanExecuteChanged;
-            public bool CanExecute(object parameter) => true;
+            public bool CanExecute(object parameter) => parameter == null || (parameter is LayoutDocumentPane ldp && ldp.SelectedContent == null) ? false : true;
             public void Execute(object parameter)
             {
-                Window.GetWindow((DependencyObject)parameter).Close();
+                if (parameter is LayoutDocumentPane ldp) ldp.SelectedContent.Close();
+                else Window.GetWindow((DependencyObject)parameter).Close();
             }
             public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }

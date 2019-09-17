@@ -32,4 +32,15 @@
     <sys:String x:Key="Undo">撤销</sys:String>
     <sys:String x:Key="Redo">重做</sys:String>
     <sys:String x:Key="Solution">解决方案'{0}'(共 {1} 个项目)</sys:String>
+    <sys:String x:Key="Recent">打开最近使用的内容</sys:String>
+    <sys:String x:Key="Getstarted">开始使用</sys:String>
+    <sys:String x:Key="Openproject">打开项目</sys:String>
+    <sys:String x:Key="Createproject">创建新项目</sys:String>
+    <sys:String x:Key="ConfigureProject">配置新项目</sys:String>
+    <sys:String x:Key="ProjectName">项目名称</sys:String>
+    <sys:String x:Key="Location">位置</sys:String>
+    <sys:String x:Key="SolutionName">解决方案名称</sys:String>
+    <sys:String x:Key="Back">上一步</sys:String>
+    <sys:String x:Key="Next">下一步</sys:String>
+    <sys:String x:Key="Create">创建</sys:String>
 </ResourceDictionary>

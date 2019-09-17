@@ -48,6 +48,8 @@ namespace GameStoryEdit
                 }
             }
 
+            close.CommandParameter = LayoutDocumentPane;
+
             Layouts_FountainEditor.ForEach(lf =>
             {
                 if (TreeView.DataContext is SolutionViewModel solutionView)

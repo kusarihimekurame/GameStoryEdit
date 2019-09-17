@@ -15,8 +15,8 @@
                 <MenuItem Header="{DynamicResource New}">
                     <MenuItem Style="{DynamicResource Project_MenuItem}"/>
                 </MenuItem>
-                <MenuItem Header="{DynamicResource Open}"/>
-                <MenuItem Header="{DynamicResource Close}"/>
+                <MenuItem Header="{DynamicResource Open}" Command="{Binding Open,Source={StaticResource Command}}"/>
+                <MenuItem x:Name="close" Header="{DynamicResource Close}" Command="{Binding Close,Source={StaticResource Command}}"/>
                 <Separator/>
                 <MenuItem Header="{DynamicResource Save}" Command="{Binding Save,Source={StaticResource Command}}"/>
                 <MenuItem Header="{DynamicResource Save As}"/>
@@ -96,7 +96,7 @@
                             </TabControl>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutDocumentPane>
+                    <avalonDock:LayoutDocumentPane x:Name="layoutDocumentPane">
                         <avalonDock:LayoutDocument ContentId="FountainEditor" Title="ScreenPlay1">
                             <UserControls:FountainEditor/>
                         </avalonDock:LayoutDocument>

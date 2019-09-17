@@ -32,4 +32,15 @@
     <sys:String x:Key="Undo">元に戻す</sys:String>
     <sys:String x:Key="Redo">やり直し</sys:String>
     <sys:String x:Key="Solution">ソリューション'{0}'({1} プロジェクト)</sys:String>
+    <sys:String x:Key="Recent">最近開いたプロジェクト</sys:String>
+    <sys:String x:Key="GetStarted">作業の開始</sys:String>
+    <sys:String x:Key="OpenProject">プロジェクトを開く</sys:String>
+    <sys:String x:Key="CreateProject">新しいプロジェクトの作成</sys:String>
+    <sys:String x:Key="ConfigureProject">新しいプロジェクトを構成する</sys:String>
+    <sys:String x:Key="ProjectName">プロジェクト名</sys:String>
+    <sys:String x:Key="Location">場所</sys:String>
+    <sys:String x:Key="SolutionName">ソリューション名</sys:String>
+    <sys:String x:Key="Back">戻る</sys:String>
+    <sys:String x:Key="Next">次へ</sys:String>
+    <sys:String x:Key="Create">作成</sys:String>
 </ResourceDictionary>
