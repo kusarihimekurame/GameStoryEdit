@@ -89,6 +89,7 @@ namespace GameStoryEdit.Commands
                 if (!string.IsNullOrEmpty(path))
                 {
                     TreeItem.Solution = Solution.Deserialize(path);
+                    
 
                     New @new = null;
                     if (Application.Current.MainWindow != null && Application.Current.MainWindow.GetType().Name.Equals("New")) @new = (New)Application.Current.MainWindow;
@@ -113,7 +114,7 @@ namespace GameStoryEdit.Commands
             public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private class _Close : ICommand
+        public class _Close : ICommand
         {
             public event EventHandler CanExecuteChanged;
             public bool CanExecute(object parameter) => parameter == null || (parameter is LayoutDocumentPane ldp && ldp.SelectedContent == null) ? false : true;

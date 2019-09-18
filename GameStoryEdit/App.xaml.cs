@@ -24,9 +24,9 @@ namespace GameStoryEdit
                 Command.Open.Execute(path);
             }
 
-            Languages.languages.SetLanguage(CultureInfo.CurrentCulture);
-
             if (MainWindow == null) new New().ShowDialog();
+
+            Languages.languages.SetLanguage(CultureInfo.CurrentCulture);
         }
         
         private void Application_Activated(object sender, EventArgs e)

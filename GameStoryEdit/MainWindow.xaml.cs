@@ -49,6 +49,7 @@ namespace GameStoryEdit
             }
 
             close.CommandParameter = LayoutDocumentPane;
+            LayoutDocumentPane.ChildrenCollectionChanged += (sender, e) => ((Commands.Command._Close)close.Command).RaiseCanExecuteChanged();
 
             Layouts_FountainEditor.ForEach(lf =>
             {
@@ -63,7 +64,7 @@ namespace GameStoryEdit
 
         private void Add_Html(object sender, RoutedEventArgs e)
         {
-            LayoutPanel.Children.Insert(2, new LayoutDocumentPane(new LayoutDocument() { Content = FountainEditor.webBrowser, Title = "HTML" }));
+            LayoutPanel.Children.Insert(2, new LayoutDocumentPane(new LayoutDocument() { Content = FountainEditor.webBrowser, Title = "HTML" }) { DockWidth = LayoutDocumentPane.DockWidth });
         }
 
         private void SceneHeadingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -96,7 +96,7 @@
                             </TabControl>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutDocumentPane x:Name="layoutDocumentPane">
+                    <avalonDock:LayoutDocumentPane>
                         <avalonDock:LayoutDocument ContentId="FountainEditor" Title="ScreenPlay1">
                             <UserControls:FountainEditor/>
                         </avalonDock:LayoutDocument>
