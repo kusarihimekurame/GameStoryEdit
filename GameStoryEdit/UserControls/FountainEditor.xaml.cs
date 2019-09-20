@@ -32,9 +32,10 @@ namespace GameStoryEdit.UserControls
     /// </summary>
     public partial class FountainEditor : UserControl
     {
+        public Manager Manager { get; } = new Manager();
         public FountainGame FountainGame
         {
-            get { return fountainGame; }
+            get => fountainGame;
             set
             {
                 fountainGame = value;
@@ -43,20 +44,39 @@ namespace GameStoryEdit.UserControls
 
                 webBrowser.NavigateToString(fountainGame.Html);
 
+                #region ListBox
+
+                var Characters = fountainGame.Blocks.Characters.
+                    GroupBy(c => c.Name).
+                    Select(Group => new { Text = Group.Key, Count = Group.Count() }).ToList();
+
+                var SceneHeadings = fountainGame.Blocks.SceneHeadings.
+                    Select(c => c.Spans.Literals[0].Text).ToList();
+
+                Manager.CharactersListBox.ItemsSource = Characters;
+                Manager.SceneHeadingListBox.ItemsSource = SceneHeadings;
+
+                #endregion
+
                 #region Folding
 
-                List<NewFolding> newFoldings = new List<NewFolding>();
-                fountainGame.SceneBlocks.ForEach(sb =>
+                try
                 {
-                    try
+                    List<NewFolding> newFoldings = new List<NewFolding>();
+                    fountainGame.SceneBlocks.ForEach(sb =>
                     {
-                        newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
-                        sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
-                    }
-                    catch { }
-                });
-                foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
-                foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+                        try
+                        {
+                            newFoldings.Add(new NewFolding(sb.Range.Location, sb.Range.EndLocation - 1) { Name = sb.SceneHeadings[0].Spans.Literals[0].Text });
+                            sb.DialogueBlocks.ForEach(db => newFoldings.Add(new NewFolding(db.Range.Location + 2, db.Range.EndLocation - 1) { Name = db.Characters[0].Spans.Literals[0].Text }));
+                        }
+                        catch { }
+                    });
+                    foldingManager.UpdateFoldings(newFoldings.Cast<NewFolding>(), -1);
+                    foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+                }
+                catch
+                { }
 
                 #endregion
 
@@ -90,9 +110,23 @@ namespace GameStoryEdit.UserControls
             {
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
+
             foldingManager = FoldingManager.Install(textEditor.TextArea);
             foldingStrategy = new XmlFoldingStrategy();
             foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+
+            Manager.SceneHeadingListBox.SelectionChanged += (sender, e) =>
+              {
+                  if (e.AddedItems.Count != 0)
+                  {
+                      foreach (var c in FountainGame.Blocks.SceneHeadings)
+                          c.Spans.Literals.Where(s => s.Text == e.AddedItems[0].ToString()).ToList().ForEach(s =>
+                          {
+                              textEditor.Select(s.Range.Location, s.Range.Length);
+                              textEditor.ScrollToLine(textEditor.Document.GetLineByOffset(s.Range.Location).LineNumber);
+                          });
+                  }
+              };
         }
 
         private Task<FountainGame> Task_FountainGame;

@@ -80,7 +80,7 @@ module private Html =
     let rec formatSpan (ctx:FormattingContext) = function
       | Literal(str, range) ->
           // preserve white spaces - Action possibly have those
-          ctx.Writer.Write("""<span style="white-space: pre;">""")
+          ctx.Writer.Write("""<span style="white-space: pre-wrap; word-break: keep-all;">""")
           ctx.Writer.Write(if ctx.PreserveWhiteSpace then str else str.Trim())
           ctx.Writer.Write("</span>");
       | HardLineBreak (range) -> ctx.Writer.Write("<br />")
@@ -148,7 +148,7 @@ module private Html =
               match key with
               | "Contact"
               | "Draft date" ->
-                  ctx.Writer.Write("""<div style="text-align:right;"><br/>""")
+                  ctx.Writer.Write("""<div style="text-align:left;"><br/>""")
               | _ ->
                   ctx.Writer.Write("""<div style="text-align:center;"><br/>""")
               formatSpans { ctx with PreserveWhiteSpace = false } spans
@@ -250,7 +250,7 @@ module private Html =
 
     /// Write a list of MarkdownParagraph values to a TextWriter
     and formatBlocks ctx blocks = 
-      ctx.Writer.Write("""<head><meta charset="UTF-8"></head><style>body{font-family:"Courier Prime","Courier New",Courier,monospace;}</style>""")
+      ctx.Writer.Write("""<style>body{font-family:"Courier Prime","Courier New",Courier,monospace;}"</style>""")
       let length = List.length blocks
       let smallCtx = { ctx with LineBreak = smallBreak ctx }
       let bigCtx = { ctx with LineBreak = bigBreak ctx }

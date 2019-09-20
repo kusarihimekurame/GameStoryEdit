@@ -53,7 +53,7 @@ namespace GameStoryEdit.UserControls
                     {
                         case ScreenPlay screenPlay:
                             ((MainWindow)Application.Current.MainWindow).LayoutDocumentPane.Children.Add(screenPlay.LayoutDocument);
-                            screenPlay.FountainEditor.FountainGame_Changed += ((MainWindow)Application.Current.MainWindow).FountainGame_Changed;
+                            //screenPlay.FountainEditor.FountainGame_Changed += ((MainWindow)Application.Current.MainWindow).FountainGame_Changed;
                             break;
                     }
                 }

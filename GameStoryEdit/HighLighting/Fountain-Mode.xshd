@@ -19,7 +19,7 @@
     <Import ruleSet="Title"/>
   </RuleSet>
   <RuleSet name="SceneHeadings" ignoreCase="true">
-    <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|内景|屋内|ext|外景|屋外|est|INT\/EXT|i\/e)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
+    <Rule color="SceneHeadings">^((?:\*{0,3}_?)?(?:(?:int|内景|屋内|内|ext|外景|屋外|外|est|INT\/EXT|i\/e|内景\/外景|屋内/屋外|内\/外)[. ]).+)|^(?:\.(?!\.+))(.+)</Rule>
   </RuleSet>
   <RuleSet name="Parenthetical">
     <Rule color="Parenthetical">^(\(.+\))$</Rule>

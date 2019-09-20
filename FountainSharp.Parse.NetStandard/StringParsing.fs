@@ -62,9 +62,15 @@ module String =
   /// Matches when a string starts with any of the specified sub-strings
   /// NOTE: BryanC 2016.01.02 - i added the string return so it's more useful and matches the others
   let (|StartsWithAny|_|) (starts:seq<string>) (text:string) = 
-    if starts |> Seq.exists (text.StartsWith) then Some(text) else None
+    if starts |> Seq.exists (text.StartsWith) then 
+      let start = starts |> Seq.find(fun s -> text.StartsWith(s, StringComparison.OrdinalIgnoreCase));
+      Some(text.Substring(start.Length)) 
+    else None
   let (|StartsWithAnyCaseInsensitive|_|) (starts:seq<string>) (text:string) = 
-    if starts |> Seq.exists (fun s -> text.StartsWith(s, StringComparison.OrdinalIgnoreCase)) then Some(text) else None
+    if starts |> Seq.exists (fun s -> text.StartsWith(s, StringComparison.OrdinalIgnoreCase)) then 
+      let start = starts |> Seq.find(fun s -> text.StartsWith(s, StringComparison.OrdinalIgnoreCase));
+      Some(text.Substring(start.Length)) 
+    else None
   /// Matches when a string starts with the specified sub-string
   let (|StartsWith|_|) (start:string) (text:string) = 
     if text.StartsWith(start) then Some(text.Substring(start.Length)) else None

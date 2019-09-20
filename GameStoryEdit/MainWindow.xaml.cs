@@ -33,6 +33,7 @@ namespace GameStoryEdit
         public LayoutPanel LayoutPanel => (LayoutPanel)dockingManager.Layout.Children.FirstOrDefault();
         public LayoutDocumentPane LayoutDocumentPane => (LayoutDocumentPane)((LayoutPanel)dockingManager.Layout.Children.FirstOrDefault()).Children.FirstOrDefault(c => c is LayoutDocumentPane);
         public List<LayoutDocument> Layouts_FountainEditor => dockingManager.Layout.Descendents().OfType<LayoutDocument>().Where(ld => !string.IsNullOrEmpty(ld.ContentId) && ld.ContentId.Equals("FountainEditor")).ToList();
+        public LayoutAnchorable Manager => dockingManager.Layout.Descendents().OfType<LayoutAnchorable>().FirstOrDefault(la => !string.IsNullOrEmpty(la.ContentId) && la.ContentId.Equals("Manager"));
 
         public MainWindow()
         {
@@ -56,10 +57,17 @@ namespace GameStoryEdit
                 if (TreeView.DataContext is SolutionViewModel solutionView)
                 {
                     lf.Content = solutionView.FindMatches(lf.Title, solutionView.Projects).Select(vm => vm.TreeItem).Cast<ScreenPlay>().First().FountainEditor;
+                    Manager.Content = ((FountainEditor)lf.Content).Manager;
                 }
-            });
 
-            if (FountainEditor != null) FountainEditor.FountainGame_Changed += FountainGame_Changed;
+                lf.IsSelectedChanged += (sender, e) =>
+                {
+                    if (lf.IsSelected && Manager != null)
+                    {
+                        Manager.Content = ((FountainEditor)lf.Content).Manager;
+                    }
+                };
+            });
         }
 
         private void Add_Html(object sender, RoutedEventArgs e)
@@ -89,25 +97,6 @@ namespace GameStoryEdit
             {
                 serializer.Serialize(stream);
             }
-        }
-
-        public void FountainGame_Changed(object sender, EventArgs e)
-        {
-            #region ListBox
-
-            FountainGame fountainGame = sender as FountainGame;
-
-            var Characters = fountainGame.Blocks.Characters.
-                GroupBy(c => c.Spans.Literals[0].Text).
-                Select(Group => new { Text = Group.Key, Count = Group.Count() }).ToList();
-
-            var SceneHeadings = fountainGame.Blocks.SceneHeadings.
-                Select(c => c.Spans.Literals[0].Text).ToList();
-
-            CharactersListBox.ItemsSource = Characters;
-            SceneHeadingListBox.ItemsSource = SceneHeadings;
-
-            #endregion
         }
 
         private void Window_GotFocus(object sender, RoutedEventArgs e)

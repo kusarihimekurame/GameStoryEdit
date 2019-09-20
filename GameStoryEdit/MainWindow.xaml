@@ -78,22 +78,6 @@
                 <avalonDock:LayoutPanel>
                     <avalonDock:LayoutAnchorablePane DockWidth="200">
                         <avalonDock:LayoutAnchorable Title="Manager" ContentId="Manager">
-                            <TabControl Margin="0,4,0,0">
-                                <TabItem Header="{DynamicResource SceneHeading}">
-                                    <ListBox x:Name="SceneHeadingListBox" SelectionChanged="SceneHeadingListBox_SelectionChanged"/>
-                                </TabItem>
-                                <TabItem Header="{DynamicResource Character}">
-                                    <ListBox x:Name="CharactersListBox">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <TextBlock Text="{Binding Text}" HorizontalAlignment="Left"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </TabItem>
-                            </TabControl>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutDocumentPane>

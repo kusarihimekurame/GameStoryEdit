@@ -10,6 +10,7 @@ using Microsoft.FSharp.Core;
 using Microsoft.FSharp.Collections;
 using System.Diagnostics;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace GameStoryEdit
 {
@@ -19,7 +20,20 @@ namespace GameStoryEdit
         public FountainDocument Fountain { get; }
         public Blocks Blocks => new Blocks(Fountain.Blocks);
         public FSharpList<FountainBlockElement> FSharpBlocks => Fountain.Blocks;
-        public List<SceneBlock> SceneBlocks => Blocks.GetSceneBlocks();
+        public List<SceneBlock> SceneBlocks
+        {
+            get
+            {
+                List<SceneBlock> sceneBlocks = Blocks.GetSceneBlocks();
+                sceneBlocks.ForEach(sb =>
+                {
+                    string txt = GetText(sb.Range);
+                    sb.Range.Offset(txt.Length - txt.TrimStart().Length);
+                });
+                return sceneBlocks;
+            }
+        }
+
         public List<DialogueBlock> DialogueBlocks => Blocks.GetDialogueBlocks();
         public string GetText(Range range) => Fountain.GetText(range);
         public void ReplaceText(int location, int length, string replaceText) => Fountain.ReplaceText(location, length, replaceText);
@@ -189,6 +203,8 @@ namespace GameStoryEdit
         public bool Primary { get; }
         public Spans Spans { get; }
         public Range Range { get; }
+        public string Name { get; }
+        public string[] State { get; }
         public FountainBlockElement.Character FSharpCharacter { get; }
         public Character(FountainBlockElement Character)
         {
@@ -197,6 +213,11 @@ namespace GameStoryEdit
             Primary = FSharpCharacter.Item2;
             Spans = new Spans(FSharpCharacter.Item3);
             Range = FSharpCharacter.Item4;
+
+            Regex regex = new Regex(@"\(([^\(\)]*)\)");
+            MatchCollection Matches = regex.Matches(Spans.Literals[0].Text);
+            Name = regex.Replace(Spans.Literals[0].Text, "").Trim();
+            State = Matches.Cast<Match>().Select(m => m.Groups[1].Value).ToArray();
         }
     }
     [DebuggerDisplay("{FSharpDialogue}")]
