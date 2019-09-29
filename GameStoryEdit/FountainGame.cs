@@ -11,6 +11,7 @@ using Microsoft.FSharp.Collections;
 using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;
+using Range = FountainSharp.Range;
 
 namespace GameStoryEdit
 {

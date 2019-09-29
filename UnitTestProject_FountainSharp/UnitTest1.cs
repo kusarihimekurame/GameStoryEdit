@@ -1,15 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
 using GameStoryEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
 
-namespace UnitTestProject_FountainGame
+namespace UnitTestProject_FountainSharp
 {
     [TestClass]
     public class UnitTest1
@@ -25,7 +23,7 @@ namespace UnitTestProject_FountainGame
                 SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
 
-            foreach(SceneHeading sceneHeading in fountainGame.Blocks.SceneHeadings)
+            foreach (SceneHeading sceneHeading in fountainGame.Blocks.SceneHeadings)
             {
                 Regex regex = SyntaxHighlighting.GetNamedRuleSet("SceneHeadings").Rules[0].Regex;
                 string text = sceneHeading.Spans.Literals[0].Text;
