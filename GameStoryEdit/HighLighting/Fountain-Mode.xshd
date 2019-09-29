@@ -7,14 +7,18 @@
   <Color name="Title" foreground="#5CACEE"/>
   <Color name="Boneyard" foreground="#006400"/>
   <RuleSet>
-    <Span color="Dialogue" multiline="true" ruleSet="Parenthetical">
-      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z ]*)( \^?)?(\(.*\))*$</Begin>
-      <End>^ {2}$</End>
-    </Span>
     <Span color="Boneyard" multiline="true">
 			<Begin>/\*</Begin>
 			<End>\*/</End>
 		</Span>
+    <Span color="Boneyard" multiline="true">
+			<Begin>\[\[</Begin>
+			<End>\]\]</End>
+		</Span>
+    <Span color="Dialogue" multiline="true" ruleSet="Parenthetical">
+      <Begin color="Character">^([@]+[^.()^]*|[A-Z]+[0-9A-Z ]*)( \^?)?(\(.*\))*$</Begin>
+      <End>^ {2}$</End>
+    </Span>
     <Import ruleSet="SceneHeadings"/>
     <Import ruleSet="Title"/>
   </RuleSet>

@@ -466,7 +466,14 @@ let (|Transition|_|) (ctx:ParsingContext) (input:string list) =
         elif blockContent.StartsWith ">" then // forced transition
             let text = blockContent.Substring(1).TrimStart()
             Some(true, { Text = text; Length = head.Length + NewLineLength * 2 + offset; Offset = head.IndexOf(text) + NewLineLength }, rest)
-        elif blockContent.EndsWith "TO:" then // non-forced transition
+        elif blockContent.Equals "CUT TO BLACK." || blockContent.Equals "FADE TO BLACK." || blockContent.Equals "FADE OUT." then // non-forced transition
+            // check for all uppercase
+            if blockContent.ToCharArray() |> Seq.exists (fun c -> Char.IsLower(c)) then
+              None
+            else
+              let text = blockContent.TrimStart()
+              Some(false, { Text = text; Length = head.Length + NewLineLength * 2 + offset; Offset = head.IndexOf(text) + offset },  rest)
+        elif blockContent.EndsWith(":") then
             // check for all uppercase
             if blockContent.ToCharArray() |> Seq.exists (fun c -> Char.IsLower(c)) then
               None

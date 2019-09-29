@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True" WordWrap="True" IsVisibleChanged="TextEditor_IsVisibleChanged">
+        <avalonEdit:TextEditor x:Name="textEditor" TextChanged="TextEditor_TextChanged" ShowLineNumbers="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" LineNumbersForeground="#FFAAAAAA" Margin="0" AllowDrop="True" WordWrap="True" IsVisibleChanged="TextEditor_IsVisibleChanged" >
             <avalonEdit:TextEditor.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="ApplicationCommands.Undo" Header="{DynamicResource Undo}"/>
