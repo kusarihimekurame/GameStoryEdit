@@ -257,7 +257,6 @@
     <PackageReference Include="FSharp.Core" Version="4.7.0" />
     <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FountainSharp.Parse.NetStandard\FountainSharp.Parse.NetStandard.fsproj" />

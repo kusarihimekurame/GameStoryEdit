@@ -13,10 +13,8 @@ using System.Windows.Input;
 
 namespace GameStoryEdit
 {
-    [Serializable]
     public partial class Languages : INotifyPropertyChanged
     {
-        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
         public static Languages languages { get; } = new Languages();
         public ICommand Language_Changed { get; } = new _Language_Changed();
