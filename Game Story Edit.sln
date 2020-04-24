@@ -7,7 +7,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FountainSharp.Parse.NetStan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStoryEdit", "GameStoryEdit\GameStoryEdit.csproj", "{A5A8CAF3-20FF-4618-A9BA-F76D285FF9F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject_FountainGame", "UnitTestProject_FountainSharp\UnitTestProject_FountainGame.csproj", "{F06ED51C-DB2B-4157-99FE-19C65EFF8E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject_FountainGame", "UnitTestProject_FountainSharp\UnitTestProject_FountainGame.csproj", "{F06ED51C-DB2B-4157-99FE-19C65EFF8E8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

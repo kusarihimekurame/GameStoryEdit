@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
     <sys:String x:Key="LocationString">第{0}行,第{1}列</sys:String>
     <sys:String x:Key="Lines">共{0}行</sys:String>
     <sys:String x:Key="Characters">{0}个字符</sys:String>
