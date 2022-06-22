@@ -256,7 +256,7 @@
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
     <PackageReference Include="FSharp.Core" Version="4.7.1" />
     <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FountainSharp.Parse.NetStandard\FountainSharp.Parse.NetStandard.fsproj" />
